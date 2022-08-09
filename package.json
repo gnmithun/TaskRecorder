@@ -1,0 +1,14 @@
+{
+  "name": "taskrecorder",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/gnmithun/TaskRecorder.git",
+  "author": "Mithun Nair <gn.mithun@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.1"
+  },
+  "scripts": {
+    "dev": "node index.js"
+  }
+}
