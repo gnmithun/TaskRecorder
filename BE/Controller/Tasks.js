@@ -1,4 +1,4 @@
-const Tasks = require("../Database/Model/Tasks")
+const Tasks = require("../Model/Tasks")
 const { taskValidator } = require("../Common/validator")
 
 exports.createTask = async (req,res) => {

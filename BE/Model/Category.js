@@ -1,6 +1,5 @@
-const dbController = require('../DBController')
+const dbController = require('../Database/DBController')
 const sequelize = require('sequelize')
-const Tasks = require('./Tasks')
 
 const Category = dbController.define("Category",{
     id: { type:sequelize.INTEGER, autoIncrement:true, primaryKey:true },

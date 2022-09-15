@@ -5,8 +5,8 @@ const TaskRoutes = require('./BE/Router/Tasks')
 const CategoryRoutes = require('./BE/Router/Category')
 
 const dbController = require('./BE/Database/DBController')
-const Category = require('./BE/Database/Model/Category')
-const Tasks = require('./BE/Database/Model/Tasks')
+const Category = require('./BE/Model/Category')
+const Tasks = require('./BE/Model/Tasks')
 
 const app = express()
 app.use(express.json())
