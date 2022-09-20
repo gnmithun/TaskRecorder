@@ -18,7 +18,6 @@ app.use(CategoryRoutes)
 
 /*Default error handler, always at the end of the middleware stack*/
 app.use( function (err,_,res,next) {
-  console.log("Default error handler")
   return res.status(500).send( { "response" : "Error", "details" : err } )
 })
 

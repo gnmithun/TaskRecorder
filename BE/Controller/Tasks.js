@@ -14,6 +14,7 @@ exports.createTask = async (req,res,next) => {
     catch (error) { 
       next(error) 
     }
+    // throw new Error("General Error", details)
 }
 
 exports.getTasks = async ( req,res ) => {
@@ -21,7 +22,7 @@ exports.getTasks = async ( req,res ) => {
       const data = await Tasks.findAll({ include: Category })
       return res.status(200).json( { "response" : "Success", "tasks" : data } )
   } catch (error) {
-      return res.status(200).send( { "response" : "Error", "error" : error } )
+      next(error)
   } 
 }
 
