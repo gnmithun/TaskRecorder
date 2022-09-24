@@ -10,7 +10,12 @@ const categoryValidator = joi.object({
     categoryType:joi.string().trim().min(1).max(30)
 })
 
+const idValidator = joi.object({
+  taskId:joi.number()
+})
+
 module.exports = {
     taskValidator:taskValidator,
-    categoryValidator:categoryValidator
+    categoryValidator:categoryValidator,
+    idValidator:idValidator
 }

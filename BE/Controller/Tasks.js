@@ -1,5 +1,5 @@
 const Tasks = require("../Model/Tasks")
-const { taskValidator } = require("../Common/validator")
+const { taskValidator, idValidator } = require("../Common/validator")
 const Category = require("../Model/Category")
 
 exports.createTask = async (req,res,next) => {
@@ -14,15 +14,52 @@ exports.createTask = async (req,res,next) => {
     catch (error) { 
       next(error) 
     }
-    // throw new Error("General Error", details)
 }
 
 exports.getTasks = async ( req,res ) => {
   try {
       const data = await Tasks.findAll({ include: Category })
+      if (0 === data.length) {
+        return res.status(200).json( { "response" : "Success", "tasks" : "No tasks found" } )
+      }
       return res.status(200).json( { "response" : "Success", "tasks" : data } )
   } catch (error) {
       next(error)
   } 
 }
+
+exports.getTask = async (req,res,next) => {
+  const { error, value } = idValidator.validate( { taskId:req.params.taskId } )    
+  if ( error ) {
+    return res.status(500).send( { "response" : "Error", "details" : error } )
+  }
+  try {  
+    const task = await Tasks.findByPk(value.taskId)     
+    if (task === null) {
+      return res.status(404).send( { "response" : "Not found", "details" : "No task with that ID" } )
+    } else {
+      return res.status(200).send( { "response" : "Success", "details" : task } )
+    }
+  } catch (error) {         
+     next(error)
+  }
+}
+
+exports.deleteTask = async ( req,res,next ) => {
+ const { error , value } = idValidator.validate( { taskId: req.params.taskId} )
+ if ( error ){
+  return res.status(500).send( { "response" : "Error" , " details " : error } )
+ }
+ try {
+    const task = await Tasks.findByPk(value.taskId)
+    if ( task === null ){
+      return res.status(404).send( { "response" : "Not found", "details" : "No task with that ID" } )
+    } 
+    const deletedTask = await task.destroy()
+    return res.status(200).send( { "response" : "Successfully deleted", "details" : deletedTask } )
+ } catch (error) {    
+    next(error)
+ }
+}
+
 

@@ -20,7 +20,6 @@ exports.getCategories = async (_,res) => {
     const categories = await Category.findAll()
     return res.status(200).json( { "response" : "Success", "details" : categories } )
   } catch (error) {
-    console.log(error)
     return res.status(500).send( { "response" : "Error", "details" : error } )
   }
 }
