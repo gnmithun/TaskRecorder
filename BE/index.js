@@ -1,12 +1,12 @@
 const express = require("express")
 const { Sequelize } = require("sequelize")
 
-const TaskRoutes = require('./BE/Router/Tasks')
-const CategoryRoutes = require('./BE/Router/Category')
+const TaskRoutes = require('./Router/Tasks')
+const CategoryRoutes = require('./Router/Category')
 
-const dbController = require('./BE/Database/DBController')
-const Category = require('./BE/Model/Category')
-const Tasks = require('./BE/Model/Tasks')
+const dbController = require('./Database/DBController')
+const Category = require('./Model/Category')
+const Tasks = require('./Model/Tasks')
 
 Tasks.belongsTo(Category)
 const app = express()
