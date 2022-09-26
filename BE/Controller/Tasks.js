@@ -62,4 +62,32 @@ exports.deleteTask = async ( req,res,next ) => {
  }
 }
 
+exports.updateTask = async ( req,res,next ) => {
+  const { error , value } = taskValidator.validate( { taskId: req.params.taskId,
+                                                      detail : req.body.detail,
+                                                      completed : req.body.completed,
+                                                      category: req.body.category } )
+  if ( error ) {
+    return res.status(500).send( { "response" : "Error", "details" : error } )
+  }
+  try {
+    const task = await Tasks.findByPk(value.taskId)
+    if ( task === null ){
+      return res.status(404).send( { "response" : "Not found", "details" : "No task with that ID" } )
+    } 
+    const updatedTask = await task.update({
+      detail : getUpdatedValueFor(value.detail,task.detail),
+      completed : getUpdatedValueFor(value.completed,task.completed),
+      categoryId : getUpdatedValueFor(value.category,task.categoryId)
+    })
+    console.log()
+    return res.status(200).send( { "response" : "Successfully updated", "details" : updatedTask } )
+  } catch (error) {
+    console.log(error)
+    next(error)    
+  }
+}
 
+function getUpdatedValueFor(updatedProperty,taskProperty) {
+  return (typeof updatedProperty === "undefined" ? taskProperty : updatedProperty)
+}
