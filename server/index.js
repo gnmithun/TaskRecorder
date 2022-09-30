@@ -1,4 +1,5 @@
 const express = require("express")
+const cors = require('cors');
 const { Sequelize } = require("sequelize")
 
 const TaskRoutes = require('./Router/Tasks')
@@ -10,9 +11,9 @@ const Tasks = require('./Model/Tasks')
 
 Tasks.belongsTo(Category)
 const app = express()
+app.use(cors());
 app.use(express.json())
 app.use(express.urlencoded())
-
 app.use(TaskRoutes)
 app.use(CategoryRoutes)
 

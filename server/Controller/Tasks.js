@@ -8,8 +8,8 @@ exports.createTask = async (req,res,next) => {
       return res.status(500).send( { "response" : "Error", "details" : error } )
     }
     try {
-      const newTask = await Tasks.create( { detail:value.detail, completed:value.completed, categoryId:value.category } )
-      return res.status(200).send( { "response" : "Success", "details" : newTask.id } )
+      const newTask = await Tasks.create( { detail:req.body.detail, completed:req.body.completed, categoryId:req.body.categoryId } )
+      return res.status(200).send( { "response" : "success", "details" : newTask } )
     } 
     catch (error) { 
       next(error) 
@@ -80,10 +80,8 @@ exports.updateTask = async ( req,res,next ) => {
       completed : getUpdatedValueFor(value.completed,task.completed),
       categoryId : getUpdatedValueFor(value.category,task.categoryId)
     })
-    console.log()
     return res.status(200).send( { "response" : "Successfully updated", "details" : updatedTask } )
   } catch (error) {
-    console.log(error)
     next(error)    
   }
 }
