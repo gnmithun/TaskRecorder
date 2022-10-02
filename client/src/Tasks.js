@@ -1,4 +1,4 @@
-import React, {useState } from 'react';
+import React, { useState } from 'react';
 
 function Tasks(props) {
 
@@ -12,13 +12,16 @@ function Tasks(props) {
     })
 
     async function addTask(event){
+      event.preventDefault()
         const requestOptions = {
             method:'POST',
             headers: {'Content-Type': 'application/json'}, 
-            body: JSON.stringify({ detail:task.detail, completed:task.completed,category:2}),
+            body: JSON.stringify({ detail:task.detail, completed:task.completed,categoryId:2}),
             mode:'cors',
         }
         const resp = await fetch('http://localhost:8000/tasks',requestOptions)
+        const data = await resp.json()
+        setTask(data.details)        
     }
 
     return (
@@ -26,13 +29,15 @@ function Tasks(props) {
             <form onSubmit={addTask}>
                 <input type="text" value={ task.detail } placeholder='What do you want today?' 
                         name='detail' onChange={ onChange }/>
-                <input type="checkbox" value={ task.completed } 
+                <input type="checkbox" value={ !task.completed } 
                         name='completed' onChange={ (event) => { 
                             setTask(task => ( {...task,completed : event.target.checked} ) )
                             }
                         }/>
                 <input type="submit" value="Submit"/>
             </form>
+              <h6> Results </h6>
+              
         </div>
     );
 }
