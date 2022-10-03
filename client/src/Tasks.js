@@ -1,5 +1,7 @@
+
 import React, {useState } from 'react';
 import TasksList from './TasksList';
+
 function Tasks(props) {
 
     const onChange = (event) => { 
@@ -14,10 +16,11 @@ function Tasks(props) {
 
     async function addTask(event){
         event.preventDefault()
+
         const requestOptions = {
             method:'POST',
             headers: {'Content-Type': 'application/json'}, 
-            body: JSON.stringify({ detail:task.detail, completed:task.completed,category:2}),
+            body: JSON.stringify({ detail:task.detail, completed:task.completed,categoryId:2}),
             mode:'cors',
         }
         const resp = await fetch('http://localhost:8000/tasks',requestOptions)
@@ -25,6 +28,7 @@ function Tasks(props) {
         const newTask = data.details
         setTask(newTask)
         setTasks(tasks => [...tasks,newTask])
+
     }
 
     return (
@@ -46,6 +50,8 @@ function Tasks(props) {
                 <input type="submit" value="Submit"/>
                 <TasksList  value={tasks}/>
             </form>
+              <h6> Results </h6>
+              
         </div>
     );
 }
