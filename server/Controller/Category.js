@@ -9,7 +9,7 @@ exports.createCategory = async (req,res) => {
     }
     try {
       const category = await Category.create( { type : value.categoryType } )
-      return res.status(200).send( { "response" : "Success", "details" : category.id } )
+      return res.status(200).send( { "response" : "Success", "details" : category } )
     } catch (error) {
       return res.status(500).send( { "response" : "Error", "details" : error } )
     }

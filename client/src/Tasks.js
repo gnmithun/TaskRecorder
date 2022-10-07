@@ -18,7 +18,7 @@ function Tasks(props) {
         const requestOptions = {
             method:'POST',
             headers: {'Content-Type': 'application/json'}, 
-            body: JSON.stringify({ detail:task.detail, completed:task.completed,categoryId:2}),
+            body: JSON.stringify({ detail:task.detail, completed:task.completed,categoryId:36}),
             mode:'cors',
         }
 
@@ -50,7 +50,7 @@ function Tasks(props) {
                        name='completed' 
                        onChange={ (event) => { 
                             setTask(task => ( {...task,completed :  event.target.checked } ) )
-                      }}/>
+                       }}/>
                 <input type="submit" value="Submit" disabled = { props.loading ? true : false }/>
                 <TasksList  value={tasks}/>
             </form>
