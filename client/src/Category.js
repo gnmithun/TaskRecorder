@@ -1,23 +1,10 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import React from 'react';
-import CategoryList from "./CategoryList";
 
 function Category(props) {
 
-  const [categories,setCategories] = useState([])
   const [inputCategory,setInpCategory] = useState("")
-  const [category,setCategory] = useState("")
-
-  useEffect(()=>{
-    async function fetchdata(params) {
-      const resp = await fetch("http://localhost:8000/categories")
-      const data = await resp.json() 
-      setCategories(data.details)     
-         
-    }
-    fetchdata()    
-  },[category])
-
+  
   async function addCategory(event){   
     event.preventDefault() 
     const options = {
@@ -25,7 +12,7 @@ function Category(props) {
     }
     const resp = await fetch("http://localhost:8000/category",options)
     const data = await resp.json()   
-    setCategory(data.details.type)
+    props.setCategory({ id:data.details.id , type:data.details.type })
     setInpCategory(" ")    
   }
 
@@ -47,7 +34,6 @@ function Category(props) {
        </form>
 
        <br></br>
-       <CategoryList data={categories}/>
     </div>
   );
 }

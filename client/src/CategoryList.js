@@ -3,13 +3,13 @@ import React from 'react';
 function CategoryList(props) {
     return (
         <div>
-            <ul> 
-            { 
-                props.data.map((category) => 
-                    <ol key={category.id}> {category.type } </ol>
-                )
-            }
-            </ul>
+            <label> Categories
+            <select name="category" id="Categories">
+                {
+                    props.data.map((category) => <option key={category.id} value={category.type}>{category.type} </option>)
+                }
+            </select>
+            </label>
         </div>
     );
 }

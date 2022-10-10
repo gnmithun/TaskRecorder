@@ -5,7 +5,7 @@ function TasksList(props) {
         <div>
             <ul>
             { 
-                props.value.map((task) => 
+                props.data.map((task) => 
                     <ol key={task.id}> { task.detail } </ol>
                 )
             }

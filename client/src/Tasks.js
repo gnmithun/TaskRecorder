@@ -1,40 +1,39 @@
 
-import React, {useState } from 'react';
+import React, { useState } from 'react';
+import CategoryList from './CategoryList';
 import TasksList from './TasksList';
-
 function Tasks(props) {
 
 
 
-    const [tasks,setTasks] = useState([])
-    const [task,setTask] = useState({
-        detail:"",
-        completed:false
-    })
+    const [category,setCategory] = useState({id:0,type:""})
+    const [task,setTask] = useState({detail:"",completed:false,categoryId:0})
+
 
     async function addTask(event){
-        event.preventDefault()
+        // event.preventDefault()
 
-        const requestOptions = {
-            method:'POST',
-            headers: {'Content-Type': 'application/json'}, 
-            body: JSON.stringify({ detail:task.detail, completed:task.completed,categoryId:36}),
-            mode:'cors',
-        }
+        // const requestOptions = {
+        //     method:'POST',
+        //     headers: {'Content-Type': 'application/json'}, 
+        //     body: JSON.stringify({ detail:task.detail, completed:task.completed,categoryId:category.id}),
+        //     mode:'cors',
+        // }
 
-        props.setLoading(true)
-        const resp = await fetch('http://localhost:8000/tasks',requestOptions)
-        const data = await resp.json()
-        const newTask = data.details
-        setTask(newTask)
-        setTasks(tasks => [...tasks,newTask])
-        props.setLoading(false)
+        // props.setLoading(true)
+        // const resp = await fetch('http://localhost:8000/tasks',requestOptions)
+        // const data = await resp.json()
+        // const newTask = data.details
+        // setTask(newTask)
+        // props.setTasks(tasks => [...tasks,newTask])
+        
+        // props.setLoading(false)
     }
 
     return (
         <div>
-          
-            <form onSubmit={addTask}>
+            {/* <form onSubmit={addTask}>
+
                 <input  type="text" 
                         value={ task.detail }                        
                         placeholder='What do you want today?' 
@@ -51,11 +50,23 @@ function Tasks(props) {
                        onChange={ (event) => { 
                             setTask(task => ( {...task,completed :  event.target.checked } ) )
                        }}/>
-                <input type="submit" value="Submit" disabled = { props.loading ? true : false }/>
-                <TasksList  value={tasks}/>
-            </form>
-              <h6> Results </h6>
-              
+
+                <select name="category" value={category.type} 
+                onChange={ (event)=> { 
+                    const selectedCategory = props.categories.find( category => category.type === event.target.value)
+                    setCategory({ id:selectedCategory.id , type:selectedCategory.type })
+                    console.log(`Changed to ${category}`) 
+                }} 
+                >
+                { props.categories.map((category) => <option key={category.id} value={category.type}>{category.type} </option>) }
+                </select>
+
+                <input type="submit" value="Submit" disabled = { props.loading ? true : (props.tasks === undefined ? true : false ) }/>
+
+                <CategoryList data={categories} onCategorySelected={onCategorySelected}/>
+                <TasksList data={props.tasks === undefined ? [] : props.tasks } />
+            </form>           */}
+            <CategoryList data={props.categories} />
         </div>
     );
 }
