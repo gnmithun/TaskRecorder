@@ -19,9 +19,6 @@ exports.createTask = async (req,res,next) => {
 exports.getTasks = async ( req,res ) => {
   try {
       const data = await Tasks.findAll({ include: Category })
-      if (0 === data.length) {
-        return res.status(200).json( { "response" : "Success", "tasks" : "No tasks found" } )
-      }
       return res.status(200).json( { "response" : "Success", "tasks" : data } )
   } catch (error) {
       next(error)

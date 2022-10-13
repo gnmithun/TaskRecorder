@@ -14,9 +14,9 @@ function TaskManager(props) {
 
     useEffect(()=>{
         async function fetchCategories(params) {
-            const resp = await fetch("http://localhost:8000/categories")
-            const data = await resp.json() 
-            setCategories(data.details)
+          const resp = await fetch("http://localhost:8000/categories")
+          const data = await resp.json()
+          setCategories(data.details)
     }
         fetchCategories()    
     },[category])
