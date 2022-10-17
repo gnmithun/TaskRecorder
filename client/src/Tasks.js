@@ -42,12 +42,14 @@ function Tasks(props) {
         const newTask = data.details
         props.setTask(newTask)
         props.setLoading(false)
+        setInputTask(inputTask => ( {...inputTask,detail : "", completed : false , categoryId : 0} ) )    
     }
 
     return (
         <div>
             <form onSubmit={addTask}>
-                <input  type="text"                    
+                <input type="text"  
+                    value={ inputTask.detail }                  
                     placeholder='What do you want today?' 
                     disabled = { props.loading ? true : false }
                     name='detail' 
@@ -58,6 +60,7 @@ function Tasks(props) {
 
                 <input type="checkbox" 
                     disabled = { props.loading ? true : false }
+                    checked = { inputTask.completed }
                     name='completed' 
                     onChange={ (event) => { 
                         setInputTask(inputTask => ( {...inputTask,completed :  event.target.checked } ) )
