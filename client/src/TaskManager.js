@@ -16,7 +16,10 @@ function TaskManager(props) {
         async function fetchCategories(params) {
           const resp = await fetch("http://localhost:8000/categories")
           const data = await resp.json()
-          setCategories(data.details)
+          if ( data.categories.length === 0) {
+            return
+          }
+          setCategories(data.categories)
     }
         fetchCategories()    
     },[category])
@@ -25,6 +28,10 @@ function TaskManager(props) {
         async function fetchTasks(params) {
           const resp = await fetch("http://localhost:8000/tasks")
           const data = await resp.json() 
+          if ( data.tasks.length === 0 ) {
+            alert("No tasks found")
+            return
+          }
           setTasks(data.tasks)  
         }
         fetchTasks()    

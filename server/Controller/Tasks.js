@@ -9,19 +9,23 @@ exports.createTask = async (req,res,next) => {
     }
     try {
       const newTask = await Tasks.create( { detail:req.body.detail, completed:req.body.completed, categoryId:req.body.categoryId } )
-      return res.status(200).send( { "response" : "success", "details" : newTask } )
+      return res.status(200).send( { "response" : "Success", "task" : newTask } )
     } 
     catch (error) { 
       next(error) 
     }
 }
 
-exports.getTasks = async ( req,res ) => {
+exports.getTasks = async ( req,res,next ) => {
   try {
       const data = await Tasks.findAll({ include: Category })
+      if (data.count === 0) {
+        return res.status(200).json( { "response" : "Success", "tasks" : [] } )
+      }
       return res.status(200).json( { "response" : "Success", "tasks" : data } )
-  } catch (error) {
-      next(error)
+  } 
+  catch (err) {
+    next(err)
   } 
 }
 
@@ -33,9 +37,9 @@ exports.getTask = async (req,res,next) => {
   try {  
     const task = await Tasks.findByPk(value.taskId)     
     if (task === null) {
-      return res.status(404).send( { "response" : "Not found", "details" : "No task with that ID" } )
+      return res.status(404).send( { "response" : "Success", "task" : {} } )
     } else {
-      return res.status(200).send( { "response" : "Success", "details" : task } )
+      return res.status(200).send( { "response" : "Success", "task" : task } )
     }
   } catch (error) {         
      next(error)
@@ -50,10 +54,10 @@ exports.deleteTask = async ( req,res,next ) => {
  try {
     const task = await Tasks.findByPk(value.taskId)
     if ( task === null ){
-      return res.status(404).send( { "response" : "Not found", "details" : "No task with that ID" } )
+      return res.status(404).send( { "response" : "Success", "details" : "No task with that ID" } )
     } 
     const deletedTask = await task.destroy()
-    return res.status(200).send( { "response" : "Successfully deleted", "details" : deletedTask } )
+    return res.status(200).send( { "response" : "Success", "details" : deletedTask } )
  } catch (error) {    
     next(error)
  }
@@ -70,14 +74,14 @@ exports.updateTask = async ( req,res,next ) => {
   try {
     const task = await Tasks.findByPk(value.taskId)
     if ( task === null ){
-      return res.status(404).send( { "response" : "Not found", "details" : "No task with that ID" } )
+      return res.status(404).send( { "response" : "Success", "details" : "No task with that ID" } )
     } 
     const updatedTask = await task.update({
       detail : getUpdatedValueFor(value.detail,task.detail),
       completed : getUpdatedValueFor(value.completed,task.completed),
       categoryId : getUpdatedValueFor(value.category,task.categoryId)
     })
-    return res.status(200).send( { "response" : "Successfully updated", "details" : updatedTask } )
+    return res.status(200).send( { "response" : "Success", "details" : updatedTask } )
   } catch (error) {
     next(error)    
   }

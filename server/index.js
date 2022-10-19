@@ -17,12 +17,12 @@ app.use(express.urlencoded())
 app.use(TaskRoutes)
 app.use(CategoryRoutes)
 
-/*Default error handler, always at the end of the middleware stack*/
-app.use( function (err,_,res,next) {
-  return res.status(500).send( { "response" : "Error", "details" : err } )
-})
-
 app.listen(8000,() => {
   console.log("Server running on port 8K")
 })
 
+app.use( function (err,req,res,next) {
+  return res.status(500).send( { "response" : "Error", "details" : err } )
+})
+
+/*Default error handler, always at the end of the middleware stack*/

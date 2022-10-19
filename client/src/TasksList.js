@@ -6,10 +6,8 @@ function TasksList(props) {
         <div>
             <ul>
             { 
-                (isTaskAvailable !== 0 ? (
-                    props.tasks.map((task) =>
-                    <ol key={task.id}> { task.detail } : { task.category.type} { task.completed ? " - Completed" : " - Pending" } </ol>)
-                ) : <label> No tasks found </label> )
+                props.tasks.map((task) =>
+                <ol key={task.id}> { task.detail } : { task.category.type} { task.completed ? " - Completed" : " - Pending" } </ol>)                
             }
             </ul>
         </div>

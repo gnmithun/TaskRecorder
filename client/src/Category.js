@@ -12,7 +12,7 @@ function Category(props) {
     }
     const resp = await fetch("http://localhost:8000/category",options)
     const data = await resp.json()   
-    props.setCategory({ id:data.details.id , type:data.details.type })
+    props.setCategory({ id:data.categories.id , type:data.categories.type })
     setInpCategory(" ")    
   }
 

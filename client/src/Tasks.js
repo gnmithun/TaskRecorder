@@ -39,10 +39,10 @@ function Tasks(props) {
         props.setLoading(true)
         const resp = await fetch('http://localhost:8000/tasks',requestOptions)
         const data = await resp.json()
-        const newTask = data.details
+        const newTask = data.task
         props.setTask(newTask)
         props.setLoading(false)
-        setInputTask(inputTask => ( {...inputTask,detail : "", completed : false , categoryId : 0} ) )    
+        setInputTask(inputTask => ( {...inputTask,detail : "", completed : false} ) )    
     }
 
     return (
