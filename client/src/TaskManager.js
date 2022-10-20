@@ -44,7 +44,11 @@ function TaskManager(props) {
                 { loading ? <LoadingSpinner/> : <></>}
                 <Category loading={loading} setLoading={setLoading} setCategory={setCategory} /> 
                 <Tasks loading={loading} setLoading={setLoading} setTask={setTask} categories={categories}/>
-                <TasksList tasks={tasks === undefined ? [] : tasks } />
+                <TasksList tasks={tasks === undefined ? [] : tasks }
+                           taskDeleted={() => { 
+                              setTask({ detail:"", completed:false })
+                            }
+                           }/>
             </div>
     )
 }
