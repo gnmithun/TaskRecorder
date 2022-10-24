@@ -11,9 +11,13 @@ function Category(props) {
       method:'POST', mode:'cors', body:JSON.stringify({"category":inputCategory}), headers:{ 'Content-Type' : 'application/json' }
     }
     const resp = await fetch("http://localhost:8000/category",options)
-    const data = await resp.json()   
-    props.setCategory({ id:data.categories.id , type:data.categories.type })
-    setInpCategory(" ")    
+    const data = await resp.json()
+    if (data.response === "Success"){
+      props.setCategory({ id:data.categories.id , type:data.categories.type })
+      setInpCategory(" ")      
+    } else {
+      alert(data.details)
+    }  
   }
 
   const onChange = (event) => {

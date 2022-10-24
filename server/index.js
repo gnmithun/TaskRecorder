@@ -22,7 +22,7 @@ app.listen(8000,() => {
 })
 
 app.use( function (err,req,res,next) {
-  return res.status(500).send( { "response" : "Error", "details" : err } )
+  return res.send( { "response" : "Error", "details" : err.message } )
 })
 
 /*Default error handler, always at the end of the middleware stack*/
