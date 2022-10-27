@@ -34,11 +34,11 @@ function TaskManager(props) {
           const data = await resp.json() 
 
           if (data.response === "Success"){
-            if ( data.tasks.length === 0 ) {
+            if ( data.details.length === 0 ) {
               alert("No tasks found")
               return
             }
-            setTasks(data.tasks)     
+            setTasks(data.details)     
           } else {
             alert(data.details)
           }  

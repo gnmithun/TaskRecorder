@@ -5,11 +5,11 @@ const Category = require("../Model/Category")
 exports.createTask = async (req,res,next) => {
     const { error, value } = taskValidator.validate( { detail : req.body.detail , completed :req.body.completed, category: req.body.category } )
     if( error ) {
-      return next( new Error(error.details[0].message))
+      return next( new Error(error.details[0].message) )
     }
     try {
       const newTask = await Tasks.create( { detail:req.body.detail, completed:req.body.completed, categoryId:req.body.categoryId } )
-      return res.status(200).send( { "response" : "Success", "task" : newTask } )
+      return res.status(200).send( { "response" : "Success", "details" : newTask } )
     } 
     catch (error) { 
       next(error) 
@@ -20,9 +20,9 @@ exports.getTasks = async ( req,res,next ) => {
   try {
       const data = await Tasks.findAll({ include: Category })
       if (data.count === 0) {
-        return res.send( { "response" : "Success", "tasks" : [] } )
+        return res.send( { "response" : "Success", "details" : [] } )
       }
-      return res.send( { "response" : "Success", "tasks" : data } )
+      return res.send( { "response" : "Success", "details" : data } )
   } 
   catch (error) {
     next(error)
@@ -37,9 +37,9 @@ exports.getTask = async (req,res,next) => {
   try {  
     const task = await Tasks.findByPk(value.taskId)     
     if (task === null) {
-      return res.send( { "response" : "Success", "task" : {} } )
+      return res.send( { "response" : "Success", "details" : {} } )
     } else {
-      return res.send( { "response" : "Success", "task" : task } )
+      return res.send( { "response" : "Success", "details" : task } )
     }
   } catch (error) {         
      next(error)
