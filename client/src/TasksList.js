@@ -1,4 +1,5 @@
 import React from 'react';
+import TaskEditingForm from './TaskEditingForm';
 
 function TasksList(props) {
     const isTaskAvailable = props.tasks.length
@@ -8,15 +9,15 @@ function TasksList(props) {
             { 
                 props.tasks.map((task) =>
                     <div key={task.id}>
-                        <ol > {task.id}  
-                            <button onClick={ async (event) => {
-                                console.log("Show task details for id",task.id)
+                        <TaskEditingForm task={task}/>
+                        <ol > {task.id}  { task.detail } { task.completed}
+                            <button onClick={ async (event) => {                                
                                 const requestOptions = {
                                     method:'GET',
                                     headers: {'Content-Type': 'application/json'},                                             
                                     mode:'cors'
                                 }
-                                const taskId = "task.id"
+                                const taskId = task.id
                                 const resp = await fetch("http://localhost:8000/task/"+taskId,requestOptions)
                                 const data = await resp.json()
                                 if( data.response === "Success" ) {
