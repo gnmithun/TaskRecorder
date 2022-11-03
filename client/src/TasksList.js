@@ -9,8 +9,8 @@ function TasksList(props) {
             { 
                 props.tasks.map((task) =>
                     <div key={task.id}>
-                        <TaskEditingForm task={task}/>
-                        <ol > {task.id}  { task.detail } { task.completed}
+                        
+                        <ol > {task.id} <TaskEditingForm task={task}/>
                             <button onClick={ async (event) => {                                
                                 const requestOptions = {
                                     method:'GET',
