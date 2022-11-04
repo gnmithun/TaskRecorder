@@ -32,7 +32,7 @@ function Tasks(props) {
         const requestOptions = {
             method:'POST',
             headers: {'Content-Type': 'application/json'}, 
-            body: JSON.stringify({ detail:inputTask.detail, completed:inputTask.completed,categoryId:inputTask.categoryId}),
+            body: JSON.stringify( { detail:inputTask.detail, completed:inputTask.completed,categoryId:inputTask.categoryId } ),
             mode:'cors',
         }
 

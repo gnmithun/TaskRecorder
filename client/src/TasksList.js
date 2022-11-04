@@ -2,7 +2,6 @@ import React from 'react';
 import TaskEditingForm from './TaskEditingForm';
 
 function TasksList(props) {
-    const isTaskAvailable = props.tasks.length
     return (
         <div>
             <ul>
@@ -41,6 +40,7 @@ function TasksList(props) {
                                         const taskId = task.id
                                         const resp = await fetch("http://localhost:8000/task/"+taskId,requestOptions)
                                         const data = await resp.json()
+                                        
                                         if ( data.response === "Success" ) {                                                
                                             const deletedTaskDetails = data.details                                                                                           
                                             props.taskDeleted()

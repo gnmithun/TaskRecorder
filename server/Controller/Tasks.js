@@ -68,6 +68,7 @@ exports.updateTask = async ( req,res,next ) => {
                                                       detail : req.body.detail,
                                                       completed : req.body.completed,
                                                       category: req.body.category } )
+
   if ( error ) {
     return next( new Error(error.details[0].message))
   }
