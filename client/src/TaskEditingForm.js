@@ -5,9 +5,6 @@ function TaskEditingForm(props) {
     const [updatedDetail,setUpdatedDetail]       = useState(props.task.detail)
     const [updatedCompleted,setUpdatedCompleted] = useState(props.task.completed)
 
-    let detail = props.task.detail
-    let completed = props.task.completed
-
     const resetOnFailure = () => {
 
         setUpdatedDetail(props.task.detail)
