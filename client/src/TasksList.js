@@ -8,8 +8,8 @@ function TasksList(props) {
             { 
                 props.tasks.map((task) =>
                     <div key={task.id}>
-                        
-                        <ol > <TaskEditingForm task={task}/>
+                        <ol > 
+                            <TaskEditingForm task={task} taskUpdated={ props.taskUpdated }/>
                             <button onClick={ async (event) => {                                
                                 const requestOptions = {
                                     method:'GET',
@@ -17,8 +17,10 @@ function TasksList(props) {
                                     mode:'cors'
                                 }
                                 const taskId = task.id
+                                props.setLoading(true)
                                 const resp = await fetch("http://localhost:8000/task/"+taskId,requestOptions)
                                 const data = await resp.json()
+                                props.setLoading(false)
                                 if( data.response === "Success" ) {
                                     const taskDetails = data.details
                                     alert(taskDetails.id + " : " + taskDetails.detail + " : " + taskDetails.category.type)
@@ -38,9 +40,10 @@ function TasksList(props) {
                                             mode:'cors'
                                         }
                                         const taskId = task.id
+                                        props.setLoading(true)
                                         const resp = await fetch("http://localhost:8000/task/"+taskId,requestOptions)
                                         const data = await resp.json()
-                                        
+                                        props.setLoading(false)
                                         if ( data.response === "Success" ) {                                                
                                             const deletedTaskDetails = data.details                                                                                           
                                             props.taskDeleted()
@@ -48,7 +51,8 @@ function TasksList(props) {
                                         } else {
                                             alert(data.details)                                        
                                         }   
-                                     } } > X </button>
+                                     } } > X 
+                            </button>
                         </ol>                             
                     </div>
                 ) 

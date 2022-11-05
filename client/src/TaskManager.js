@@ -14,9 +14,11 @@ function TaskManager(props) {
 
     useEffect(()=>{
         async function fetchCategories(params) {
+          setLoading(true)
           const resp = await fetch("http://localhost:8000/categories")
           const data = await resp.json()
-          if (data.response === "Success") {
+          setLoading(false)
+          if (data.response === "Success") {          
             if ( data.categories.length === 0) {
               return
             }
@@ -30,9 +32,10 @@ function TaskManager(props) {
 
     useEffect(()=>{
         async function fetchTasks(params) {
+          setLoading(true)
           const resp = await fetch("http://localhost:8000/tasks")
           const data = await resp.json() 
-
+          setLoading(false)
           if (data.response === "Success"){
             if ( data.details.length === 0 ) {
               alert("No tasks found")
@@ -53,9 +56,13 @@ function TaskManager(props) {
                 <h1> Welcome to TaskManager </h1>
                 <h2> Add tasks, track and improve!!</h2>
                 { loading ? <LoadingSpinner/> : <></>}
-                <Category loading={loading} setLoading={setLoading} setCategory={setCategory} /> 
-                <Tasks loading={loading} setLoading={setLoading} setTask={setTask} task={task} categories={categories}/>
-                <TasksList tasks={tasks === undefined ? [] : tasks } taskDeleted={ () => setTask({}) }/>
+                <Category  setLoading={setLoading} setCategory={setCategory} /> 
+                <Tasks     setLoading={setLoading} setTask={setTask} task={task} categories={categories}/>
+                <TasksList setLoading={setLoading} 
+                           tasks={tasks === undefined ? [] : tasks } 
+                           taskDeleted={ () => setTask({}) }
+                           taskUpdated={ () => setTask({}) } //How to fetch only the updated task
+                           />
             </div>
     )
 }

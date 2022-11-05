@@ -7,20 +7,18 @@ function Category(props) {
   
   async function addCategory(event){   
     event.preventDefault() 
-    const options = {
-      method:'POST', mode:'cors', body:JSON.stringify({"category":inputCategory}), headers:{ 'Content-Type' : 'application/json' }
-    }
+    const options = { method:'POST', mode:'cors', body:JSON.stringify({"category":inputCategory}), headers:{ 'Content-Type' : 'application/json' } }
+    
     props.setLoading(true)
     const resp = await fetch("http://localhost:8000/category",options)
     const data = await resp.json()
+    props.setLoading(false)
     if (data.response === "Success"){
-      props.setCategory({ id:data.categories.id , type:data.categories.type })
-      props.setLoading(false)
+      props.setCategory({ id:data.categories.id , type:data.categories.type })      
       setInpCategory(" ")      
     } else {
-      props.setLoading(false)
       alert(data.details)
-    }  
+    }
   }
 
   const onChange = (event) => {

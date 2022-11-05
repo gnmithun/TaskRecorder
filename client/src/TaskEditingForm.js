@@ -9,8 +9,9 @@ function TaskEditingForm(props) {
     let completed = props.task.completed
 
     const resetOnFailure = () => {
-        setUpdatedDetail(detail)
-        setUpdatedCompleted(completed)
+
+        setUpdatedDetail(props.task.detail)
+        setUpdatedCompleted(props.task.completed)
     }
     return (
         <div>
@@ -31,6 +32,7 @@ function TaskEditingForm(props) {
                 const data = await resp.json()
                 if ( data.response === "Success" ) {
                     alert("Update successfull")
+                    props.taskUpdated()
                 } else {
                     resetOnFailure()
                     alert(data.details)
