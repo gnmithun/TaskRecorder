@@ -9,7 +9,7 @@ function TasksList(props) {
                 props.tasks.map((task) =>
                     <div key={task.id}>
                         
-                        <ol > {task.id} <TaskEditingForm task={task}/>
+                        <ol > <TaskEditingForm task={task}/>
                             <button onClick={ async (event) => {                                
                                 const requestOptions = {
                                     method:'GET',
@@ -21,7 +21,7 @@ function TasksList(props) {
                                 const data = await resp.json()
                                 if( data.response === "Success" ) {
                                     const taskDetails = data.details
-                                    console.log(taskDetails)
+                                    alert(taskDetails.id + " : " + taskDetails.detail + " : " + taskDetails.category.type)
                                 } else {
                                     alert(data.details)
                                 }

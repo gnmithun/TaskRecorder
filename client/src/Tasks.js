@@ -40,7 +40,7 @@ function Tasks(props) {
         const resp = await fetch('http://localhost:8000/tasks',requestOptions)
         const data = await resp.json()
         if (data.response === "Success") {
-            const newTask = data.task
+            const newTask = data.details
             props.setTask(newTask)
             props.setLoading(false)
             setInputTask(inputTask => ( {...inputTask,detail : "", completed : false} ) )    

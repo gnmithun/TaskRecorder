@@ -35,7 +35,12 @@ exports.getTask = async (req,res,next) => {
     return next( new Error(error.details[0].message))
   }
   try {  
-    const task = await Tasks.findByPk(value.taskId)     
+    const task = await Tasks.findOne( {
+      where:{
+        id:value.taskId
+      },
+      include: Category
+    })     
     if (task === null) {
       return res.send( { "response" : "Success", "details" : {} } )
     } else {

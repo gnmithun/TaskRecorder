@@ -36,15 +36,14 @@ function TaskManager(props) {
           if (data.response === "Success"){
             if ( data.details.length === 0 ) {
               alert("No tasks found")
+              setTasks([])
               return
             }
-            setTasks(data.details)     
+            setTasks(data.details)  
           } else {
             alert(data.details)
           }  
 
-
- 
         }
         fetchTasks()    
     },[task])
@@ -55,12 +54,8 @@ function TaskManager(props) {
                 <h2> Add tasks, track and improve!!</h2>
                 { loading ? <LoadingSpinner/> : <></>}
                 <Category loading={loading} setLoading={setLoading} setCategory={setCategory} /> 
-                <Tasks loading={loading} setLoading={setLoading} setTask={setTask} categories={categories}/>
-                <TasksList tasks={tasks === undefined ? [] : tasks }
-                           taskDeleted={() => { 
-                              setTask({ detail:"", completed:false })
-                            }
-                           }/>
+                <Tasks loading={loading} setLoading={setLoading} setTask={setTask} task={task} categories={categories}/>
+                <TasksList tasks={tasks === undefined ? [] : tasks } taskDeleted={ () => setTask({}) }/>
             </div>
     )
 }

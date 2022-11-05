@@ -21,8 +21,8 @@ app.listen(8000,() => {
   console.log("Server running on port 8K")
 })
 
+/*Default error handler, always at the end of the middleware stack*/
 app.use( function (err,req,res,next) {
   return res.send( { "response" : "Error", "details" : err.message } )
 })
 
-/*Default error handler, always at the end of the middleware stack*/
