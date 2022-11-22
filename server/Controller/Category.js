@@ -1,14 +1,10 @@
 const Category = require("../Model/Category")
-const { categoryValidator } = require("../Common/validator")
 const joi = require("joi")
 
 exports.createCategory = async (req,res,next) => {
-    const { error , value } = categoryValidator.validate( { categoryType : req.body.category } )
-    if( error ) {
-      return next( new Error(error.details[0].message))
-    }
+    const categoryType = req.body.category
     try {
-      const category = await Category.create( { type : value.categoryType } )
+      const category = await Category.create( { type : categoryType } )
       return res.send( { "response" : "Success", "categories" : category } )
     } catch (error) {
       next(error)
