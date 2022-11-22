@@ -3,10 +3,6 @@ const { taskValidator, idValidator } = require("../Common/validator")
 const Category = require("../Model/Category")
 
 exports.createTask = async (req,res,next) => {
-    const { error, value } = taskValidator.validate( { detail : req.body.detail , completed :req.body.completed, category: req.body.category } )
-    if( error ) {
-      return next( new Error(error.details[0].message) )
-    }
     try {
       const newTask = await Tasks.create( { detail:req.body.detail, completed:req.body.completed, categoryId:req.body.categoryId } )
       return res.status(200).send( { "response" : "Success", "details" : newTask } )
@@ -30,14 +26,11 @@ exports.getTasks = async ( req,res,next ) => {
 }
 
 exports.getTask = async (req,res,next) => {
-  const { error, value } = idValidator.validate( { taskId:req.params.taskId } )    
-  if( error ) {
-    return next( new Error(error.details[0].message))
-  }
+  const taskId = req.params.taskId
   try {  
     const task = await Tasks.findOne( {
       where:{
-        id:value.taskId
+        id:taskId
       },
       include: Category
     })     
@@ -52,12 +45,10 @@ exports.getTask = async (req,res,next) => {
 }
 
 exports.deleteTask = async ( req,res,next ) => {
- const { error , value } = idValidator.validate( { taskId: req.params.taskId} )
- if ( error ) {
-  return next( new Error(error.details[0].message))
- }
+
+ const taskId = req.params.taskId
  try {
-    const task = await Tasks.findByPk(value.taskId)
+    const task = await Tasks.findByPk(taskId)
     if ( task === null ){
       return res.send( { "response" : "Success", "details" : "No task with that ID" } )
     } 
@@ -69,23 +60,15 @@ exports.deleteTask = async ( req,res,next ) => {
 }
 
 exports.updateTask = async ( req,res,next ) => {
-  const { error , value } = taskValidator.validate( { taskId: req.params.taskId,
-                                                      detail : req.body.detail,
-                                                      completed : req.body.completed,
-                                                      category: req.body.category } )
-
-  if ( error ) {
-    return next( new Error(error.details[0].message))
-  }
   try {
-    const task = await Tasks.findByPk(value.taskId)
+    const task = await Tasks.findByPk(req.params.taskId)
     if ( task === null ){
       return res.send( { "response" : "Success", "details" : "No task with that ID" } )
     } 
     const updatedTask = await task.update({
-      detail : getUpdatedValueFor(value.detail,task.detail),
-      completed : getUpdatedValueFor(value.completed,task.completed),
-      categoryId : getUpdatedValueFor(value.category,task.categoryId)
+      detail : getUpdatedValueFor(req.body.detail,task.detail),
+      completed : getUpdatedValueFor(req.body.completed,task.completed),
+      categoryId : getUpdatedValueFor(req.body.category,task.categoryId)
     })
     return res.send( { "response" : "Success", "details" : updatedTask } )
   } catch (error) {

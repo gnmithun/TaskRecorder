@@ -1,12 +1,13 @@
 const express = require('express')
 const Router = express.Router()
 const TaskController = require('../Controller/Tasks')
+const Validators = require('../Controller/Validator')
 
-Router.post('/tasks',TaskController.createTask)
+Router.post('/tasks',Validators.validateTasks,TaskController.createTask)
 Router.get('/tasks',TaskController.getTasks)
-Router.get('/task/:taskId',TaskController.getTask)
-Router.delete('/task/:taskId',TaskController.deleteTask)
-Router.patch('/task/:taskId',TaskController.updateTask)
+Router.get('/task/:taskId',Validators.validateTaskId,TaskController.getTask)
+Router.delete('/task/:taskId',Validators.validateTaskId,TaskController.deleteTask)
+Router.patch('/task/:taskId',Validators.validateUpdateTask,TaskController.updateTask)
 
 module.exports = Router
 
