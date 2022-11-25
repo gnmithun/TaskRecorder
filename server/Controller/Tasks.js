@@ -4,7 +4,7 @@ const Category = require("../Model/Category")
 
 exports.createTask = async (req,res,next) => {
     try {
-      const newTask = await Tasks.create( { detail:req.body.detail, completed:req.body.completed, categoryId:req.body.categoryId } )
+      const newTask = await Tasks.create( { detail:req.body.detail, completed:req.body.completed, categoryId:req.body.categoryId, priority:req.body.priority } )
       return res.status(200).send( { "response" : "Success", "details" : newTask } )
     } 
     catch (error) { 

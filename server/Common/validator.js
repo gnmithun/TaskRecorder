@@ -1,10 +1,11 @@
 const joi = require('joi')
+const { priority } = require('./appConst')
 
 const taskValidator = joi.object({
     detail:joi.string().trim().min(5).max(100),
-    completed:joi.bool().required(),
+    priority:joi.string().valid(...priority),
+    completed:joi.bool(),
     category:joi.number(),
-    taskId:joi.number()
 })
 
 const categoryValidator = joi.object({

@@ -8,7 +8,10 @@ exports.validateCategory = (req,res,next) => {
 }
 
 exports.validateTasks = (req,res,next) => {
-    const { error, value } = taskValidator.validate( { detail : req.body.detail , completed :req.body.completed, category: req.body.category } )
+    const { error, value } = taskValidator.validate( { detail : req.body.detail, 
+                                                      priority:req.body.priority, 
+                                                      completed :req.body.completed, 
+                                                      category: req.body.category } )                                                      
     validated(error,next)
 }
 
