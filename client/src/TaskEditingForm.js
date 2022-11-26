@@ -4,10 +4,11 @@ import { useState } from 'react';
 function TaskEditingForm(props) {
     const [updatedDetail,setUpdatedDetail]       = useState(props.task.detail)
     const [updatedCompleted,setUpdatedCompleted] = useState(props.task.completed)
+    const [updatedPriority,setUpdatedPriority]   = useState(props.task.priority)
 
     const resetOnFailure = () => {
-
         setUpdatedDetail(props.task.detail)
+        setUpdatedPriority(props.task.priority)
         setUpdatedCompleted(props.task.completed)
     }
     return (
@@ -21,7 +22,7 @@ function TaskEditingForm(props) {
                 const requestOptions = {
                     method:'PATCH',
                     headers: {'Content-Type': 'application/json'},  
-                    body: JSON.stringify( { detail:updatedDetail, completed:updatedCompleted } ),                                           
+                    body: JSON.stringify( { detail:updatedDetail, completed:updatedCompleted, priority:updatedPriority } ),                                           
                     mode:'cors'
                 }
                 const taskId = props.task.id
@@ -38,6 +39,18 @@ function TaskEditingForm(props) {
             }}> U </button>
 
             <input type="text" value={updatedDetail} onChange={ (event) => setUpdatedDetail(event.target.value) }/>
+
+            <select name='priority'
+                    onChange={ (event) => {
+                        const updatedPriority = props.priority.find( priority => priority === event.target.value)
+                        setUpdatedPriority(updatedPriority)
+                    }}
+                    value={updatedPriority}                 
+                    >                    
+                    { props.priority.map( (priority,index) => 
+                         <option key={index} > {priority} </option>
+                    ) }                    
+            </select>
 
             <input type="checkbox" checked={updatedCompleted} onChange = { (event) =>  setUpdatedCompleted(event.target.checked) }/>
 

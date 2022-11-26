@@ -57,7 +57,10 @@ function TaskManager(props) {
                 <h2> Add tasks, track and improve!!</h2>
                 { loading ? <LoadingSpinner/> : <></>}
                 <Category  setLoading={setLoading} setCategory={setCategory} /> 
-                <Tasks     setLoading={setLoading} setTask={setTask} task={task} categories={categories}/>
+                <Tasks     setLoading={setLoading} setTask={setTask} 
+                                                      task={task} 
+                                                categories={categories} 
+                                                priorities={["HIGH","MEDIUM","LOW"]}/>
                 <TasksList setLoading={setLoading} 
                            tasks={tasks === undefined ? [] : tasks } 
                            taskDeleted={ () => setTask({}) }

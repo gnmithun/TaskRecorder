@@ -9,7 +9,9 @@ function TasksList(props) {
                 props.tasks.map((task) =>
                     <div key={task.id}>
                         <ol > 
-                            <TaskEditingForm task={task} taskUpdated={ props.taskUpdated }/>
+                            <TaskEditingForm task={task} 
+                                         priority={["HIGH","MEDIUM","LOW"]} 
+                                      taskUpdated={ props.taskUpdated }/>
                             <button onClick={ async (event) => {                                
                                 const requestOptions = {
                                     method:'GET',
@@ -23,7 +25,8 @@ function TasksList(props) {
                                 props.setLoading(false)
                                 if( data.response === "Success" ) {
                                     const taskDetails = data.details
-                                    alert(taskDetails.id + " : " + taskDetails.detail + " : " + taskDetails.category.type)
+                                    alert(taskDetails.id + " : " + taskDetails.detail + " : " + " is a " + taskDetails.priority
+                                    + " priority task of " + taskDetails.category.type + " category ")
                                 } else {
                                     alert(data.details)
                                 }

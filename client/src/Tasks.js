@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 function Tasks(props) {
 
-    const [inputTask,setInputTask] = useState( { detail:"", completed:false, categoryId: 0 } )
+    const [inputTask,setInputTask] = useState( { detail:"", completed:false, categoryId: 0, priority:"HIGH" } )
 
     function isSubmitEnabled(){
         return props.loading ? true : (inputTask.detail !== "" ? false : true)
@@ -32,7 +32,10 @@ function Tasks(props) {
         const requestOptions = {
             method:'POST',
             headers: {'Content-Type': 'application/json'}, 
-            body: JSON.stringify( { detail:inputTask.detail, completed:inputTask.completed,categoryId:inputTask.categoryId } ),
+            body: JSON.stringify( { detail:inputTask.detail, 
+                                completed:inputTask.completed,
+                                categoryId:inputTask.categoryId, 
+                                priority:inputTask.priority } ),
             mode:'cors',
         }
 
@@ -81,6 +84,19 @@ function Tasks(props) {
                     { props.categories.map((category) => <option key={category.id} >{category.type} </option>) }
                 </select>
 
+                    <br/>
+                    <br/>
+                <label> Priority </label>
+
+                <select name="priority"
+                    onChange = { (event) => {
+                        const selectedPriority = props.priorities.find( priority => priority === event.target.value)
+                        setInputTask(inputTask => ( { ...inputTask,priority : selectedPriority } ) )
+                    }}>
+                    { props.priorities.map( (priority,index) => <option key={index}> { priority} </option>)}
+                </select>
+                <br/>
+                <br/>
                 <input type="submit" value="Submit" disabled = { isSubmitEnabled() }/>
             </form>           
         </div>

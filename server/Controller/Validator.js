@@ -21,10 +21,10 @@ exports.validateTaskId = (req,res,next) => {
 }
 
 exports.validateUpdateTask = (req,res,next) => {
-    const { error , value } = taskValidator.validate( { taskId: req.params.taskId, 
-                                                        detail : req.body.detail, 
+    const { error , value } = taskValidator.validate( { detail : req.body.detail, 
                                                         completed : req.body.completed,
-                                                        category: req.body.category } )
+                                                        category: req.body.category,
+                                                        priority:req.body.priority } )
     validated(error,next)
 }
 
