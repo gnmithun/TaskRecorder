@@ -11,6 +11,7 @@ function TasksList(props) {
                         <ol > 
                             <TaskEditingForm task={task} 
                                          priority={["HIGH","MEDIUM","LOW"]} 
+                                         categories={props.categories}
                                       taskUpdated={ props.taskUpdated }/>
                             <button onClick={ async (event) => {                                
                                 const requestOptions = {

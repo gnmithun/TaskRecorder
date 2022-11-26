@@ -62,6 +62,7 @@ function TaskManager(props) {
                                                 categories={categories} 
                                                 priorities={["HIGH","MEDIUM","LOW"]}/>
                 <TasksList setLoading={setLoading} 
+                           categories={categories} 
                            tasks={tasks === undefined ? [] : tasks } 
                            taskDeleted={ () => setTask({}) }
                            taskUpdated={ () => setTask({}) } //How to fetch only the updated task

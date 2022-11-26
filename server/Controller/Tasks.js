@@ -68,7 +68,7 @@ exports.updateTask = async ( req,res,next ) => {
     const updatedTask = await task.update({
       detail : getUpdatedValueFor(req.body.detail,task.detail),
       completed : getUpdatedValueFor(req.body.completed,task.completed),
-      categoryId : getUpdatedValueFor(req.body.category,task.categoryId),
+      categoryId : getUpdatedValueFor(req.body.categoryId,task.categoryId),
       priority : getUpdatedValueFor(req.body.priority,task.priority)
     })
     return res.send( { "response" : "Success", "details" : updatedTask } )

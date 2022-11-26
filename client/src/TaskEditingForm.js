@@ -5,7 +5,7 @@ function TaskEditingForm(props) {
     const [updatedDetail,setUpdatedDetail]       = useState(props.task.detail)
     const [updatedCompleted,setUpdatedCompleted] = useState(props.task.completed)
     const [updatedPriority,setUpdatedPriority]   = useState(props.task.priority)
-
+    const [updatedCategory,setupdatedCategory]   = useState(props.task.category)    
     const resetOnFailure = () => {
         setUpdatedDetail(props.task.detail)
         setUpdatedPriority(props.task.priority)
@@ -22,7 +22,9 @@ function TaskEditingForm(props) {
                 const requestOptions = {
                     method:'PATCH',
                     headers: {'Content-Type': 'application/json'},  
-                    body: JSON.stringify( { detail:updatedDetail, completed:updatedCompleted, priority:updatedPriority } ),                                           
+                    body: JSON.stringify( { detail:updatedDetail, completed:updatedCompleted,
+                       categoryId:updatedCategory.id,
+                       priority:updatedPriority } ),                                           
                     mode:'cors'
                 }
                 const taskId = props.task.id
@@ -52,6 +54,16 @@ function TaskEditingForm(props) {
                     ) }                    
             </select>
 
+            <select name="category" 
+                    onChange={ (event)=> { 
+                        const selectedCategory = props.categories.find( category => category.type === event.target.value)                        
+                        setupdatedCategory(selectedCategory )
+                        console.log("Updated Id " + selectedCategory.id)
+                    }} value = { updatedCategory.type } >
+                      
+                    { props.categories.map((category,index) => <option key={index} >{category.type} </option>) }
+                </select>
+            
             <input type="checkbox" checked={updatedCompleted} onChange = { (event) =>  setUpdatedCompleted(event.target.checked) }/>
 
         </div>
