@@ -5,11 +5,13 @@ function TaskEditingForm(props) {
     const [updatedDetail,setUpdatedDetail]       = useState(props.task.detail)
     const [updatedCompleted,setUpdatedCompleted] = useState(props.task.completed)
     const [updatedPriority,setUpdatedPriority]   = useState(props.task.priority)
-    const [updatedCategory,setupdatedCategory]   = useState(props.task.category)    
+    const [updatedCategory,setUpdatedCategory]   = useState(props.task.category)    
+
     const resetOnFailure = () => {
         setUpdatedDetail(props.task.detail)
         setUpdatedPriority(props.task.priority)
         setUpdatedCompleted(props.task.completed)
+        setUpdatedCategory(props.task.category)
     }
     return (
         <div>
@@ -57,12 +59,12 @@ function TaskEditingForm(props) {
             <select name="category" 
                     onChange={ (event)=> { 
                         const selectedCategory = props.categories.find( category => category.type === event.target.value)                        
-                        setupdatedCategory(selectedCategory )
+                        setUpdatedCategory(selectedCategory )
                         console.log("Updated Id " + selectedCategory.id)
                     }} value = { updatedCategory.type } >
                       
                     { props.categories.map((category,index) => <option key={index} >{category.type} </option>) }
-                </select>
+            </select>
             
             <input type="checkbox" checked={updatedCompleted} onChange = { (event) =>  setUpdatedCompleted(event.target.checked) }/>
 

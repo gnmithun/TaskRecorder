@@ -26,7 +26,7 @@ function TasksList(props) {
                                 props.setLoading(false)
                                 if( data.response === "Success" ) {
                                     const taskDetails = data.details
-                                    alert(taskDetails.id + " : " + taskDetails.detail + " : " + " is a " + taskDetails.priority
+                                    alert(taskDetails.id + " : " + taskDetails.detail + " is a " + taskDetails.priority
                                     + " priority task of " + taskDetails.category.type + " category ")
                                 } else {
                                     alert(data.details)
