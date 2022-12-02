@@ -3,6 +3,7 @@ import Category from "./Category";
 import LoadingSpinner from "./LoadingSpinner";
 import Tasks from "./Tasks";
 import TasksList from "./TasksList";
+import TaskByDate from "./TaskByDate";
 
 function TaskManager(props) {
 
@@ -67,6 +68,7 @@ function TaskManager(props) {
                            taskDeleted={ () => setTask({}) }
                            taskUpdated={ () => setTask({}) } //How to fetch only the updated task
                            />
+                <TaskByDate/>
             </div>
     )
 }
