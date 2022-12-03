@@ -18,8 +18,8 @@ const idValidator = joi.object({
 })
 
 const dateValidator = joi.object({
-    from:joi.date().format(['D-M-YYYY','DD-MM-YYYY']).less('now'),
-    to:joi.date().format(['D-M-YYYY','DD-MM-YYYY']).less('now')
+    from:joi.date().format(['D-M-YYYY','DD-MM-YYYY']),
+    to:joi.date().format(['D-M-YYYY','DD-MM-YYYY'])
 })
 
 module.exports = {
