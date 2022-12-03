@@ -11,11 +11,9 @@ exports.getTasksBetweenDates = async (req,res,next) => {
         const tasks = await Tasks.findAll( {
             where: {
                 createdAt : {
-                    [Op.and] : [{
-                        [Op.lt] : toDate
-                    }, {
-                        [Op.gt] : fromDate
-                    }]
+                    [Op.and] : 
+                      [ { [Op.or] : [ { [Op.eq] : fromDate } , { [Op.gt] : fromDate } ] },
+                        { [Op.or] : [ { [Op.eq] : toDate } , { [Op.lt] : toDate } ] } ]
                 }
             }
         })
@@ -23,5 +21,4 @@ exports.getTasksBetweenDates = async (req,res,next) => {
     } catch (error) {
         next(error)
     }
-    
 }
