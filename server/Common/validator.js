@@ -1,4 +1,5 @@
-const joi = require('joi')
+const joi = require('joi').extend(require('@joi/date'))
+
 const { priority } = require('./appConst')
 
 const taskValidator = joi.object({
@@ -16,8 +17,14 @@ const idValidator = joi.object({
   taskId:joi.number()
 })
 
+const dateValidator = joi.object({
+    from:joi.date().format(['D-M-YYYY','DD-MM-YYYY']).less('now'),
+    to:joi.date().format(['D-M-YYYY','DD-MM-YYYY']).less('now')
+})
+
 module.exports = {
     taskValidator:taskValidator,
     categoryValidator:categoryValidator,
-    idValidator:idValidator
+    idValidator:idValidator,
+    dateValidator:dateValidator
 }

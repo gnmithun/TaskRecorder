@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import DatedTasks from './DatedTasks';
+import DatedTasksList from './DatedTasksList';
 import moment from 'moment'
 
 const TaskByDate = () => {
@@ -22,7 +22,7 @@ const TaskByDate = () => {
             <input type="submit" value={ "Get Tasks" } onClick = { (event)=> {
                 console.log("Get tasks from " + fromDate + " to " + toDate )
             }}/>
-            <DatedTasks/>
+            <DatedTasksList/>
         </div>
     );
 };
