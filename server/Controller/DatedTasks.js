@@ -6,20 +6,20 @@ exports.getTasksBetweenDates = async (req,res,next) => {
     const from     = req.query["from"]
     const to       = req.query["to"]
     try {
-        // const fromDate = moment(from).format('YYYY-MM-DD HH:MM:SS')
-        // const toDate   = moment(to).format('YYYY-MM-DD HH:MM:SS')
+        const fromDate = new Date(moment(from,'DD-MM-YYYY').format('YYYY-MM-DD'))
+        const toDate   = new Date(moment(to,'DD-MM-YYYY').format('YYYY-MM-DD'))
         const tasks = await Tasks.findAll( {
             where: {
                 createdAt : {
                     [Op.and] : [{
-                        [Op.lt] : to
+                        [Op.lt] : toDate
                     }, {
-                        [Op.gt] : from
+                        [Op.gt] : fromDate
                     }]
                 }
             }
         })
-        return res.send( { status : "Success" , details : [from,to]} )
+        return res.send( { status : "Success" , details : [tasks]} )
     } catch (error) {
         next(error)
     }
