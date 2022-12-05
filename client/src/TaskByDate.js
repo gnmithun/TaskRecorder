@@ -2,9 +2,14 @@ import React, { useState } from 'react';
 import DatedTasksList from './DatedTasksList';
 import moment from 'moment'
 
-const TaskByDate = () => {
+const TaskByDate = (props) => {
     const [ fromDate , setFromDate] = useState()
     const [ toDate, setToDate ] = useState()
+    const [tasks,setTasks] = useState()
+    
+    function isDisabled () {
+        return false
+    }
 
     return (
         <div>
@@ -19,10 +24,40 @@ const TaskByDate = () => {
                 setToDate(moment(new Date(event.target.value)).format("DD-MM-YYYY"))
             }}></input>
             <br/>
-            <input type="submit" value={ "Get Tasks" } onClick = { (event)=> {
-                console.log("Get tasks from " + fromDate + " to " + toDate )
-            }}/>
-            <DatedTasksList/>
+            <input type="submit" disabled={ isDisabled ()} enavalue={ "Get Tasks" } onClick = { async (event)=> {
+
+                if ( !fromDate ) {
+                    alert("Please select a valid starting date")
+                    return
+                }
+                if ( !toDate ) {
+                    alert("Please select a valid end date")
+                    return
+                }
+                
+                props.setLoading(true)
+                const requestOptions = {
+                    method:'GET',
+                    headers: {'Content-Type': 'application/json'}, 
+                    mode:'cors',
+                }
+                const resp = await fetch("http://localhost:8000/datedTasks?from="+fromDate+'&to='+toDate,requestOptions)
+                const data = await resp.json()
+                console.log(data)
+                if ( data.response === 'Success') {
+                    if ( data.details.length === 0 ) {
+                        alert("No tasks found")
+                        setTasks([])
+                        props.setLoading(false)
+                        return
+                      }
+                    setTasks(data.details)                    
+                } else {
+                    alert(data.details)
+                }             
+                props.setLoading(false)
+            }}/>            
+            <DatedTasksList tasks={tasks === undefined ? [] : tasks}/>
         </div>
     );
 };

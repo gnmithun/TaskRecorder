@@ -68,7 +68,7 @@ function TaskManager(props) {
                            taskDeleted={ () => setTask({}) }
                            taskUpdated={ () => setTask({}) } //How to fetch only the updated task
                            />
-                <TaskByDate/>
+                <TaskByDate setLoading={setLoading}/>
             </div>
     )
 }
