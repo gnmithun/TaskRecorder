@@ -24,7 +24,7 @@ const TaskByDate = (props) => {
                 setToDate(moment(new Date(event.target.value)).format("DD-MM-YYYY"))
             }}></input>
             <br/>
-            <input type="submit" disabled={ isDisabled ()} enavalue={ "Get Tasks" } onClick = { async (event)=> {
+            <input type="submit" disabled={ isDisabled ()}  onClick = { async (event)=> {
 
                 if ( !fromDate ) {
                     alert("Please select a valid starting date")
