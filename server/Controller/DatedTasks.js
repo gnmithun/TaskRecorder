@@ -1,6 +1,7 @@
 const Tasks = require('../Model/Tasks')
 const { Op } = require("sequelize")
 const moment = require('moment')
+const Category = require('../Model/Category')
 
 exports.getTasksBetweenDates = async (req,res,next) => {
     const from     = req.query["from"]
@@ -15,7 +16,7 @@ exports.getTasksBetweenDates = async (req,res,next) => {
                       [ { [Op.or] : [ { [Op.eq] : fromDate } , { [Op.gt] : fromDate } ] },
                         { [Op.or] : [ { [Op.eq] : toDate } , { [Op.lt] : toDate } ] } ]
                 }
-            }
+            },include: Category
         })
         return res.send( { "response" : "Success" , details : tasks} )
     } catch (error) {

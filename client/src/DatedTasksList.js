@@ -1,18 +1,27 @@
 import React from 'react';
+const moment = require('moment')
 
 function DatedTaskList (props){
     return (
                 <div>
-                    <ol>
+                    <ul>
                     { props.tasks.map((task)=>{
+                       
                         return(
                             <div key={task.id}>
-                                <li> { task.detail } </li>
+                                <li> { task.id + " : " + task.detail + " is a " + task.priority 
+                                + " priority task, created on " + formatDate(task.createdAt) 
+                                + " and is of " + task.category.type + " category "} </li>
                             </div>)
                         })} 
-                    </ol> 
+                    </ul> 
                 </div>
     );
 };
+
+function formatDate(date){
+    const fromDate = new Date(moment(date))
+    return moment(fromDate,'DD-MM-YYYY').format("DD-MM-YYYY")
+}
 
 export default DatedTaskList
