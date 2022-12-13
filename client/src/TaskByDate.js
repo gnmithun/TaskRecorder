@@ -43,7 +43,7 @@ const TaskByDate = (props) => {
                 }
                 const resp = await fetch("http://localhost:8000/datedTasks?from="+fromDate+'&to='+toDate,requestOptions)
                 const data = await resp.json()
-                console.log(data)
+                
                 if ( data.response === 'Success') {
                     if ( data.details.length === 0 ) {
                         alert("No tasks found")

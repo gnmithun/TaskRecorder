@@ -60,7 +60,6 @@ function TaskEditingForm(props) {
                     onChange={ (event)=> { 
                         const selectedCategory = props.categories.find( category => category.type === event.target.value)                        
                         setUpdatedCategory(selectedCategory )
-                        console.log("Updated Id " + selectedCategory.id)
                     }} value = { updatedCategory.type } >
                       
                     { props.categories.map((category,index) => <option key={index} >{category.type} </option>) }
