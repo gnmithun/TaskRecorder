@@ -5,6 +5,7 @@ const { Sequelize } = require("sequelize")
 const TaskRoutes = require('./Router/Tasks')
 const CategoryRoutes = require('./Router/Category')
 const DatedTaskRoutes = require('./Router/DatedTasks')
+const PriorityRoutes = require('./Router/Priority')
 
 const dbController = require('./Database/DBController')
 const Category = require('./Model/Category')
@@ -18,6 +19,7 @@ app.use(express.urlencoded())
 app.use(TaskRoutes)
 app.use(CategoryRoutes)
 app.use(DatedTaskRoutes)
+app.use(PriorityRoutes)
 
 app.listen(8000,() => {
   console.log("Server running on port 8K")

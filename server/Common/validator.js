@@ -22,9 +22,14 @@ const dateValidator = joi.object({
     to:joi.date().format(['D-M-YYYY','DD-MM-YYYY'])
 })
 
+const priorityValidator = joi.object({
+    priority:joi.string().valid(...priority)
+})
+
 module.exports = {
     taskValidator:taskValidator,
     categoryValidator:categoryValidator,
     idValidator:idValidator,
-    dateValidator:dateValidator
+    dateValidator:dateValidator,
+    priorityValidator:priorityValidator
 }

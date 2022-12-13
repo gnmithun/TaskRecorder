@@ -1,6 +1,7 @@
 const { taskValidator, idValidator } = require("../Common/validator")
 const { categoryValidator } = require("../Common/validator")
 const { dateValidator } = require("../Common/validator")
+const { priorityValidator } = require("../Common/validator")
 
 exports.validateCategory = (req,res,next) => {
   const { error , value } = categoryValidator.validate( { categoryType : req.body.category } )
@@ -30,6 +31,11 @@ exports.validateUpdateTask = (req,res,next) => {
 
 exports.validateDates = (req,res,next) => {
     const { error , value } = dateValidator.validate( { from : req.query["from"], to : req.query["to"] })
+    validated(error,next)
+}
+
+exports.validatePriority = (req,res,next) => {
+    const { error , value } = priorityValidator.validate( { priority : req.params.priority } )
     validated(error,next)
 }
 
