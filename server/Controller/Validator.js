@@ -3,39 +3,39 @@ const { categoryValidator } = require("../Common/validator")
 const { dateValidator } = require("../Common/validator")
 const { priorityValidator } = require("../Common/validator")
 
-exports.validateCategory = (req,res,next) => {
-  const { error , value } = categoryValidator.validate( { categoryType : req.body.category } )
+exports.validateCategory = (req,_,next) => {
+  const { error  } = categoryValidator.validate( { categoryType : req.body.category } )
   validated(error,next)
 }
 
-exports.validateTasks = (req,res,next) => {
-    const { error, value } = taskValidator.validate( { detail : req.body.detail, 
+exports.validateTasks = (req,_,next) => {
+    const { error } = taskValidator.validate( { detail : req.body.detail, 
                                                       priority:req.body.priority, 
                                                       completed :req.body.completed, 
                                                       category: req.body.category } )                                                      
     validated(error,next)
 }
 
-exports.validateTaskId = (req,res,next) => {
-    const { error, value } = idValidator.validate( { taskId:req.params.taskId } )    
+exports.validateTaskId = (req,_,next) => {
+    const { error } = idValidator.validate( { taskId:req.params.taskId } )    
     validated(error,next)
 }
 
-exports.validateUpdateTask = (req,res,next) => {
-    const { error , value } = taskValidator.validate( { detail : req.body.detail, 
+exports.validateUpdateTask = (req,_,next) => {
+    const { error  } = taskValidator.validate( { detail : req.body.detail, 
                                                         completed : req.body.completed,
                                                         category: req.body.category,
                                                         priority:req.body.priority } )
     validated(error,next)
 }
 
-exports.validateDates = (req,res,next) => {
-    const { error , value } = dateValidator.validate( { from : req.query["from"], to : req.query["to"] })
+exports.validateDates = (req,_,next) => {
+    const { error } = dateValidator.validate( { from : req.query["from"], to : req.query["to"] })
     validated(error,next)
 }
 
-exports.validatePriority = (req,res,next) => {
-    const { error , value } = priorityValidator.validate( { priority : req.params.priority } )
+exports.validatePriority = (req,_,next) => {
+    const { error } = priorityValidator.validate( { priority : req.params.priority } )
     validated(error,next)
 }
 

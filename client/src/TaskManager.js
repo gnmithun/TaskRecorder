@@ -4,6 +4,7 @@ import LoadingSpinner from "./LoadingSpinner";
 import Tasks from "./Tasks";
 import TasksList from "./TasksList";
 import TaskByDate from "./TaskByDate";
+import PriorityTaskList from "./PriorityTaskList"
 
 function TaskManager(props) {
 
@@ -69,6 +70,7 @@ function TaskManager(props) {
                            taskUpdated={ () => setTask({}) } //How to fetch only the updated task
                            />
                 <TaskByDate setLoading={setLoading}/>
+                <PriorityTaskList setLoading={setLoading}/>
             </div>
     )
 }

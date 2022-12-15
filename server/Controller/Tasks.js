@@ -12,7 +12,7 @@ exports.createTask = async (req,res,next) => {
     }
 }
 
-exports.getTasks = async ( req,res,next ) => {
+exports.getTasks = async ( _,res,next ) => {
   try {
       const data = await Tasks.findAll({ include: Category })
       if (data.count === 0) {
