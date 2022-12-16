@@ -8,12 +8,17 @@ const TaskByDate = (props) => {
     const [tasks,setTasks] = useState()
     
     function isDisabled () {
-        return false
+        if ( fromDate === undefined || toDate === undefined) {
+            return true
+        } else {
+            return false
+        }   
     }
 
     return (
         <div>
-            <h6> Show tasks based on dates </h6>
+            <label> Show tasks based on dates </label>
+            <br/>
             <label> From </label>
             <input type="date" onChange={ (event) => {
                 setFromDate(moment(new Date(event.target.value)).format("DD-MM-YYYY"))                
@@ -25,15 +30,6 @@ const TaskByDate = (props) => {
             }}></input>
             <br/>
             <input type="submit" disabled={ isDisabled ()}  onClick = { async (event)=> {
-
-                if ( !fromDate ) {
-                    alert("Please select a valid starting date")
-                    return
-                }
-                if ( !toDate ) {
-                    alert("Please select a valid end date")
-                    return
-                }
                 
                 props.setLoading(true)
                 const requestOptions = {

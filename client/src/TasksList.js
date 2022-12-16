@@ -1,6 +1,6 @@
 import React from 'react';
 import TaskEditingForm from './TaskEditingForm';
-
+import priority from './Common/appConst'
 function TasksList(props) {
     return (
         <div>
@@ -10,7 +10,7 @@ function TasksList(props) {
                     <div key={task.id}>
                         <li > 
                             <TaskEditingForm task={task} 
-                                         priority={["HIGH","MEDIUM","LOW"]} 
+                                         priority={priority} 
                                          categories={props.categories}
                                       taskUpdated={ props.taskUpdated }/>
                             <button onClick={ async (event) => {                                

@@ -1,3 +1,3 @@
 module.exports = {
-    priority : ["HIGH","MEDIUM","LOW","NANO"]
+    priority : ["HIGH","MEDIUM","LOW"]
 }

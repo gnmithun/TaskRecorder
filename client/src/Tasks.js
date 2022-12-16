@@ -58,7 +58,7 @@ function Tasks(props) {
             <form onSubmit={addTask}>
                 <input type="text"  
                     value={ inputTask.detail }                  
-                    placeholder='What do you want today?' 
+                    placeholder='What next?' 
                     disabled = { props.loading ? true : false }
                     name='detail' 
                     onChange={ (event) => { 
@@ -95,7 +95,6 @@ function Tasks(props) {
                     }}>
                     { props.priorities.map( (priority,index) => <option key={index}> { priority} </option>)}
                 </select>
-                <br/>
                 <br/>
                 <input type="submit" value="Submit" disabled = { isSubmitEnabled() }/>
             </form>           

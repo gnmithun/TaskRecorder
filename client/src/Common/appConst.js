@@ -1,2 +1,2 @@
-const priority = ["HIGH","MEDIUM","LOW","NANO"]
+const priority = ["HIGH","MEDIUM","LOW"]
 export default priority
