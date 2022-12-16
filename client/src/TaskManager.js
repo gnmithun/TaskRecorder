@@ -5,6 +5,7 @@ import Tasks from "./Tasks";
 import TasksList from "./TasksList";
 import TaskByDate from "./TaskByDate";
 import PriorityTaskList from "./PriorityTaskList"
+import Priorities from "./Common/appConst"
 
 function TaskManager(props) {
 
@@ -62,7 +63,7 @@ function TaskManager(props) {
                 <Tasks     setLoading={setLoading} setTask={setTask} 
                                                       task={task} 
                                                 categories={categories} 
-                                                priorities={["HIGH","MEDIUM","LOW"]}/>
+                                                priorities={Priorities}/>
                 <TasksList setLoading={setLoading} 
                            categories={categories} 
                            tasks={tasks === undefined ? [] : tasks } 

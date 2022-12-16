@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 const PriorityTaskList = (props) => {
     //Create a form with drop down of priority
@@ -6,6 +6,7 @@ const PriorityTaskList = (props) => {
     //Fetch tasks with those priority
     //List the tasks
     const [priorities,setPriorities]  = useState([])
+    const [priority,setPriority] = useState("HIGH")
 
     useEffect(() => {
         async function getPriorities(){            
@@ -19,13 +20,25 @@ const PriorityTaskList = (props) => {
         }
         getPriorities()
     },[])
-
-    const getTasksWithPriority = ((priority) => {
-
-    })
     
+    const isSubmitDisabled = () => {
+        return false
+    }
+
+    const getTasksWithSelectedPriority = (event) => {
+        alert(priority)
+    }
     return(
-        <h1> Tasks with priority </h1>
+        <div>
+            <form onSubmit={getTasksWithSelectedPriority}>
+                <label> Priorities </label>
+                <br/>
+                <select onChange={ (event) => { setPriority(event.target.value) } } value={priority}>
+                    { priorities.map( (priority,index) =>   <option key={index}> {priority}  </option> ) } 
+                </select>
+                <input type="submit" value={"Submit"} disabled={isSubmitDisabled()}/>
+            </form>
+        </div>
     )
 }
 

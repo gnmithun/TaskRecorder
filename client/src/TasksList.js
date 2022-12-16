@@ -4,11 +4,11 @@ import TaskEditingForm from './TaskEditingForm';
 function TasksList(props) {
     return (
         <div>
-            <ul>
+            <ol>
             { 
                 props.tasks.map((task) =>
                     <div key={task.id}>
-                        <ol > 
+                        <li > 
                             <TaskEditingForm task={task} 
                                          priority={["HIGH","MEDIUM","LOW"]} 
                                          categories={props.categories}
@@ -57,11 +57,11 @@ function TasksList(props) {
                                         }   
                                      } } > X 
                             </button>
-                        </ol>                             
+                        </li>                             
                     </div>
                 ) 
             }
-            </ul>
+            </ol>
         </div>
     );
 }
