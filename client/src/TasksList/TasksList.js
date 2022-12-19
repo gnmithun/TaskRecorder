@@ -1,6 +1,8 @@
 import React from 'react';
-import TaskEditingForm from './TaskEditingForm';
-import priority from './Common/appConst'
+import TaskEditingForm from '../TaskEditing/TaskEditing';
+import priority from '../Common/appConst'
+
+
 function TasksList(props) {
     return (
         <div>

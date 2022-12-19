@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
-import Category from "./Category";
-import LoadingSpinner from "./LoadingSpinner";
-import Tasks from "./Tasks";
-import TasksList from "./TasksList";
-import TaskByDate from "./TaskByDate";
-import PriorityTaskList from "./PriorityTaskList"
-import Priorities from "./Common/appConst"
+import Category from "../Category/Category";
+import LoadingSpinner from "../Spinner/LoadingSpinner";
+import Tasks from "../Tasks/Tasks";
+import TasksList from "../TasksList/TasksList";
+import TaskByDate from "../TaskByDate/TaskByDate";
+import PriorityTaskList from "../TaskByPriority/TaskByPriority"
+import Priorities from "../Common/appConst"
+import styles from '../TasksList/TasksList.module.css'
 
 function TaskManager(props) {
 
@@ -22,10 +23,10 @@ function TaskManager(props) {
           const data = await resp.json()
           setLoading(false)
           if (data.response === "Success") {          
-            if ( data.categories.length === 0) {
+            if ( data.details.length === 0) {
               return
             }
-            setCategories(data.categories) 
+            setCategories(data.details) 
         } else {
             alert(data.details)            
         }
@@ -56,8 +57,8 @@ function TaskManager(props) {
 
     return(
             <div>
-                <h1> Welcome to TaskManager </h1>
-                <h2> Add tasks, track and improve!!</h2>
+                <h1 className={styles.title}> Welcome to TaskManager </h1>
+                <h2 className={styles.title}> Add tasks, track and improve!!</h2>
                 { loading ? <LoadingSpinner/> : <></>}
                 <Category  setLoading={setLoading} setCategory={setCategory} /> 
                 <Tasks     setLoading={setLoading} setTask={setTask} 

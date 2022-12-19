@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import DatedTasksList from "./DatedTasksList"
+import DatedTasksList from "../DatedTasksList"
 
 const PriorityTaskList = (props) => {
     //List the tasks

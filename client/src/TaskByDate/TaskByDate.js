@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import DatedTasksList from './DatedTasksList';
+import DatedTasksList from '../DatedTasksList';
 import moment from 'moment'
 
 const TaskByDate = (props) => {
