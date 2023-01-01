@@ -1,5 +1,6 @@
 import { useState } from "react";
 import React from 'react';
+import styles from './Category.module.css'
 
 function Category(props) {
 
@@ -26,7 +27,7 @@ function Category(props) {
   }
 
   return (    
-    <div>
+    <div className = {styles.formBasic} >
       <form onSubmit={addCategory}> 
         <input type="text"
                placeholder='Add a category..e.g Work, Music, Writing etc'
@@ -35,7 +36,7 @@ function Category(props) {
                onChange={onChange}/>
 
         <input type="submit"
-               value="Add category"/>               
+               value="Add category" className={ styles.submitBtn}/>               
        </form>
 
        <br></br>

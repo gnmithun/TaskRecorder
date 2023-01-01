@@ -6,7 +6,7 @@ import TasksList from "../TasksList/TasksList";
 import TaskByDate from "../TaskByDate/TaskByDate";
 import PriorityTaskList from "../TaskByPriority/TaskByPriority"
 import Priorities from "../Common/appConst"
-import styles from '../TasksList/TasksList.module.css'
+import styles from './TaskManager.module.css'
 
 function TaskManager(props) {
 
@@ -57,8 +57,10 @@ function TaskManager(props) {
 
     return(
             <div>
-                <h1 className={styles.title}> Welcome to TaskManager </h1>
-                <h2 className={styles.title}> Add tasks, track and improve!!</h2>
+                <div id={ styles.heading }>
+                  <h1> Welcome to TaskManager </h1>
+                  <h2> Add tasks, track and improve!!</h2>
+                </div>
                 { loading ? <LoadingSpinner/> : <></>}
                 <Category  setLoading={setLoading} setCategory={setCategory} /> 
                 <Tasks     setLoading={setLoading} setTask={setTask} 

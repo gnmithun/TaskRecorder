@@ -1,5 +1,7 @@
 
 import React, { useEffect, useState } from 'react';
+import styles from "./Tasks.module.css"
+
 function Tasks(props) {
 
     const [inputTask,setInputTask] = useState( { detail:"", completed:false, categoryId: 0, priority:"HIGH" } )
@@ -54,11 +56,11 @@ function Tasks(props) {
     }
 
     return (
-        <div>
+        <div className={styles.formStyle} >          
             <form onSubmit={addTask}>
                 <input type="text"  
                     value={ inputTask.detail }                  
-                    placeholder='What next?' 
+                    placeholder='What next to do?' 
                     disabled = { props.loading ? true : false }
                     name='detail' 
                     onChange={ (event) => { 

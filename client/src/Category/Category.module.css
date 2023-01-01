@@ -1,0 +1,10 @@
+.formBasic{
+  background-color: beige;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+.submitBtn {
+  margin-top: 20px;
+  display: block;
+}
