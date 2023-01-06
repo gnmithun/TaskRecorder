@@ -4,3 +4,20 @@
   margin-right: 20px;
 }
 
+.taskContainer {
+  display: flex;
+  flex-direction: column;
+
+}
+
+.taskInput{
+  margin: 20px 20px;
+  height: 40px;
+}
+
+.categoryInput{
+  width: 200px;
+  height: 20px;
+  margin-right: 20px;
+  align-self: end;
+}

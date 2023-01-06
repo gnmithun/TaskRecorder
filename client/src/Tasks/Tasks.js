@@ -58,36 +58,41 @@ function Tasks(props) {
     return (
         <div className={styles.formStyle} >          
             <form onSubmit={addTask}>
-                <input type="text"  
-                    value={ inputTask.detail }                  
-                    placeholder='What next to do?' 
-                    disabled = { props.loading ? true : false }
-                    name='detail' 
-                    onChange={ (event) => { 
-                        setInputTask(inputTask => ( {...inputTask,detail : event.target.value } ) ) 
-                    }}
-                />
+                <div className ={styles.taskContainer}>
+                    <input type="text"
+                        className= { styles.taskInput }
+                        value={ inputTask.detail }              
+                        placeholder='What next to do?' 
+                        disabled = { props.loading ? true : false }
+                        name='detail' 
+                        onChange={ (event) => { 
+                            setInputTask(inputTask => ( {...inputTask,detail : event.target.value } ) ) 
+                        }}
+                    />
 
-                <input type="checkbox" 
-                    disabled = { props.loading ? true : false }
-                    checked = { inputTask.completed }
-                    name='completed' 
-                    onChange={ (event) => { 
-                        setInputTask(inputTask => ( {...inputTask,completed :  event.target.checked } ) )
-                    }}
-                />
+                    {/* <input type="checkbox" 
+                        disabled = { props.loading ? true : false }
+                        checked = { inputTask.completed }
+                        name='completed' 
+                        onChange={ (event) => { 
+                            setInputTask(inputTask => ( {...inputTask,completed :  event.target.checked } ) )
+                        }}
+                    /> */}
 
-                <select name="category" 
-                    onChange={ (event)=> { 
-                        const selectedCategory = props.categories.find( category => category.type === event.target.value)
-                        const categoryId = selectedCategory.id
-                        setInputTask(inputTask => ( { ...inputTask,categoryId : categoryId } ) )
-                    }} >
-                    { props.categories.map((category) => <option key={category.id} >{category.type} </option>) }
-                </select>
+                    <select name="category" 
+                        className={ styles.categoryInput }
+                        onChange={ (event)=> { 
+                            const selectedCategory = props.categories.find( category => category.type === event.target.value)
+                            const categoryId = selectedCategory.id
+                            setInputTask(inputTask => ( { ...inputTask,categoryId : categoryId } ) )
+                        }} >
+                        { props.categories.map((category) => <option key={category.id} >{category.type} </option>) }
+                    </select>
+                </div>
 
-                    <br/>
-                    <br/>
+                <br/>
+                <br/>
+
                 <label> Priority </label>
 
                 <select name="priority"
