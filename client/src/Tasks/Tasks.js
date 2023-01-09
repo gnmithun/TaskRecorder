@@ -79,31 +79,34 @@ function Tasks(props) {
                         }}
                     /> */}
 
-                    <select name="category" 
-                        className={ styles.categoryInput }
+                    
+                    <div className={styles.taskSubContainer}>
+                        <input type="submit" value="Submit" className = {styles.taskSubContainerSubmit } disabled = { isSubmitEnabled() }/>
+                        
+                        <select name="category" 
+                        className={ styles.taskSubContainerSubItemInput }
                         onChange={ (event)=> { 
                             const selectedCategory = props.categories.find( category => category.type === event.target.value)
                             const categoryId = selectedCategory.id
                             setInputTask(inputTask => ( { ...inputTask,categoryId : categoryId } ) )
                         }} >
                         { props.categories.map((category) => <option key={category.id} >{category.type} </option>) }
-                    </select>
+                        </select>
+
+                        <select name="priority"
+                        className={ styles.taskSubContainerSubItemInput }
+                        onChange = { (event) => {
+                            const selectedPriority = props.priorities.find( priority => priority === event.target.value)
+                            setInputTask(inputTask => ( { ...inputTask,priority : selectedPriority } ) )
+                        }}>
+                        { props.priorities.map( (priority,index) => <option key={index}> { priority} </option>)}
+                        </select>
+                        
+                    </div>
+
                 </div>
-
-                <br/>
-                <br/>
-
-                <label> Priority </label>
-
-                <select name="priority"
-                    onChange = { (event) => {
-                        const selectedPriority = props.priorities.find( priority => priority === event.target.value)
-                        setInputTask(inputTask => ( { ...inputTask,priority : selectedPriority } ) )
-                    }}>
-                    { props.priorities.map( (priority,index) => <option key={index}> { priority} </option>)}
-                </select>
-                <br/>
-                <input type="submit" value="Submit" disabled = { isSubmitEnabled() }/>
+                {/* <label> Priority </label> */}
+                
             </form>           
         </div>
     );

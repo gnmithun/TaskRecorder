@@ -57,7 +57,7 @@ function TaskManager(props) {
 
     return(
             <div>
-                <div id={ styles.heading }>
+                <div className={ styles.heading }>
                   <h1> Welcome to TaskManager </h1>
                   <h2> Add tasks, track and improve!!</h2>
                 </div>
