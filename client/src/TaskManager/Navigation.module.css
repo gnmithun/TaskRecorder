@@ -1,0 +1,13 @@
+.navigationMain{
+    background-color: yellow;
+    display: flex;
+    flex-direction: row;
+    margin: 20px 0px;
+    box-sizing: border-box;
+}
+
+.navigationItems{
+    padding: 20px;
+    font-size: larger;
+    box-sizing: border-box;
+}
