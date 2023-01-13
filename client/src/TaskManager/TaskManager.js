@@ -58,14 +58,21 @@ function TaskManager(props) {
     return(
             <div>
               <div className={ navigationStyles.navigationMain }>
-                  <li className={ navigationStyles.navigationItems}> <a href="#"> About </a></li>
-                  <li className={ navigationStyles.navigationItems}> <a href="#"> Reports </a> </li>
-                  <li className={ navigationStyles.navigationItems}> <a href="#"> Category </a></li>
+                <div className={ navigationStyles.dropDown } >
+                  <p className={ navigationStyles.navigationItems}>  About </p>
+                    <div className= { navigationStyles.dropdownContent } >
+                        <p> Developer </p>
+                        <p> Terms of usage </p>
+                    </div>
+                </div>
+                  
+                  <li className={ navigationStyles.navigationItems}> <a href="https://www.google.com"> Reports </a> </li>
+                  <li className={ navigationStyles.navigationItems}> <a href="https://www.google.com"> Category </a></li>
               </div>
 
                 <div className={ styles.heading }>
-                  <h1 className={ styles.h1Style }> Welcome to TaskManager </h1>
-                  <h2  className={ styles.h1Style }> Add tasks, track and improve!!</h2>
+                  <h1> Welcome to TaskManager </h1>
+                  <h2> Add tasks, track and improve!!</h2>
                 </div>
                 { loading ? <LoadingSpinner/> : <></>}
                 <Category  setLoading={setLoading} setCategory={setCategory} /> 
