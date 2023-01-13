@@ -58,16 +58,16 @@ function TaskManager(props) {
     return(
             <div>
               <div className={ navigationStyles.navigationMain }>
-                <div className={ navigationStyles.dropDown } >
-                  <p className={ navigationStyles.navigationItems}>  About </p>
-                    <div className= { navigationStyles.dropdownContent } >
-                        <p> Developer </p>
-                        <p> Terms of usage </p>
-                    </div>
+                <div className={ navigationStyles.dropDown}> 
+                  <li className={ navigationStyles.navigationItems}> <a href="https://www.google.com"> About </a></li>
+                  <div className= { navigationStyles.dropDownContent } >
+                    <p> Developer </p>
+                    <p> Terms of usage </p>
                 </div>
-                  
-                  <li className={ navigationStyles.navigationItems}> <a href="https://www.google.com"> Reports </a> </li>
-                  <li className={ navigationStyles.navigationItems}> <a href="https://www.google.com"> Category </a></li>
+                </div>
+
+                  {/* <li className={ navigationStyles.navigationItems}> <a href="https://www.google.com"> Reports </a> </li>
+                  <li className={ navigationStyles.navigationItems}> <a href="https://www.google.com"> Category </a></li> */}
               </div>
 
                 <div className={ styles.heading }>

@@ -1,5 +1,5 @@
 .navigationMain{
-    background-color: yellow;
+    /* background-color: yellow; */
     display: flex;
     flex-direction: row;
     margin: 20px 0px;
@@ -12,13 +12,12 @@
     box-sizing: border-box;
 }
 
-.dropdown {
+.dropDown {
     position: relative;
     display: inline-block;
-    cursor: pointer;
 }
 
-.dropdownContent {
+.dropDownContent {
     display: none;
     position: absolute;
     background-color: #f9f9f9;
@@ -28,6 +27,6 @@
     z-index: 1;
 }
 
-.dropdown:hover .dropdownContent{
+.dropDown:hover  .dropDownContent{
     display: block;
 }
