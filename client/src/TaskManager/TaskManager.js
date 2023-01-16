@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import Category from "../Category/Category";
 import LoadingSpinner from "../Spinner/LoadingSpinner";
 import Tasks from "../Tasks/Tasks";
 import TasksList from "../TasksList/TasksList";
@@ -57,6 +56,9 @@ function TaskManager(props) {
 
     async function addCategory() {
       let category = prompt("Enter a category")
+      if (category === null) {
+        return
+      }
       const options = { method : 'POST', mode:'cors', body:JSON.stringify({"category":category}), headers:{'Content-Type':'application/json'}}
       setLoading(true)
       const resp = await fetch("http://localhost:8000/category",options)
