@@ -55,31 +55,49 @@ function TaskManager(props) {
         fetchTasks()    
     },[task])
 
+    async function addCategory() {
+      let category = prompt("Enter a category")
+      const options = { method : 'POST', mode:'cors', body:JSON.stringify({"category":category}), headers:{'Content-Type':'application/json'}}
+      setLoading(true)
+      const resp = await fetch("http://localhost:8000/category",options)
+      const data = await resp.json()
+      setLoading(false)
+      if (data.response === "Success"){
+        setCategory({ id:data.details.id , type:data.details.type })      
+      } else {
+        alert(data.details)
+      }
+    }
     return(
-            <div>
-              <div className={ navigationStyles.navigationMain }>
-                <div className={ navigationStyles.dropDown}> 
-                  <li className={ navigationStyles.navigationItems}> <a href="https://www.google.com"> About </a></li>
-                  <div className= { navigationStyles.dropDownContent } >
-                    <p> Developer </p>
-                    <p> Terms of usage </p>
+              <div>
+                <div className={ navigationStyles.navigationMain }>
+                  <div className={ navigationStyles.dropDown}> 
+                    <ul className={ navigationStyles.navigationItems}> 
+                       About
+                    </ul>
+                    <div className= { navigationStyles.dropDownContent } >
+                      <p> Developer </p>
+                      <hr className= { styles.hrCustom }></hr>
+                      <p> Terms of usage </p>
+                    </div>
+                  </div>
+                  <div className={ navigationStyles.dropDown}> 
+                    <ul className = { navigationStyles.navigationItems } > 
+                      Category 
+                    </ul>
+                    <div className = {navigationStyles.dropDownContent } >
+                      <p onClick={ addCategory }> Add Category </p>
+                    </div>
+                  </div>
                 </div>
-                </div>
-
-                  {/* <li className={ navigationStyles.navigationItems}> <a href="https://www.google.com"> Reports </a> </li>
-                  <li className={ navigationStyles.navigationItems}> <a href="https://www.google.com"> Category </a></li> */}
-              </div>
 
                 <div className={ styles.heading }>
-                  <h1> Welcome to TaskManager </h1>
-                  <h2> Add tasks, track and improve!!</h2>
+                  <h1 className={ styles.customH1}> Welcome to TaskManager </h1>
+                  <h2 className={ styles.customH2}> Add tasks, track and improve!!</h2>
                 </div>
                 { loading ? <LoadingSpinner/> : <></>}
-                <Category  setLoading={setLoading} setCategory={setCategory} /> 
-                <Tasks     setLoading={setLoading} setTask={setTask} 
-                                                      task={task} 
-                                                categories={categories} 
-                                                priorities={Priorities}/>
+
+                <Tasks     setLoading={setLoading} setTask={setTask} task={task} categories={categories} priorities={Priorities}/>
                 <TasksList setLoading={setLoading} 
                            categories={categories} 
                            tasks={tasks === undefined ? [] : tasks } 
