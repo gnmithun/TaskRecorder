@@ -78,9 +78,9 @@ function TaskManager(props) {
                        About
                     </ul>
                     <div className= { navigationStyles.dropDownContent } >
-                      <p> Developer </p>
+                      <p className={ navigationStyles.clickableMenuItem }> About </p>
                       <hr className= { styles.hrCustom }></hr>
-                      <p> Terms of usage </p>
+                      <p className={ navigationStyles.clickableMenuItem }> T & C </p>
                     </div>
                   </div>
                   <div className={ navigationStyles.dropDown}> 
@@ -88,7 +88,7 @@ function TaskManager(props) {
                       Category 
                     </ul>
                     <div className = {navigationStyles.dropDownContent } >
-                      <p onClick={ addCategory }> Add Category </p>
+                      <p className={ navigationStyles.clickableMenuItem } onClick={ addCategory }> Category </p>
                     </div>
                   </div>
                 </div>
@@ -100,14 +100,14 @@ function TaskManager(props) {
                 { loading ? <LoadingSpinner/> : <></>}
 
                 <Tasks     setLoading={setLoading} setTask={setTask} task={task} categories={categories} priorities={Priorities}/>
-                <TasksList setLoading={setLoading} 
+                {/* <TasksList setLoading={setLoading} 
                            categories={categories} 
                            tasks={tasks === undefined ? [] : tasks } 
                            taskDeleted={ () => setTask({}) }
                            taskUpdated={ () => setTask({}) } //How to fetch only the updated task
                            />
                 <TaskByDate setLoading={setLoading}/>
-                <PriorityTaskList setLoading={setLoading}/>
+                <PriorityTaskList setLoading={setLoading}/> */}
             </div>
     )
 }

@@ -62,7 +62,7 @@ function Tasks(props) {
                     <input type="text"
                         className= { styles.taskInput }
                         value={ inputTask.detail }              
-                        placeholder='What next to do?' 
+                        placeholder='Whats next?' 
                         disabled = { props.loading ? true : false }
                         name='detail' 
                         onChange={ (event) => { 
