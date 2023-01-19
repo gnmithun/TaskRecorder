@@ -6,7 +6,9 @@ import TaskManager from './TaskManager/TaskManager'
 
 const root = ReactDOM.createRoot(document.getElementById("root"))
 root.render(<React.StrictMode>
-    <TaskManager/>
+    <div className="bg">
+        <TaskManager/>
+    </div> 
 </React.StrictMode>)
 
 reportWebVitals();

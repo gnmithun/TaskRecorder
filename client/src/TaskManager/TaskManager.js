@@ -6,7 +6,7 @@ import TaskByDate from "../TaskByDate/TaskByDate";
 import PriorityTaskList from "../TaskByPriority/TaskByPriority"
 import Priorities from "../Common/appConst"
 import styles from './TaskManager.module.css'
-import navigationStyles from './Navigation.module.css'
+import NavBar from "../Navigation/NavBar";
 function TaskManager(props) {
 
     const [loading,setLoading] = useState(false)
@@ -54,44 +54,9 @@ function TaskManager(props) {
         fetchTasks()    
     },[task])
 
-    async function addCategory() {
-      let category = prompt("Enter a category")
-      if (category === null) {
-        return
-      }
-      const options = { method : 'POST', mode:'cors', body:JSON.stringify({"category":category}), headers:{'Content-Type':'application/json'}}
-      setLoading(true)
-      const resp = await fetch("http://localhost:8000/category",options)
-      const data = await resp.json()
-      setLoading(false)
-      if (data.response === "Success"){
-        setCategory({ id:data.details.id , type:data.details.type })      
-      } else {
-        alert(data.details)
-      }
-    }
     return(
               <div>
-                <div className={ navigationStyles.navigationMain }>
-                  <div className={ navigationStyles.dropDown}> 
-                    <ul className={ navigationStyles.navigationItems}> 
-                       About
-                    </ul>
-                    <div className= { navigationStyles.dropDownContent } >
-                      <p className={ navigationStyles.clickableMenuItem }> About </p>
-                      <hr className= { styles.hrCustom }></hr>
-                      <p className={ navigationStyles.clickableMenuItem }> T & C </p>
-                    </div>
-                  </div>
-                  <div className={ navigationStyles.dropDown}> 
-                    <ul className = { navigationStyles.navigationItems } > 
-                      Category 
-                    </ul>
-                    <div className = {navigationStyles.dropDownContent } >
-                      <p className={ navigationStyles.clickableMenuItem } onClick={ addCategory }> Category </p>
-                    </div>
-                  </div>
-                </div>
+                <NavBar setCategory={setCategory}/>
 
                 <div className={ styles.heading }>
                   <h1 className={ styles.customH1}> Welcome to TaskManager </h1>
@@ -100,14 +65,14 @@ function TaskManager(props) {
                 { loading ? <LoadingSpinner/> : <></>}
 
                 <Tasks     setLoading={setLoading} setTask={setTask} task={task} categories={categories} priorities={Priorities}/>
-                {/* <TasksList setLoading={setLoading} 
+                <TasksList setLoading={setLoading} 
                            categories={categories} 
                            tasks={tasks === undefined ? [] : tasks } 
                            taskDeleted={ () => setTask({}) }
                            taskUpdated={ () => setTask({}) } //How to fetch only the updated task
                            />
                 <TaskByDate setLoading={setLoading}/>
-                <PriorityTaskList setLoading={setLoading}/> */}
+                <PriorityTaskList setLoading={setLoading}/>
             </div>
     )
 }

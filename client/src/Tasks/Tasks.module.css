@@ -1,5 +1,5 @@
 .formStyle{
-  background-color: greenyellow;
+  /* background-color: greenyellow; */
 }
 
 .taskContainer {
@@ -23,6 +23,8 @@
 .taskSubContainerSubItemInput {
   width: 200px;
   margin-right: 20px;
+  margin-bottom: 10px;
+  height: 20px;
 }
 
 .categoryInput{
@@ -32,4 +34,6 @@
 
 .taskSubContainerSubmit{
   width: 100px;
+  margin-bottom: 10px;
+  height: 20px;
 }
