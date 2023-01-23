@@ -1,5 +1,5 @@
 .formStyle{
-  /* background-color: greenyellow; */
+  background-color: greenyellow;
 }
 
 .taskContainer {
@@ -10,18 +10,18 @@
 .taskSubContainer {
   display: flex;
   flex-direction:row-reverse;
-  margin-right: 20px;
+  margin-right: 20px; 
   margin-left: 20px;
 }
-
 
 .taskInput{
   margin: 20px 20px;
   height: 40px;
+
 }
 
 .taskSubContainerSubItemInput {
-  width: 200px;
+  width: 100px;
   margin-right: 20px;
   margin-bottom: 10px;
   height: 20px;
@@ -36,4 +36,11 @@
   width: 100px;
   margin-bottom: 10px;
   height: 20px;
+
+}
+
+.taskSubContainerSubmit, .taskSubContainerSubItemInput, .taskInput
+{
+  border-radius: 20px;
+  border-color: blue;
 }

@@ -7,6 +7,8 @@ import PriorityTaskList from "../TaskByPriority/TaskByPriority"
 import Priorities from "../Common/appConst"
 import styles from './TaskManager.module.css'
 import NavBar from "../Navigation/NavBar";
+import Heading from "../Heading/Heading";
+
 function TaskManager(props) {
 
     const [loading,setLoading] = useState(false)
@@ -57,13 +59,8 @@ function TaskManager(props) {
     return(
               <div>
                 <NavBar setCategory={setCategory}/>
-
-                <div className={ styles.heading }>
-                  <h1 className={ styles.customH1}> Welcome to TaskManager </h1>
-                  <h2 className={ styles.customH2}> Add tasks, track and improve!!</h2>
-                </div>
+                <Heading/>
                 { loading ? <LoadingSpinner/> : <></>}
-
                 <Tasks     setLoading={setLoading} setTask={setTask} task={task} categories={categories} priorities={Priorities}/>
                 <TasksList setLoading={setLoading} 
                            categories={categories} 

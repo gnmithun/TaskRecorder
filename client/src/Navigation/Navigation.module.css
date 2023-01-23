@@ -2,13 +2,14 @@
     background-color: #a2c3e2;
     display: flex;
     flex-direction: row;
-    margin: 0px 0px;
     box-sizing: border-box;
+
+
 }
 
 .navigationItems{
     padding: 20px;
-    font-size: larger;
+    /* font-size: larger; */
     box-sizing: border-box;
 }
 
@@ -17,7 +18,7 @@
     border-color: chocolate;
     border-style:double;
     border-radius: 25px;
-    font-size: small;
+    /* font-size: small; */
     text-align: center;
 }
 
