@@ -1,0 +1,15 @@
+.taskEditingContainer {
+    display:flex;
+}
+
+.tasksDetailsItem {
+    margin-right: 20px;
+    margin-bottom: 5px;
+    flex-grow: 1;
+}
+
+.tasksDetailsItemName{
+    margin-right: 20px;
+    margin-bottom: 5px;
+    flex-grow: 12;
+}

@@ -1,39 +1,47 @@
-import React from 'react';
+import React, {useState} from 'react';
 import TaskEditingForm from '../TaskEditing/TaskEditing';
 import priority from '../Common/appConst'
-
+import styles from './TasksList.module.css'
 
 function TasksList(props) {
+const [showList, setShowList] = useState(false)
+const displayStatus = showList ?  styles.visible: styles.invisible;
+
     return (
         <div>
-            <ol>
-            { 
-                props.tasks.map((task) =>
-                    <div key={task.id}>
+            <input type="button" 
+                value="Today" 
+                className={styles.collapsibleMenu} 
+                onClick={ (event)=> setShowList(!showList)}/>
+            <div className={`${displayStatus}`}>
+                <ul className= { styles.customul }>
+                    {
+                    props.tasks.map((task) =>
+                        <div key={task.id}>
                         <li > 
-                            <TaskEditingForm task={task} 
-                                         priority={priority} 
-                                         categories={props.categories}
-                                      taskUpdated={ props.taskUpdated }/>
+                            <div>
+                                <TaskEditingForm task={task} priority={priority} categories={props.categories} taskUpdated={ props.taskUpdated }/>
+                            </div>
+                            {/* { <div className={styles.tasksOperations}>
                             <button onClick={ async (event) => {                                
-                                const requestOptions = {
-                                    method:'GET',
-                                    headers: {'Content-Type': 'application/json'},                                             
-                                    mode:'cors'
-                                }
-                                const taskId = task.id
-                                props.setLoading(true)
-                                const resp = await fetch("http://localhost:8000/task/"+taskId,requestOptions)
-                                const data = await resp.json()
-                                props.setLoading(false)
-                                if( data.response === "Success" ) {
-                                    const taskDetails = data.details
-                                    alert(taskDetails.id + " : " + taskDetails.detail + " is a " + taskDetails.priority
-                                    + " priority task of " + taskDetails.category.type + " category ")
-                                } else {
-                                    alert(data.details)
-                                }
-                            }}> Details
+                                    const requestOptions = {
+                                        method:'GET',
+                                        headers: {'Content-Type': 'application/json'},                                             
+                                        mode:'cors'
+                                    }
+                                    const taskId = task.id
+                                    props.setLoading(true)
+                                    const resp = await fetch("http://localhost:8000/task/"+taskId,requestOptions)
+                                    const data = await resp.json()
+                                    props.setLoading(false)
+                                    if( data.response === "Success" ) {
+                                        const taskDetails = data.details
+                                        alert(taskDetails.id + " : " + taskDetails.detail + " is a " + taskDetails.priority
+                                        + " priority task of " + taskDetails.category.type + " category ")
+                                    } else {
+                                        alert(data.details)
+                                    }
+                                }}> Details
                             </button>
                             <button onClick={ async (event) => { 
                                         const response = window.confirm("Do you want to delete this task?")
@@ -57,13 +65,15 @@ function TasksList(props) {
                                         } else {
                                             alert(data.details)                                        
                                         }   
-                                     } } > X 
+                                    } } > X 
                             </button>
+                            </div> } */}
                         </li>                             
-                    </div>
-                ) 
-            }
-            </ol>
+                        </div>
+                    ) 
+                    }
+                </ul>
+            </div>
         </div>
     );
 }
