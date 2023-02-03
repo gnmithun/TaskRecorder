@@ -1,10 +1,10 @@
 const joi = require('joi').extend(require('@joi/date'))
 
-const { priority } = require('./appConst')
+const appConst = require('./appConst')
 
 const taskValidator = joi.object({
     detail:joi.string().trim().min(5).max(100),
-    priority:joi.string().valid(...priority),
+    priority:joi.string().valid(...(appConst.priority)),
     completed:joi.bool(),
     category:joi.number(),
 })
@@ -23,7 +23,11 @@ const dateValidator = joi.object({
 })
 
 const priorityValidator = joi.object({
-    priority:joi.string().valid(...priority)
+    priority:joi.string().valid(...(appConst.priority))
+})
+
+const taskByDayValidator = joi.object({
+    day:joi.string().valid(...(appConst.taskDays))
 })
 
 module.exports = {
@@ -31,5 +35,6 @@ module.exports = {
     categoryValidator:categoryValidator,
     idValidator:idValidator,
     dateValidator:dateValidator,
-    priorityValidator:priorityValidator
+    priorityValidator:priorityValidator,
+    taskByDayValidator:taskByDayValidator
 }

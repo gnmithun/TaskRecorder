@@ -25,6 +25,15 @@ exports.getTasks = async ( _,res,next ) => {
   } 
 }
 
+exports.getTasksBasedOnDay = (req,res,_) => {
+  try{
+    console.log("getTasksBasedOnDay",req.query.day)
+    return res.send( { "response":"Success","details":[] } )  
+  } catch (error) {
+    next(error)
+  }
+}
+
 exports.getTask = async (req,res,next) => {
   const taskId = req.params.taskId
   try {  

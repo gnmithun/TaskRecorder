@@ -2,6 +2,7 @@ const { taskValidator, idValidator } = require("../Common/validator")
 const { categoryValidator } = require("../Common/validator")
 const { dateValidator } = require("../Common/validator")
 const { priorityValidator } = require("../Common/validator")
+const { taskByDayValidator } = require("../Common/validator")
 
 exports.validateCategory = (req,_,next) => {
   const { error  } = categoryValidator.validate( { categoryType : req.body.category } )
@@ -39,6 +40,10 @@ exports.validatePriority = (req,_,next) => {
     validated(error,next)
 }
 
+exports.validateTaskByDay = (req,res,next) => {
+    const { error } = taskByDayValidator.validate( { day:req.query.day } )
+    validated(error,next)
+}
 function validated(error,next) {
     if ( error ) {
       return next( new Error(error.details[0].message))
