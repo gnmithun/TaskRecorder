@@ -1,6 +1,9 @@
 const Tasks = require("../Model/Tasks")
 const { taskValidator, idValidator } = require("../Common/validator")
 const Category = require("../Model/Category")
+const moment = require('moment')
+const { date } = require("joi")
+const { Op } = require("sequelize")
 
 exports.createTask = async (req,res,next) => {
     try {
@@ -25,11 +28,55 @@ exports.getTasks = async ( _,res,next ) => {
   } 
 }
 
-exports.getTasksBasedOnDay = (req,res,_) => {
+exports.getTasksBasedOnDay = async (req,res,next) => {
   try{
-    console.log("getTasksBasedOnDay",req.query.day)
-    return res.send( { "response":"Success","details":[] } )  
-  } catch (error) {
+
+    const now = new Date()
+    let tasks = []
+
+    let today = new Date()
+    today.setHours(0,0,0,0)
+
+    let yesterday = new Date()
+    yesterday.setDate(yesterday.getDate() - 1)
+    yesterday.setHours(0,0,0,0)
+
+
+
+    if ( req.query.day === 'yesterday') {
+      tasks = await Tasks.findAll({
+        where:{
+          createdAt:{
+            [Op.gte] : yesterday,
+            [Op.lte] : today
+          }
+        }
+      })
+    }
+
+    if ( req.query.day === 'today') {
+        tasks = await Tasks.findAll({
+          where:{
+            createdAt : {
+              [Op.gte] : today,
+              [Op.lte] : now
+            }
+          }
+        })
+    }
+
+    if ( req.query.day === 'pending') {
+      tasks = await Tasks.findAll({
+        where:{
+          createdAt : {
+            [Op.lte] : yesterday
+          }
+        }
+      })
+    }
+    return res.send( { "response":"Success","details":tasks ,  "count":tasks.length } )  
+  } 
+  catch (error) {
     next(error)
   }
 }
