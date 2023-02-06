@@ -1,2 +1,5 @@
-const priority = ["HIGH","MEDIUM","LOW"]
-export default priority
+
+module.exports = {
+    priorities : ["HIGH","MEDIUM","LOW"],
+    taskDays : ["pending","yesterday","today"]
+}

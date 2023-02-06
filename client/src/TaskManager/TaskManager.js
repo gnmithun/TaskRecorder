@@ -4,7 +4,7 @@ import Tasks from "../Tasks/Tasks";
 import TasksList from "../TasksList/TasksList";
 import TaskByDate from "../TaskByDate/TaskByDate";
 import PriorityTaskList from "../TaskByPriority/TaskByPriority"
-import Priorities from "../Common/appConst"
+import Constants from "../Common/appConst"
 import styles from './TaskManager.module.css'
 import NavBar from "../Navigation/NavBar";
 import Heading from "../Heading/Heading";
@@ -56,17 +56,17 @@ function TaskManager(props) {
         fetchTasks()    
     },[task])
 
+    const customFetchTasks = (day) => {
+      
+    }
     return(
               <div>
                 <NavBar setCategory={setCategory}/>
                 <Heading/>
                 { loading ? <LoadingSpinner/> : <></>}
-                <Tasks     setLoading={setLoading} setTask={setTask} task={task} categories={categories} priorities={Priorities}/>
-                <TasksList setLoading={setLoading} 
-                           categories={categories} 
-                           tasks={tasks === undefined ? [] : tasks } 
-                           taskDeleted={ () => setTask({}) }
-                           taskUpdated={ () => setTask({}) } //How to fetch only the updated task
+                <Tasks     setLoading={setLoading} setTask={setTask} task={task} categories={categories} priorities={Constants.priorities}/>
+                <TasksList setLoading={setLoading} categories={categories} customFetchTasks={customFetchTasks}
+                           tasks={tasks === undefined ? [] : tasks } taskDeleted={ () => setTask({}) } taskUpdated={ () => setTask({}) } //How to fetch only the updated task
                            />
                 {/* <TaskByDate setLoading={setLoading}/>
                 <PriorityTaskList setLoading={setLoading}/> */}

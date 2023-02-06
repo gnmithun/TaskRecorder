@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import TaskEditingForm from '../TaskEditing/TaskEditing';
-import priority from '../Common/appConst'
+import Constants from '../Common/appConst'
 import styles from './TasksList.module.css'
 
 function TasksList(props) {
@@ -9,10 +9,13 @@ const displayStatus = showList ?  styles.visible: styles.invisible;
 
     return (
         <div>
-            <input type="button" 
-                value="Today" 
-                className={styles.collapsibleMenu} 
-                onClick={ (event)=> setShowList(!showList)}/>
+
+            <input type="button" value="Today" className={styles.collapsibleMenu} onClick={ (event)=> props.customFetchTasks(Constants.taskDays[2]) }/>
+            
+            <input type="button" value="Yesterday" className={styles.collapsibleMenu} onClick={  (event)=> props.customFetchTasks(Constants.taskDays[1]) } />
+
+            <input type="button" value="Pending" className={styles.collapsibleMenu} onClick={  (event)=> props.customFetchTasks(Constants.taskDays[0]) } />
+
             <div className={`${displayStatus}`}>
                 <ul className= { styles.customul }>
                     {
@@ -20,7 +23,7 @@ const displayStatus = showList ?  styles.visible: styles.invisible;
                         <div key={task.id}>
                         <li > 
                             <div>
-                                <TaskEditingForm task={task} priority={priority} categories={props.categories} taskUpdated={ props.taskUpdated }/>
+                                <TaskEditingForm task={task} priority={Constants.priorities} categories={props.categories} taskUpdated={ props.taskUpdated }/>
                             </div>
                             {/* { <div className={styles.tasksOperations}>
                             <button onClick={ async (event) => {                                

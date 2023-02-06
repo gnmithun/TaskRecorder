@@ -40,9 +40,6 @@ exports.getTasksBasedOnDay = async (req,res,next) => {
     let yesterday = new Date()
     yesterday.setDate(yesterday.getDate() - 1)
     yesterday.setHours(0,0,0,0)
-
-
-
     if ( req.query.day === 'yesterday') {
       tasks = await Tasks.findAll({
         where:{
@@ -74,6 +71,7 @@ exports.getTasksBasedOnDay = async (req,res,next) => {
         }
       })
     }
+    
     return res.send( { "response":"Success","details":tasks ,  "count":tasks.length } )  
   } 
   catch (error) {
