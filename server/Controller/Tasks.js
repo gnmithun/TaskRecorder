@@ -42,6 +42,7 @@ exports.getTasksBasedOnDay = async (req,res,next) => {
     yesterday.setHours(0,0,0,0)
     if ( req.query.day === 'yesterday') {
       tasks = await Tasks.findAll({
+        include: Category,
         where:{
           createdAt:{
             [Op.gte] : yesterday,
@@ -53,6 +54,7 @@ exports.getTasksBasedOnDay = async (req,res,next) => {
 
     if ( req.query.day === 'today') {
         tasks = await Tasks.findAll({
+          include: Category,
           where:{
             createdAt : {
               [Op.gte] : today,
@@ -64,6 +66,7 @@ exports.getTasksBasedOnDay = async (req,res,next) => {
 
     if ( req.query.day === 'pending') {
       tasks = await Tasks.findAll({
+        include: Category,
         where:{
           createdAt : {
             [Op.lte] : yesterday

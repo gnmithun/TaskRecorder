@@ -5,16 +5,15 @@ import styles from './TasksList.module.css'
 
 function TasksList(props) {
 const [showList, setShowList] = useState(false)
-const displayStatus = showList ?  styles.visible: styles.invisible;
-
+const displayStatus = showList ?  styles.visible: styles.visible;
     return (
         <div>
 
-            <input type="button" value="Today" className={styles.collapsibleMenu} onClick={ (event)=> props.customFetchTasks(Constants.taskDays[2]) }/>
+            <input type="button" value="Today" className={styles.collapsibleMenu} onClick={ (event)=>  props.customFetchTasks(Constants.taskDays[2]) }/>
             
             <input type="button" value="Yesterday" className={styles.collapsibleMenu} onClick={  (event)=> props.customFetchTasks(Constants.taskDays[1]) } />
 
-            <input type="button" value="Pending" className={styles.collapsibleMenu} onClick={  (event)=> props.customFetchTasks(Constants.taskDays[0]) } />
+            <input type="button" value="Loooooooooooooooong Pending" className={styles.collapsibleMenu} onClick={  (event)=> props.customFetchTasks(Constants.taskDays[0]) } />
 
             <div className={`${displayStatus}`}>
                 <ul className= { styles.customul }>
