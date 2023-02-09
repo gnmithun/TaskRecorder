@@ -28,6 +28,22 @@ exports.getTasks = async ( _,res,next ) => {
   } 
 }
 
+exports.getTasksBasedOnStatus = async (req,res,next) => {
+  try{
+    const data = await Tasks.findAll({
+      include:Category,
+      where:{ completed:mapStatus(req.params.status) }
+    })
+    if (data.count === 0 ){
+      return res.send( { "response" : "Success", "details" : []  })
+    }else {
+      return res.send( { "response" : "Success", "details" : data  })
+    }
+  } catch ( error ) {
+    next(error)
+  }
+}
+
 exports.getTasksBasedOnDay = async (req,res,next) => {
   try{
 
@@ -136,4 +152,8 @@ exports.updateTask = async ( req,res,next ) => {
 
 function getUpdatedValueFor(updatedProperty,taskProperty) {
   return (typeof updatedProperty === "undefined" ? taskProperty : updatedProperty)
+}
+
+function mapStatus(status){
+  return (status === "completed" ? 1 : 0)
 }

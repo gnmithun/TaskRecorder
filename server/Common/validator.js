@@ -30,11 +30,16 @@ const taskByDayValidator = joi.object({
     day:joi.string().valid(...(appConst.taskDays))
 })
 
+const taskByStatusValidator = joi.object({
+    status:joi.string().valid(...(appConst.taskStatus))
+})
+
 module.exports = {
     taskValidator:taskValidator,
     categoryValidator:categoryValidator,
     idValidator:idValidator,
     dateValidator:dateValidator,
     priorityValidator:priorityValidator,
-    taskByDayValidator:taskByDayValidator
+    taskByDayValidator:taskByDayValidator,
+    taskByStatusValidator:taskByStatusValidator
 }
