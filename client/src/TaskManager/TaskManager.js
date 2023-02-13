@@ -80,13 +80,40 @@ function TaskManager(props) {
       }  
       setLoading(false)
     }
+
+    const customFetchTasksBasedOnStatus = async (status) => {
+      setLoading(true)
+
+      const requestOptions = {
+        method : 'GET',
+        headers : { 'Content-Type' : 'application/json' },
+        mode:'cors'
+      }
+      const resp = await fetch("http://localhost:8000/tasksWithStatus/"+status,requestOptions)
+      const data = await resp.json() 
+
+      if (data.response === "Success"){
+        if ( data.details.length === 0 ) {
+          alert("No tasks found")
+          setTasks([])
+          setLoading(false)
+          return
+        }
+        setTasks(data.details)  
+      } else {
+        alert(data.details)
+      }  
+      setLoading(false)
+    }
+
     return(
               <div>
                 <NavBar setCategory={setCategory}/>
                 <Heading/>
                 { loading ? <LoadingSpinner/> : <></>}
                 <Tasks     setLoading={setLoading} setTask={setTask} task={task} categories={categories} priorities={Constants.priorities}/>
-                <TasksList setLoading={setLoading} categories={categories} customFetchTasks={customFetchTasks}
+                <TasksList setLoading={setLoading} categories={categories} customFetchTasks={customFetchTasks} 
+                           customFetchTasksBasedOnStatus = { customFetchTasksBasedOnStatus }
                            tasks={tasks === undefined ? [] : tasks } taskDeleted={ () => setTask({}) } taskUpdated={ () => setTask({}) } //How to fetch only the updated task
                            />
                 {/* <TaskByDate setLoading={setLoading}/>

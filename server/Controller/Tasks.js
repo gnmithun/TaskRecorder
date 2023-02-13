@@ -63,7 +63,7 @@ exports.getTasksBasedOnDay = async (req,res,next) => {
           createdAt:{
             [Op.gte] : yesterday,
             [Op.lte] : today
-          }
+          },completed:0
         }
       })
     }
@@ -75,7 +75,7 @@ exports.getTasksBasedOnDay = async (req,res,next) => {
             createdAt : {
               [Op.gte] : today,
               [Op.lte] : now
-            }
+            },completed:0
           }
         })
     }
@@ -86,7 +86,7 @@ exports.getTasksBasedOnDay = async (req,res,next) => {
         where:{
           createdAt : {
             [Op.lte] : yesterday
-          }
+          },completed:0
         }
       })
     }

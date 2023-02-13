@@ -9,6 +9,8 @@ const displayStatus = showList ?  styles.visible: styles.visible;
     return (
         <div>
 
+            <input type="button" value="Completed" className={styles.collapsibleMenu} onClick={ (event)=>  props.customFetchTasksBasedOnStatus(Constants.status[1]) }/>
+            
             <input type="button" value="Today" className={styles.collapsibleMenu} onClick={ (event)=>  props.customFetchTasks(Constants.taskDays[2]) }/>
             
             <input type="button" value="Yesterday" className={styles.collapsibleMenu} onClick={  (event)=> props.customFetchTasks(Constants.taskDays[1]) } />
