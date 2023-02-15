@@ -9,6 +9,7 @@ import styles from './TaskManager.module.css'
 import NavBar from "../Navigation/NavBar";
 import Heading from "../Heading/Heading";
 
+
 function TaskManager(props) {
 
     const [loading,setLoading] = useState(false)
@@ -56,54 +57,51 @@ function TaskManager(props) {
         fetchTasks()    
     },[task])
 
-    const customFetchTasks = async (day) => {
+    // const customFetchTasks = async (day) => {
+    //   setLoading(true)
+
+    //   const requestOptions = {
+    //     method : 'GET',
+    //     headers : { 'Content-Type' : 'application/json' },
+    //     mode:'cors'
+    //   }
+    //   const resp = await fetch("http://localhost:8000/tasksFor?day="+day,requestOptions)
+    //   const data = await resp.json() 
+
+    //   if (data.response === "Success"){
+    //     if ( data.details.length === 0 ) {
+    //       alert("No tasks found")
+    //       setTasks([])
+    //       setLoading(false)
+    //       return
+    //     }
+    //     setTasks(data.details)  
+    //   } else {
+    //     alert(data.details)
+    //   }  
+    //   setLoading(false)
+    // }
+
+
+
+    async function customFetch(fetcher,param){
       setLoading(true)
+      fetcher.getTasksWith(param)
+      // const resp = await fetcher.fetch(param)
+      // const data = await resp.json() 
 
-      const requestOptions = {
-        method : 'GET',
-        headers : { 'Content-Type' : 'application/json' },
-        mode:'cors'
-      }
-      const resp = await fetch("http://localhost:8000/tasksFor?day="+day,requestOptions)
-      const data = await resp.json() 
-
-      if (data.response === "Success"){
-        if ( data.details.length === 0 ) {
-          alert("No tasks found")
-          setTasks([])
-          setLoading(false)
-          return
-        }
-        setTasks(data.details)  
-      } else {
-        alert(data.details)
-      }  
-      setLoading(false)
-    }
-
-    const customFetchTasksBasedOnStatus = async (status) => {
-      setLoading(true)
-
-      const requestOptions = {
-        method : 'GET',
-        headers : { 'Content-Type' : 'application/json' },
-        mode:'cors'
-      }
-      const resp = await fetch("http://localhost:8000/tasksWithStatus/"+status,requestOptions)
-      const data = await resp.json() 
-
-      if (data.response === "Success"){
-        if ( data.details.length === 0 ) {
-          alert("No tasks found")
-          setTasks([])
-          setLoading(false)
-          return
-        }
-        setTasks(data.details)  
-      } else {
-        alert(data.details)
-      }  
-      setLoading(false)
+      // if (data.response === "Success"){
+      //   if ( data.details.length === 0 ) {
+      //     alert("No tasks found")
+      //     setTasks([])
+      //     setLoading(false)
+      //     return
+      //   }
+      //   setTasks(data.details)  
+      // } else {
+      //   alert(data.details)
+      // }  
+      // setLoading(false)
     }
 
     return(
@@ -111,10 +109,17 @@ function TaskManager(props) {
                 <NavBar setCategory={setCategory}/>
                 <Heading/>
                 { loading ? <LoadingSpinner/> : <></>}
-                <Tasks     setLoading={setLoading} setTask={setTask} task={task} categories={categories} priorities={Constants.priorities}/>
-                <TasksList setLoading={setLoading} categories={categories} customFetchTasks={customFetchTasks} 
-                           customFetchTasksBasedOnStatus = { customFetchTasksBasedOnStatus }
-                           tasks={tasks === undefined ? [] : tasks } taskDeleted={ () => setTask({}) } taskUpdated={ () => setTask({}) } //How to fetch only the updated task
+                <Tasks     setLoading={setLoading} 
+                           setTask={setTask} 
+                           task={task} 
+                           categories={categories} 
+                           priorities={Constants.priorities}/>
+                <TasksList setLoading={setLoading} 
+                           categories={categories}  
+                           customFetch = { customFetch }
+                           tasks={tasks === undefined ? [] : tasks } 
+                           taskDeleted={ () => setTask({}) } 
+                           taskUpdated={ () => setTask({}) } //How to fetch only the updated task
                            />
                 {/* <TaskByDate setLoading={setLoading}/>
                 <PriorityTaskList setLoading={setLoading}/> */}

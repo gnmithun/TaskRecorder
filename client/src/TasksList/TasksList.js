@@ -2,6 +2,8 @@ import React, {useState} from 'react';
 import TaskEditingForm from '../TaskEditing/TaskEditing';
 import Constants from '../Common/appConst'
 import styles from './TasksList.module.css'
+import { FilteredTasks } from "../FilteredAPIs/FilteredTasks"
+import { CompletedTasks } from "../FilteredAPIs/CompletedTasks"
 
 function TasksList(props) {
 const [showList, setShowList] = useState(false)
@@ -9,13 +11,13 @@ const displayStatus = showList ?  styles.visible: styles.visible;
     return (
         <div>
 
-            <input type="button" value="Completed" className={styles.collapsibleMenu} onClick={ (event)=>  props.customFetchTasksBasedOnStatus(Constants.status[1]) }/>
+            <input type="button" value="Completed" className={styles.collapsibleMenu} onClick={ (event)=>  props.customFetch(new CompletedTasks(),Constants.status[1]) }/>
             
-            <input type="button" value="Today" className={styles.collapsibleMenu} onClick={ (event)=>  props.customFetchTasks(Constants.taskDays[2]) }/>
+            <input type="button" value="Today" className={styles.collapsibleMenu} onClick={ (event)=>  props.customFetch(new FilteredTasks(),Constants.taskDays[2]) }/>
             
-            <input type="button" value="Yesterday" className={styles.collapsibleMenu} onClick={  (event)=> props.customFetchTasks(Constants.taskDays[1]) } />
+            <input type="button" value="Yesterday" className={styles.collapsibleMenu} onClick={  (event)=> props.customFetch(new FilteredTasks(),Constants.taskDays[1]) } />
 
-            <input type="button" value="Loooooooooooooooong Pending" className={styles.collapsibleMenu} onClick={  (event)=> props.customFetchTasks(Constants.taskDays[0]) } />
+            <input type="button" value="Loooooooooooooooong Pending" className={styles.collapsibleMenu} onClick={  (event)=> props.customFetch(new FilteredTasks(),Constants.taskDays[0]) } />
 
             <div className={`${displayStatus}`}>
                 <ul className= { styles.customul }>
