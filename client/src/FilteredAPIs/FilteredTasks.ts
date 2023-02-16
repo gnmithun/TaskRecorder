@@ -1,6 +1,6 @@
 export class FilteredTasks {
     constructor(){}
-    getTasksWith(day){
+    public static getTasksWith(day){
         console.log("Fetch tasks which are",day)
         // const options = {
         //     method : 'GET',

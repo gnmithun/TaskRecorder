@@ -11,13 +11,13 @@ const displayStatus = showList ?  styles.visible: styles.visible;
     return (
         <div>
 
-            <input type="button" value="Completed" className={styles.collapsibleMenu} onClick={ (event)=>  props.customFetch(new CompletedTasks(),Constants.status[1]) }/>
+            <input type="button" value="Completed" className={styles.collapsibleMenu} onClick={ (event)=>  props.customFetch(CompletedTasks,Constants.status[1]) }/>
             
-            <input type="button" value="Today" className={styles.collapsibleMenu} onClick={ (event)=>  props.customFetch(new FilteredTasks(),Constants.taskDays[2]) }/>
+            <input type="button" value="Today" className={styles.collapsibleMenu} onClick={ (event)=>  props.customFetch(FilteredTasks,Constants.taskDays[2]) }/>
             
-            <input type="button" value="Yesterday" className={styles.collapsibleMenu} onClick={  (event)=> props.customFetch(new FilteredTasks(),Constants.taskDays[1]) } />
+            <input type="button" value="Yesterday" className={styles.collapsibleMenu} onClick={  (event)=> props.customFetch(FilteredTasks,Constants.taskDays[1]) } />
 
-            <input type="button" value="Loooooooooooooooong Pending" className={styles.collapsibleMenu} onClick={  (event)=> props.customFetch(new FilteredTasks(),Constants.taskDays[0]) } />
+            <input type="button" value="Loooooooooooooooong Pending" className={styles.collapsibleMenu} onClick={  (event)=> props.customFetch(FilteredTasks,Constants.taskDays[0]) } />
 
             <div className={`${displayStatus}`}>
                 <ul className= { styles.customul }>

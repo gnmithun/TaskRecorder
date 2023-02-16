@@ -1,6 +1,6 @@
 export class CompletedTasks {
     constructor(){}
-    getTasksWith(param){
+    public static getTasksWith(param){
         console.log("Fetch tasks which are",param)
     }
 }
