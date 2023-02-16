@@ -62,7 +62,18 @@ function TaskManager(props) {
 
     async function customFetch(fetcher,param){
       setLoading(true)
-      fetcher.getTasksWith(param)
+      const data = await fetcher.getTasksWith(param)
+      if (data.response === "Success"){
+        if ( data.details.length === 0 ) {
+          alert("No tasks found")
+          setTasks([])
+          setLoading(false)
+          return
+        }
+        setTasks(data.details)  
+      } else {
+        alert(data.details)
+      }  
       setLoading(false)
     }
 
