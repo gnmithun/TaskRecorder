@@ -17,7 +17,7 @@ exports.createTask = async (req,res,next) => {
 
 exports.getTasks = async ( _,res,next ) => {
   try {
-      const data = await Tasks.findAll({ include: Category })
+      const data = await Tasks.findAll({ include: Category, where : {completed:mapStatus("pending")}})
       if (data.count === 0) {
         return res.send( { "response" : "Success", "details" : [] } )
       }
