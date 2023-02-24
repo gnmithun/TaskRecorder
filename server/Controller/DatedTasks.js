@@ -1,4 +1,4 @@
-const Tasks = require('../Model/Tasks')
+const { Tasks } = require('../Model/Tasks')
 const { Op } = require("sequelize")
 const moment = require('moment')
 const Category = require('../Model/Category')

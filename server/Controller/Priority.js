@@ -1,4 +1,4 @@
-const Tasks = require('../Model/Tasks')
+const { Tasks } = require('../Model/Tasks')
 const priority = require('../Common/appConst')
 const Category = require('../Model/Category')
 

@@ -1,4 +1,4 @@
-const Tasks = require("../Model/Tasks")
+const { Tasks, TasksView } = require("../Model/Tasks")
 const { taskValidator, idValidator } = require("../Common/validator")
 const Category = require("../Model/Category")
 const moment = require('moment')
@@ -17,7 +17,7 @@ exports.createTask = async (req,res,next) => {
 
 exports.getTasks = async ( _,res,next ) => {
   try {
-      const data = await Tasks.findAll({ include: Category, where : {completed:mapStatus("pending")}})
+      const data = await TasksView.findAll()
       if (data.count === 0) {
         return res.send( { "response" : "Success", "details" : [] } )
       }

@@ -9,7 +9,7 @@ const PriorityRoutes = require('./Router/Priority')
 
 const dbController = require('./Database/DBController')
 const Category = require('./Model/Category')
-const Tasks = require('./Model/Tasks')
+const { Tasks, TasksView } = require('./Model/Tasks')
 
 Tasks.belongsTo(Category)
 const app = express()
