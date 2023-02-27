@@ -12,6 +12,7 @@ const Category = require('./Model/Category')
 const { Tasks, TasksView } = require('./Model/Tasks')
 
 Tasks.belongsTo(Category)
+TasksView.belongsTo(Category)
 const app = express()
 app.use(cors());
 app.use(express.json())
