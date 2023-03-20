@@ -17,7 +17,7 @@ exports.createTask = async (req,res,next) => {
 
 exports.getTasks = async ( _,res,next ) => {
   try {
-      const data = await TasksView.findAll({include:Category})
+      const data = await Tasks.findAll({include:Category})
       if (data.count === 0) {
         return res.send( { "response" : "Success", "details" : [] } )
       }
@@ -30,7 +30,7 @@ exports.getTasks = async ( _,res,next ) => {
 
 exports.getTasksBasedOnStatus = async (req,res,next) => {
   try{
-    const data = await TasksView.findAll({
+    const data = await Tasks.findAll({
       include:Category,
       where:{ completed:mapStatus(req.params.status) }
     })
@@ -57,7 +57,7 @@ exports.getTasksBasedOnDay = async (req,res,next) => {
     yesterday.setDate(yesterday.getDate() - 1)
     yesterday.setHours(0,0,0,0)
     if ( req.query.day === 'yesterday') {
-      tasks = await TasksView.findAll({
+      tasks = await Tasks.findAll({
         include: Category,
         where:{
           createdAt:{
@@ -69,7 +69,7 @@ exports.getTasksBasedOnDay = async (req,res,next) => {
     }
 
     if ( req.query.day === 'today') {
-        tasks = await TasksView.findAll({
+        tasks = await Tasks.findAll({
           include: Category,
           where:{
             createdAt : {
@@ -81,7 +81,7 @@ exports.getTasksBasedOnDay = async (req,res,next) => {
     }
 
     if ( req.query.day === 'pending') {
-      tasks = await TasksView.findAll({
+      tasks = await Tasks.findAll({
         include: Category,
         where:{
           createdAt : {
@@ -101,7 +101,7 @@ exports.getTasksBasedOnDay = async (req,res,next) => {
 exports.getTask = async (req,res,next) => {
   const taskId = req.params.taskId
   try {  
-    const task = await TasksView.findOne( {
+    const task = await Tasks.findOne( {
       where:{
         id:taskId
       },

@@ -1,4 +1,4 @@
-const sequelize = require('sequelize')
+
 const { Sequelize } = require('sequelize')
 const dbController = require('../Database/DBController')
 const { priority } = require('../Common/appConst')
