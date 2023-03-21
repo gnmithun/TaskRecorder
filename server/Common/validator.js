@@ -3,14 +3,14 @@ const joi = require('joi').extend(require('@joi/date'))
 const appConst = require('./appConst')
 
 const taskValidator = joi.object({
-    detail:joi.string().trim().min(5).max(100),
-    priority:joi.string().valid(...(appConst.priority)),
-    completed:joi.bool(),
-    category:joi.number(),
+    detail:joi.string().trim().min(5).max(100).exist(),
+    priority:joi.string().valid(...(appConst.priority)).exist(),
+    completed:joi.bool().exist(),
+    category:joi.number().exist(),
 })
 
 const categoryValidator = joi.object({
-    categoryType:joi.string().trim().min(1).max(30)
+    categoryType:joi.string().trim().min(1).max(30).exist()
 })
 
 const idValidator = joi.object({
@@ -18,8 +18,8 @@ const idValidator = joi.object({
 })
 
 const dateValidator = joi.object({
-    from:joi.date().format(['D-M-YYYY','DD-MM-YYYY']),
-    to:joi.date().format(['D-M-YYYY','DD-MM-YYYY'])
+    from:joi.date().format(['D-M-YYYY','DD-MM-YYYY']).exist(),
+    to:joi.date().format(['D-M-YYYY','DD-MM-YYYY']).exist()
 })
 
 const priorityValidator = joi.object({
@@ -27,7 +27,7 @@ const priorityValidator = joi.object({
 })
 
 const taskByDayValidator = joi.object({
-    day:joi.string().valid(...(appConst.taskDays))
+    day:joi.string().valid(...(appConst.taskDays)).exist()
 })
 
 const taskByStatusValidator = joi.object({
@@ -35,8 +35,8 @@ const taskByStatusValidator = joi.object({
 })
 
 const userValidator = joi.object({
-    email:joi.string().email().max(45),
-    password:joi.string()
+    email:joi.string().email().max(45).exist(),
+    password:joi.string().exist()
 })
 
 module.exports = {
