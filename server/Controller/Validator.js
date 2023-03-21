@@ -4,6 +4,7 @@ const { dateValidator } = require("../Common/validator")
 const { priorityValidator } = require("../Common/validator")
 const { taskByDayValidator } = require("../Common/validator")
 const { taskByStatusValidator } = require("../Common/validator")
+const { userValidator } = require("../Common/validator")
 
 exports.validateCategory = (req,_,next) => {
   const { error  } = categoryValidator.validate( { categoryType : req.body.category } )
@@ -48,6 +49,11 @@ exports.validateTaskByDay = (req,_,next) => {
 
 exports.validateTasksByStatus = (req,_,next) => {
     const { error } = taskByStatusValidator.validate( { status: req.params.status} )
+    validated(error,next)
+}
+
+exports.validateUser = (req,_,next) => {
+    const { error } = userValidator.validate( { email:req.body.email, password: req.body.password } )
     validated(error,next)
 }
 

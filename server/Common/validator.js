@@ -34,6 +34,11 @@ const taskByStatusValidator = joi.object({
     status:joi.string().valid(...(appConst.taskStatus))
 })
 
+const userValidator = joi.object({
+    email:joi.string().email().max(45),
+    password:joi.string()
+})
+
 module.exports = {
     taskValidator:taskValidator,
     categoryValidator:categoryValidator,
@@ -41,5 +46,6 @@ module.exports = {
     dateValidator:dateValidator,
     priorityValidator:priorityValidator,
     taskByDayValidator:taskByDayValidator,
-    taskByStatusValidator:taskByStatusValidator
+    taskByStatusValidator:taskByStatusValidator,
+    userValidator:userValidator
 }

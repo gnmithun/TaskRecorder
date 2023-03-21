@@ -1,10 +1,11 @@
-const Router = require('express').Router
+const Router = require('express').Router()
 const access = require('../Controller/Access')
+const Validators = require('../Controller/Validator')
 
-//Get for signup page
-//Get for signin page
+Router.post('/signup',Validators.validateUser,access.signup)
+Router.post('/signin',Validators.validateUser,access.signin)
 
-Router.post('/signup',access.signup)
-Router.post('/signin',access.signin)
+
+module.exports = Router
 
 
