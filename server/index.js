@@ -11,7 +11,6 @@ const AccessRoutes = require('./Router/Access')
 const dbController = require('./Database/DBController')
 const Category = require('./Model/Category')
 const { Tasks, TasksView } = require('./Model/Tasks')
-const Users = require('./Model/Users')
 
 Tasks.belongsTo(Category)
 TasksView.belongsTo(Category)
