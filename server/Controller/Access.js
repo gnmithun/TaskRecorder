@@ -1,18 +1,22 @@
 const hasher = require('password-hash')
-const Users  = require('../Model/Users')
+const { Users }  = require('../Model/Users')
 
 exports.signup = async (req,res,next) => {
+  
     try {
         const email = req.body.email
         const password = req.body.password
+        
         const user = await Users.findOne({
+          where: {
             email : email
+          }            
         })
-        if ( user === undefined) {
-            return res.send( { "response" : "Success", "details" : { } } )
+        if ( user !== null ) {
+            return res.send( { "response" : "Success", "details" :  " User already exists! " } )
         } else {
             const hashPassword = hasher.generate(req.body.password)            
-            const newTask = await Users.create( { email:email, password:password } )
+            const newTask = await Users.create( { email:email, password:hashPassword } )
             return res.send( { "response" : "Success", "details" : { "email" : req.body.email } } )
         }
     } catch (error){
