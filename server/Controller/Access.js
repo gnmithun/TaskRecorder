@@ -2,6 +2,28 @@ const hasher = require('password-hash')
 const { Users }  = require('../Model/Users')
 const jwt = require('jsonwebtoken')
 
+exports. isAuthenticatedUser = async(req,res,next) => {
+    try {
+        if ( req.session.user_id){
+            next()
+        } else {
+            res.status(401).send( { "response" : "Success", "details" : "Unauthorized" } )
+        }
+    } catch (error) {
+        next(error)
+    }
+
+}
+
+exports.signout = async (req,res,next) => {
+    try {
+        req.session.user_id = null
+        res.send( { "response" : "Success", "details" : "Logged out" } )
+    } catch ( error ) {
+        next(error)
+    }
+}
+
 exports.signup = async (req,res,next) => {
   
     try {
@@ -32,6 +54,7 @@ exports.signin = async (req,res,next) => {
 
             if (isPasswordCorrect) {
                 const token = jwt.sign({ email : email },"E(H+MbQeShVmYq3t6w9z$C&F)J@NcRfU")
+                req.session.user_id = user.id
                 return res.send( { "response" : "Success", "details" : "Logged In", "token" : token } )
             }
             else{
