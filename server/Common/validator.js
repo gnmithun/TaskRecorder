@@ -6,7 +6,7 @@ const taskValidator = joi.object({
     detail:joi.string().trim().min(5).max(100).exist(),
     priority:joi.string().valid(...(appConst.priority)).exist(),
     completed:joi.bool().exist(),
-    category:joi.number().exist(),
+    categoryId:joi.number().exist(),
 })
 
 const categoryValidator = joi.object({

@@ -1,4 +1,4 @@
-const { Tasks, TasksView } = require("../Model/Tasks")
+const { Tasks } = require("../Model/Tasks")
 const { taskValidator, idValidator } = require("../Common/validator")
 const Category = require("../Model/Category")
 const moment = require('moment')
@@ -7,7 +7,11 @@ const { Op } = require("sequelize")
 
 exports.createTask = async (req,res,next) => {
     try {
-      const newTask = await Tasks.create( { detail:req.body.detail, completed:req.body.completed, categoryId:req.body.categoryId, priority:req.body.priority } )
+      const newTask = await Tasks.create( { detail:req.body.detail, 
+        completed:req.body.completed, 
+        userId:req.session.userId, 
+        categoryId:req.body.categoryId,
+        priority:req.body.priority } )
       return res.status(200).send( { "response" : "Success", "details" : newTask } )
     } 
     catch (error) { 

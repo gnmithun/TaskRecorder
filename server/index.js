@@ -12,10 +12,12 @@ const AccessRoutes = require('./Router/Access')
 
 const dbController = require('./Database/DBController')
 const Category = require('./Model/Category')
-const { Tasks, TasksView } = require('./Model/Tasks')
+const { Tasks } = require('./Model/Tasks')
+const { Users } = require('./Model/Users')
 
 Tasks.belongsTo(Category)
-TasksView.belongsTo(Category)
+Tasks.belongsTo(Users)
+
 const app = express()
 
 app.use(session({
@@ -27,11 +29,12 @@ app.use(session({
 app.use(cors());
 app.use(express.json())
 app.use(express.urlencoded())
-app.use(TaskRoutes)
+
 app.use(CategoryRoutes)
 app.use(DatedTaskRoutes)
 app.use(PriorityRoutes)
 app.use(AccessRoutes)
+app.use(TaskRoutes)
 
 app.listen(8000,() => {
   console.log("Server running on port 8K")

@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken')
 
 exports. isAuthenticatedUser = async(req,res,next) => {
     try {
-        if ( req.session.user_id){
+        if ( req.session.userId){
             next()
         } else {
             res.status(401).send( { "response" : "Success", "details" : "Unauthorized" } )
@@ -17,7 +17,7 @@ exports. isAuthenticatedUser = async(req,res,next) => {
 
 exports.signout = async (req,res,next) => {
     try {
-        req.session.user_id = null
+        req.session.userId = null
         res.send( { "response" : "Success", "details" : "Logged out" } )
     } catch ( error ) {
         next(error)
@@ -54,7 +54,7 @@ exports.signin = async (req,res,next) => {
 
             if (isPasswordCorrect) {
                 const token = jwt.sign({ email : email },"E(H+MbQeShVmYq3t6w9z$C&F)J@NcRfU")
-                req.session.user_id = user.id
+                req.session.userId = user.id
                 return res.send( { "response" : "Success", "details" : "Logged In", "token" : token } )
             }
             else{
