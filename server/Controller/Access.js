@@ -1,19 +1,11 @@
 const hasher = require('password-hash')
 const { Users }  = require('../Model/Users')
-const jwt = require('jsonwebtoken')
 
 exports. isAuthenticatedUser = async(req,res,next) => {
-    try { 
-             
-        if ( req.headers.authorization.startsWith('Bearer') ) {
-          const token = req.headers.authorization.substring(7)
-          const isValidToken = jwt.verify(token,"E(H+MbQeShVmYq3t6w9z$C&F)J@NcRfU")
-          if (isValidToken) {
-            next()
-          } else {
-            res.status(401).send( { "response" : "Success", "details" : "Unauthorized" } )
-          }          
-        } else {
+    try {              
+       if (req.session.userId ){
+          next()        
+       } else {
           res.status(401).send( { "response" : "Success", "details" : "Unauthorized" } )
         }
     } catch (error) {
@@ -24,6 +16,7 @@ exports. isAuthenticatedUser = async(req,res,next) => {
 
 exports.signout = async (req,res,next) => {
     try {        
+      req.session.userId = null
         res.send( { "response" : "Success", "details" : "Logged out" } )
     } catch ( error ) {
         next(error)
@@ -58,10 +51,9 @@ exports.signin = async (req,res,next) => {
             const hashedPassword = user.password
             const isPasswordCorrect = hasher.verify(password,hashedPassword)
 
-            if (isPasswordCorrect) {
-                const token = jwt.sign( { email : email },"E(H+MbQeShVmYq3t6w9z$C&F)J@NcRfU", { expiresIn : 60})
-                
-                return res.send( { "response" : "Success", "details" : "Logged In", "token" : token } )
+            if (isPasswordCorrect) {                
+                req.session.userId = user.id
+                return res.send( { "response" : "Success", "details" : "Logged In" } )
             }
             else{
                 return res.send( { "response" : "Success", "details" : "Password Incorrect!!" } )
