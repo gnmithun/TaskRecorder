@@ -3,11 +3,18 @@ const { Users }  = require('../Model/Users')
 const jwt = require('jsonwebtoken')
 
 exports. isAuthenticatedUser = async(req,res,next) => {
-    try {
-        if ( req.session.userId){
+    try { 
+             
+        if ( req.headers.authorization.startsWith('Bearer') ) {
+          const token = req.headers.authorization.substring(7)
+          const isValidToken = jwt.verify(token,"E(H+MbQeShVmYq3t6w9z$C&F)J@NcRfU")
+          if (isValidToken) {
             next()
-        } else {
+          } else {
             res.status(401).send( { "response" : "Success", "details" : "Unauthorized" } )
+          }          
+        } else {
+          res.status(401).send( { "response" : "Success", "details" : "Unauthorized" } )
         }
     } catch (error) {
         next(error)
@@ -16,8 +23,7 @@ exports. isAuthenticatedUser = async(req,res,next) => {
 }
 
 exports.signout = async (req,res,next) => {
-    try {
-        req.session.userId = null
+    try {        
         res.send( { "response" : "Success", "details" : "Logged out" } )
     } catch ( error ) {
         next(error)
@@ -53,8 +59,8 @@ exports.signin = async (req,res,next) => {
             const isPasswordCorrect = hasher.verify(password,hashedPassword)
 
             if (isPasswordCorrect) {
-                const token = jwt.sign({ email : email },"E(H+MbQeShVmYq3t6w9z$C&F)J@NcRfU")
-                req.session.userId = user.id
+                const token = jwt.sign( { email : email },"E(H+MbQeShVmYq3t6w9z$C&F)J@NcRfU", { expiresIn : 60})
+                
                 return res.send( { "response" : "Success", "details" : "Logged In", "token" : token } )
             }
             else{

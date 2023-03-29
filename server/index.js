@@ -1,5 +1,4 @@
 const express = require("express")
-const session = require("express-session")
 
 const cors = require('cors');
 const { Sequelize } = require("sequelize")
@@ -19,12 +18,6 @@ Tasks.belongsTo(Category)
 Tasks.belongsTo(Users)
 
 const app = express()
-
-app.use(session({
-  secret: 'top secret',
-  resave: false,
-  saveUninitialized: false,
-}))
 
 app.use(cors());
 app.use(express.json())
