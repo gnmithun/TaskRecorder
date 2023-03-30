@@ -4,6 +4,7 @@ const Category = require("../Model/Category")
 const moment = require('moment')
 const { date } = require("joi")
 const { Op } = require("sequelize")
+const { Users } = require("../Model/Users")
 
 exports.createTask = async (req,res,next) => {
     try {
@@ -21,7 +22,7 @@ exports.createTask = async (req,res,next) => {
 
 exports.getTasks = async ( _,res,next ) => {
   try {
-      const data = await Tasks.findAll({include:Category})
+      const data = await Tasks.findAll({include:[Category,Users]})
       if (data.count === 0) {
         return res.send( { "response" : "Success", "details" : [] } )
       }
