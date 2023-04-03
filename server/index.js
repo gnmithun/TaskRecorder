@@ -12,11 +12,12 @@ const dbController = require('./Database/DBController')
 const Category = require('./Model/Category')
 
 const { Sequelize } = require("sequelize")
-const { Tasks } = require('./Model/Tasks')
+const { Tasks, TasksView } = require('./Model/Tasks')
 const { Users } = require('./Model/Users')
 
 Tasks.belongsTo(Category)
 Tasks.belongsTo(Users)
+TasksView.belongsTo(Category)
 
 const app = express()
 

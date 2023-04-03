@@ -9,7 +9,15 @@ const Tasks = dbController.define('tasks',{
     priority:{ type:Sequelize.ENUM(...priority) },
 })
 
+const TasksView = dbController.define('tasksview',{ 
+    detail:{ type:Sequelize.STRING, allowNull:false },
+    completed:{ type:Sequelize.BOOLEAN, defaultValue:false },
+    priority:{ type:Sequelize.ENUM(...priority) },
+})
+
+TasksView.sync = () => Promise.resolve();
 
 module.exports = {
-    Tasks:Tasks
+    Tasks:Tasks,
+    TasksView:TasksView
 }

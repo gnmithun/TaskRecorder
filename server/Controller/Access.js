@@ -16,7 +16,7 @@ exports. isAuthenticatedUser = async(req,res,next) => {
 
 exports.signout = async (req,res,next) => {
     try {        
-      req.session.userId = null
+        req.session.userId = null
         res.send( { "response" : "Success", "details" : "Logged out" } )
     } catch ( error ) {
         next(error)

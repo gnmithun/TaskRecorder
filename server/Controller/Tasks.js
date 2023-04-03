@@ -5,7 +5,9 @@ const moment = require('moment')
 const { date } = require("joi")
 const { Op } = require("sequelize")
 const { Users } = require("../Model/Users")
-
+const { TasksView } = require("../Model/Tasks")
+const dbController = require("../Database/DBController")
+const session = require("express-session")
 exports.createTask = async (req,res,next) => {
     try {
       const newTask = await Tasks.create( { detail:req.body.detail, 
@@ -20,9 +22,13 @@ exports.createTask = async (req,res,next) => {
     }
 }
 
-exports.getTasks = async ( _,res,next ) => {
+exports.getTasks = async ( req,res,next ) => {
   try {
-      const data = await Tasks.findAll({include:[Category,Users]})
+    const result = await dbController.query(" DROP VIEW if exists todos.tasksviews; ")
+    const resultOne = await dbController.query(" CREATE VIEW `tasksviews` AS SELECT `tasks`.`id` AS `id`, `tasks`.`detail` AS `detail`, `tasks`.categoryId AS `categoryId`, `tasks`.`completed` AS `completed`, `tasks`.`priority` AS `priority`,`tasks`.`createdAt` AS `createdAt`, `tasks`.`updatedAt` AS `updatedAt` FROM `tasks` WHERE (`tasks`.`userId` = :userId)",{
+       replacements : { userId : req.session.userId }
+   })
+      const data = await TasksView.findAll({include:Category})
       if (data.count === 0) {
         return res.send( { "response" : "Success", "details" : [] } )
       }
