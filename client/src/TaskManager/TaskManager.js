@@ -8,7 +8,7 @@ import Constants from "../Common/appConst"
 import styles from './TaskManager.module.css'
 import NavBar from "../Navigation/NavBar";
 import Heading from "../Heading/Heading";
-
+import Signup from "../Access/Signup";
 
 function TaskManager(props) {
 
@@ -57,9 +57,6 @@ function TaskManager(props) {
         fetchTasks()    
     },[task])
 
-
-
-
     async function customFetch(fetcher,param){
       setLoading(true)
       const data = await fetcher.getTasksWith(param)
@@ -79,6 +76,7 @@ function TaskManager(props) {
 
     return(
               <div>
+                <Signup/>
                 <NavBar setCategory={setCategory}/>
                 <Heading/>
                 { loading ? <LoadingSpinner/> : <></>}
