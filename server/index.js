@@ -21,14 +21,18 @@ TasksView.belongsTo(Category)
 
 const app = express()
 
-app.use(cors());
+app.use(cors( {
+  origin:'http://localhost:3000',
+  methods: ['GET','POST','DELETE','UPDATE','PUT','PATCH'],
+  credentials: true,
+}));
 app.use(express.json())
 app.use(express.urlencoded())
 
 app.use(session({
   secret : "E(H+MbQeShVmYq3t6w9z$C&F)J@NcRfU",
   resave:false,
-  saveUninitialized:false
+  saveUninitialized:false,
 }))
 app.use(CategoryRoutes)
 app.use(DatedTaskRoutes)

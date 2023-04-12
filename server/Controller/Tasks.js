@@ -8,7 +8,7 @@ const { Users } = require("../Model/Users")
 const { TasksView } = require("../Model/Tasks")
 const dbController = require("../Database/DBController")
 const session = require("express-session")
-const sessionId = 2 // replace with session ID later
+
 
 createTasksViewForTenants = async (sessionId) => {
   await dbController.query(" DROP VIEW if exists tasksviews; ")
@@ -21,7 +21,7 @@ exports.createTask = async (req,res,next) => {
     try {
       const newTask = await Tasks.create( { detail:req.body.detail, 
         completed:req.body.completed, 
-        userId:sessionId, 
+        userId:req.session.userId, 
         categoryId:req.body.categoryId,
         priority:req.body.priority } )
       return res.status(200).send( { "response" : "Success", "details" : newTask } )
@@ -33,7 +33,7 @@ exports.createTask = async (req,res,next) => {
 
 exports.getTasks = async ( req,res,next ) => {
   try {
-      await createTasksViewForTenants(sessionId)
+      await createTasksViewForTenants(req.session.userId)
       const data = await TasksView.findAll({include:Category})
       if (data.count === 0) {
         return res.send( { "response" : "Success", "details" : [] } )
