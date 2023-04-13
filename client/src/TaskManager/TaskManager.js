@@ -41,10 +41,20 @@ function TaskManager(props) {
     useEffect(()=>{
         async function fetchTasks(params) {
           setLoading(true)
-          const resp = await fetch("http://localhost:8000/tasks")
+          const requestOptionsForGetTasks = {
+            method:'GET',
+            headers:{ 'Content-Type' : 'application/json' },
+            credentials:"include",
+            mode:'cors'
+        }
+          const resp = await fetch("http://localhost:8000/tasks",requestOptionsForGetTasks)
           const data = await resp.json() 
           setLoading(false)
           if (data.response === "Success"){
+            if ( data.details === "Unauthorized"){
+              alert("Unauthorized: Please sign in")
+              return
+            }
             if ( data.details.length === 0 ) {
               alert("No tasks found")
               setTasks([])
@@ -79,7 +89,7 @@ function TaskManager(props) {
     return(
               <div>
                 <Signup/>
-                <Signin/>
+                <Signin setTasks = {setTasks}/>
                 <Signout/>
                 <NavBar setCategory={setCategory}/>
                 <Heading/>

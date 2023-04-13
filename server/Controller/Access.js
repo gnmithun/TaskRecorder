@@ -2,16 +2,15 @@ const hasher = require('password-hash')
 const { Users }  = require('../Model/Users')
 
 exports. isAuthenticatedUser = async(req,res,next) => {
-    // try {              
-    //    if (req.session.userId ){
-    //       next()        
-    //    } else {
-    //       res.status(401).send( { "response" : "Success", "details" : "Unauthorized" } )
-    //     }
-    // } catch (error) {
-    //     next(error)
-    // }
-    next()
+    try {              
+       if (req.session.userId ){
+          next()        
+       } else {
+          res.status(401).send( { "response" : "Success", "details" : "Unauthorized" } )
+        }
+    } catch (error) {
+        next(error)
+    }
 }
 
 exports.signout = async (req,res,next) => {

@@ -22,14 +22,21 @@ function  Signin(props) {
         const data = await resp.json()
         if (data.response === "Success") {
             const details = data.details
-            const requestOptionsForGetTasks = {
-                method:'GET',
-                headers:{ 'Content-Type' : 'application/json' },
-                credentials:"include",
-                mode:'cors'
+            
+            if ( details === "Unauthorized"){
+                alert("Unauthorized: Please sign in")
+            } else {
+                const requestOptionsForGetTasks = {
+                    method:'GET',
+                    headers:{ 'Content-Type' : 'application/json' },
+                    credentials:"include",
+                    mode:'cors'
+                }
+                const tasksData = await fetch("http://localhost:8000/tasks",requestOptionsForGetTasks)
+                const respData = await tasksData.json()
+                console.log(respData.details)
+                props.setTasks(respData.details)
             }
-            const tasksData = await fetch("http://localhost:8000/tasks",requestOptionsForGetTasks)
-            const respData = await tasksData.json()
         } else {
             alert(data.details)
         }

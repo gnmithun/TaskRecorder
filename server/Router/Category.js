@@ -4,7 +4,7 @@ const Category = require('../Model/Category')
 const Validators = require('../Controller/Validator')
 const Access = require('../Controller/Access')
 
-Router.use(Access.isAuthenticatedUser)
+//Router.use(Access.isAuthenticatedUser)
 Router.post('/category',Validators.validateCategory,CategoryController.createCategory)
 Router.get('/categories',CategoryController.getCategories)
 
