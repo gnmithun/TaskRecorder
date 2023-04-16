@@ -2,7 +2,7 @@ const hasher = require('password-hash')
 const { Users }  = require('../Model/Users')
 
 exports. isAuthenticatedUser = async(req,res,next) => {
-    try {              
+    try {            
        if (req.session.userId ){
           next()        
        } else {
@@ -15,8 +15,9 @@ exports. isAuthenticatedUser = async(req,res,next) => {
 
 exports.signout = async (req,res,next) => {
     try {        
-        req.session.userId = null
-        res.send( { "response" : "Success", "details" : "Logged out" } )
+        req.session = null
+        res.clearCookie('connect.sid')
+        return res.send( { "response" : "Success", "details" : "Logged out and cookie removed. Hoepfully!" } )
     } catch ( error ) {
         next(error)
     }
@@ -55,10 +56,10 @@ exports.signin = async (req,res,next) => {
                 return res.send( { "response" : "Success", "details" : "Logged In" } )
             }
             else{
-                return res.send( { "response" : "Success", "details" : "Password Incorrect!!" } )
+                return res.send( { "response" : "Error", "details" : "Password Incorrect!!" } )
             }
         } else {
-            return res.send( { "response" : "Success", "details" : "User not found!!" } )
+            return res.send( { "response" : "Error", "details" : "User not found!!" } )
         }
     } catch (error){
         next(error)
