@@ -8,6 +8,7 @@ import Constants from "../Common/appConst"
 import styles from './TaskManager.module.css'
 import NavBar from "../Navigation/NavBar";
 import Heading from "../Heading/Heading";
+import Routing from "../Routes/Routes";
 import Signup from "../Access/Signup";
 import Signin from "../Access/Signin"
 import Signout from "../Access/Signout";
@@ -88,9 +89,6 @@ function TaskManager(props) {
 
     return(
               <div>
-                <Signup/>
-                <Signin setTasks = {setTasks}/>
-                <Signout/>
                 <NavBar setCategory={setCategory}/>
                 <Heading/>
                 { loading ? <LoadingSpinner/> : <></>}
