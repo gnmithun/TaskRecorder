@@ -1,113 +1,19 @@
-import React, { useState, useEffect } from "react";
-import LoadingSpinner from "../Spinner/LoadingSpinner";
-import Tasks from "../Tasks/Tasks";
-import TasksList from "../TasksList/TasksList";
-import TaskByDate from "../TaskByDate/TaskByDate";
-import PriorityTaskList from "../TaskByPriority/TaskByPriority"
-import Constants from "../Common/appConst"
-import styles from './TaskManager.module.css'
-import NavBar from "../Navigation/NavBar";
-import Heading from "../Heading/Heading";
-import Routing from "../Routes/Routes";
-import Signup from "../Access/Signup";
+import React, { useState } from "react";
 import Signin from "../Access/Signin"
-import Signout from "../Access/Signout";
+import Dashboard from "../Dashboard/Dashboard";
 
 function TaskManager(props) {
-
-    const [loading,setLoading] = useState(false)
-    const [categories,setCategories] = useState([])
-    const [category,setCategory] = useState({})
-    const [tasks,setTasks] = useState([])
-    const [task,setTask] = useState( { detail:"", completed:false, categoryId:0 } )
-
-    useEffect(()=>{
-        async function fetchCategories(params) {
-          setLoading(true)
-          const resp = await fetch("http://localhost:8000/categories")
-          const data = await resp.json()
-          setLoading(false)
-          if (data.response === "Success") {          
-            if ( data.details.length === 0) {
-              return
-            }
-            setCategories(data.details) 
-        } else {
-            alert(data.details)            
-        }
-    }
-        fetchCategories()    
-    },[category])
-
-    useEffect(()=>{
-        async function fetchTasks(params) {
-          setLoading(true)
-          const requestOptionsForGetTasks = {
-            method:'GET',
-            headers:{ 'Content-Type' : 'application/json' },
-            credentials:"include",
-            mode:'cors'
-        }
-          const resp = await fetch("http://localhost:8000/tasks",requestOptionsForGetTasks)
-          const data = await resp.json() 
-          setLoading(false)
-          if (data.response === "Success"){
-            if ( data.details === "Unauthorized"){
-              alert("Unauthorized: Please sign in")
-              return
-            }
-            if ( data.details.length === 0 ) {
-              alert("No tasks found")
-              setTasks([])
-              return
-            }
-            setTasks(data.details)  
-          } else {
-            alert(data.details)
-          }  
-
-        }
-        fetchTasks()    
-    },[task])
-
-    async function customFetch(fetcher,param){
-      setLoading(true)
-      const data = await fetcher.getTasksWith(param)
-      if (data.response === "Success"){
-        if ( data.details.length === 0 ) {
-          alert("No tasks found")
-          setTasks([])
-          setLoading(false)
-          return
-        }
-        setTasks(data.details)  
-      } else {
-        alert(data.details)
-      }  
-      setLoading(false)
-    }
-
+    const [loggedIn, setLoggedIn] = useState(false)
+    
     return(
-              <div>
-                <NavBar setCategory={setCategory}/>
-                <Heading/>
-                { loading ? <LoadingSpinner/> : <></>}
-                <Tasks     setLoading={setLoading} 
-                           setTask={setTask} 
-                           task={task} 
-                           categories={categories} 
-                           priorities={Constants.priorities}/>
-                <TasksList setLoading={setLoading} 
-                           categories={categories}  
-                           customFetch = { customFetch }
-                           tasks={tasks === undefined ? [] : tasks } 
-                           taskDeleted={ () => setTask({}) } 
-                           taskUpdated={ () => setTask({}) } //How to fetch only the updated task
-                           />
-                {/* <TaskByDate setLoading={setLoading}/>
-                <PriorityTaskList setLoading={setLoading}/> */}
+      
+            <div>
+                {
+                  ( loggedIn ? <Dashboard setLoggedIn = { setLoggedIn }/>  : <Signin setLoggedIn = { setLoggedIn } /> )
+                }
             </div>
     )
 }
 
 export default TaskManager
+

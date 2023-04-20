@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-
+import { useNavigate } from 'react-router-dom';
 function  Signin(props) {
     const [userId,setUserId] = useState("")
     const [password,setPassword] = useState("")
-    
+    const navigate = useNavigate()
+
     async function signin(event){
         event.preventDefault()
 
@@ -26,16 +27,7 @@ function  Signin(props) {
             if ( details === "Unauthorized"){
                 alert("Unauthorized: Please sign in")
             } else {
-                const requestOptionsForGetTasks = {
-                    method:'GET',
-                    headers:{ 'Content-Type' : 'application/json' },
-                    credentials:"include",
-                    mode:'cors'
-                }
-                const tasksData = await fetch("http://localhost:8000/tasks",requestOptionsForGetTasks)
-                const respData = await tasksData.json()
-                console.log(respData.details)
-                props.setTasks(respData.details)
+                props.setLoggedIn(true)
             }
         } else {
             alert(data.details)
@@ -44,7 +36,6 @@ function  Signin(props) {
 
     return (
         <div>
-            <h1>Show signin form here</h1>
             <form onSubmit={ signin }>
 
                 <label > Username </label> <br/>
@@ -57,7 +48,10 @@ function  Signin(props) {
                     setPassword(event.target.value)
                 }}/><br/>
 
-                <input type='submit' value='signin'  />
+                <input type='submit' value='Signin'  />
+                <input type='button' value=' Signup' onClick={ () => {
+                    navigate('/signup')
+                }}/>
             </form>
         </div>
     );

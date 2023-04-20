@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 function  Signup(props) {
     const [userId,setUserId] = useState("")
     const [password,setPassword] = useState("")
-    
+    const navigate = useNavigate()
+
     async function signup(event){
         event.preventDefault()
 
@@ -21,7 +23,7 @@ function  Signup(props) {
             const data = await resp.json()
             if (data.response === "Success") {
                 const details = data.details
-                console.log(details)
+                navigate('/signin')
             } else {
                 alert(data.details)
             }
@@ -29,7 +31,6 @@ function  Signup(props) {
 
     return (
         <div>
-            <h1>Show signup form here</h1>
             <form onSubmit={ signup }>
 
                 <label > Username </label> <br/>
@@ -43,6 +44,9 @@ function  Signup(props) {
                 }}/><br/>
 
                 <input type='submit' value='Signup'  />
+                <input type='button' value='Signin' onClick={ () => {
+                    navigate('/signin')
+                }}/>
             </form>
         </div>
     );

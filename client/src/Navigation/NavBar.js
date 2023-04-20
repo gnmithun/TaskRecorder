@@ -1,28 +1,8 @@
-import React, { useState } from "react"
+import React from "react"
 import navigationStyles from './Navigation.module.css'
 import styles from '../TaskManager/TaskManager.module.css'
 
-export default function NavBar(props){
-
-    const [loading,setLoading] = useState(false)
-
-    async function addCategory() {
-        let category = prompt("Enter a category")
-        if (category === null) {
-          return
-        }
-        const options = { method : 'POST', mode:'cors', body:JSON.stringify({"category":category}), headers:{'Content-Type':'application/json'}}
-        setLoading(true)
-        const resp = await fetch("http://localhost:8000/category",options)
-        const data = await resp.json()
-        setLoading(false)
-        if (data.response === "Success"){
-          props.setCategory({ id:data.details.id , type:data.details.type })      
-        } else {
-          alert(data.details)
-        }
-      }
-
+export default function NavBar(props){    
     return(
         <div className={ navigationStyles.navigationMain }>
         <div className={ navigationStyles.dropDown}> 
@@ -33,6 +13,8 @@ export default function NavBar(props){
             <p className={ navigationStyles.clickableMenuItem }> About </p>
             <hr className= { styles.hrCustom }></hr>
             <p className={ navigationStyles.clickableMenuItem }> T & C </p>
+            <hr className= { styles.hrCustom }></hr>
+            <p className={ navigationStyles.clickableMenuItem } onClick = { props.signout }> Signout </p>
           </div>
         </div>
         <div className={ navigationStyles.dropDown}> 
@@ -40,7 +22,7 @@ export default function NavBar(props){
             Category 
           </ul>
           <div className = {navigationStyles.dropDownContent } >
-            <p className={ navigationStyles.clickableMenuItem } onClick={ addCategory }> Category </p>
+            <p className={ navigationStyles.clickableMenuItem } onClick={ props.addCategory }> + Category </p>
           </div>
         </div>
       </div>
