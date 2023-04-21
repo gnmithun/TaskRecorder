@@ -7,6 +7,7 @@ import TasksList from "../TasksList/TasksList";
 import TaskByDate from "../TaskByDate/TaskByDate";
 import PriorityTaskList from "../TaskByPriority/TaskByPriority"
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 
 const Dashboard = (props) => {
@@ -16,6 +17,8 @@ const Dashboard = (props) => {
     const [category,setCategory] = useState({})
     const [tasks,setTasks] = useState([])
     const [task,setTask] = useState( { detail:"", completed:false, categoryId:0 } )
+    const navigate = useNavigate()
+
 
     useEffect(()=>{
         async function fetchCategories(params) {
@@ -90,10 +93,9 @@ const Dashboard = (props) => {
         credentials:"include",
         mode:'cors'
       }
-      // const signedOut = 
-      await fetch('http://localhost:8000/signout',requestOptions)
-      // const data = await signedOut.json()      
-      props.setLoggedIn(false)      
+      await fetch('http://localhost:8000/signout',requestOptions)    
+      props.setLoggedIn(false)
+      navigate('/signin')      
     }
 
     async function addCategory() {

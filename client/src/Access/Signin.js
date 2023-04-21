@@ -27,6 +27,7 @@ function  Signin(props) {
                 alert("Unauthorized: Please sign in")
             } else {
                 props.setLoggedIn(true)
+                navigate('/dashboard')
             }
         } else {
             alert(data.details)
