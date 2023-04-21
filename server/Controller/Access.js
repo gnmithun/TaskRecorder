@@ -30,7 +30,7 @@ exports.signup = async (req,res,next) => {
         const password = req.body.password 
         const user = await Users.findOne( {where: { email : email } } )
         if ( user !== null ) {
-            return res.send( { "response" : "Success", "details" :  " User already exists! " } )
+            return res.send( { "response" : "Error", "details" :  " User already exists! " } )
         } else {
             const hashPassword = hasher.generate(password)            
             const user = await Users.create( { email:email, password:hashPassword } )

@@ -22,7 +22,7 @@ function  Signup(props) {
             const resp = await fetch("http://localhost:8000/signup",requestOptions)           
             const data = await resp.json()
             if (data.response === "Success") {
-                navigate('/signin')
+                navigate('/dashboard')
             } else {
                 alert(data.details)
             }

@@ -23,7 +23,6 @@ function  Signin(props) {
         const data = await resp.json()
         if (data.response === "Success") {
             const details = data.details
-            
             if ( details === "Unauthorized"){
                 alert("Unauthorized: Please sign in")
             } else {
@@ -32,6 +31,28 @@ function  Signin(props) {
         } else {
             alert(data.details)
         }
+    }
+
+    async function signup(event){
+        event.preventDefault()
+
+        const requestOptions = {
+            method:'POST',
+            headers:{ 'Content-Type' : 'application/json' },
+            body: JSON.stringify( {
+                    "email":userId,
+                    "password":password
+            }),
+            mode:'cors'
+        }
+        
+            const resp = await fetch("http://localhost:8000/signup",requestOptions)           
+            const data = await resp.json()
+            if (data.response === "Success") {
+                signin(event)
+            } else {
+                alert(data.details)
+            }
     }
 
     return (
@@ -49,8 +70,8 @@ function  Signin(props) {
                 }}/><br/>
 
                 <input type='submit' value='Signin'  />
-                <input type='button' value=' Signup' onClick={ () => {
-                    navigate('/signup')
+                <input type='button' value=' Signup' onClick={ (event) => {
+                    signup(event)
                 }}/>
             </form>
         </div>

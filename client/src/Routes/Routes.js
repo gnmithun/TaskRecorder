@@ -7,9 +7,10 @@ const Routing = () => {
         <div>
             <Router>
                 <Routes>
-                    <Route exact path='/' element = { <TaskManager/>}></Route>
+                    <Route exact path='/dashboard' element = { <TaskManager/>}></Route>
                     <Route exact path='/signup' element = { <Signup/> }></Route>
-                    <Route exact path='/signin' element = { <Signin/> }></Route>            
+                    <Route exact path='/signin' element = { <Signin/> }></Route>           
+                    <Route exact path='/' element = { <TaskManager/>}></Route>
                 </Routes>
             </Router>
         </div>
