@@ -22,8 +22,14 @@ const Dashboard = (props) => {
 
     useEffect(()=>{
         async function fetchCategories(params) {
+          const requestOptionsForGetCategories = {
+            method:"GET",
+            headers: { "Content-Type" : "application/json"},
+            credentials:"include",
+            mode:"cors"
+          }
           setLoading(true)
-          const resp = await fetch("http://localhost:8000/categories")
+          const resp = await fetch("http://localhost:8000/categories",requestOptionsForGetCategories)
           const data = await resp.json()
           setLoading(false)
           if (data.response === "Success") {          
@@ -108,7 +114,8 @@ const Dashboard = (props) => {
       if (category === null) {
         return
       }
-      const options = { method : 'POST', mode:'cors', body:JSON.stringify({"category":category}), headers:{'Content-Type':'application/json'}}
+      const options = { method : 'POST', 
+      mode:'cors', body:JSON.stringify({"category":category}), headers:{'Content-Type':'application/json'},mode:"cors",credentials:"include"}
       setLoading(true)
       const resp = await fetch("http://localhost:8000/category",options)
       const data = await resp.json()

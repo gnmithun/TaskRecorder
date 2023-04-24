@@ -53,6 +53,7 @@ exports.signin = async (req,res,next) => {
 
             if (isPasswordCorrect) {                
                 req.session.userId = user.id
+                
                 return res.send( { "response" : "Success", "details" : "Logged In" } )
             }
             else{

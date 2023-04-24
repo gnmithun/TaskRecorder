@@ -39,6 +39,7 @@ function Tasks(props) {
                                 categoryId:inputTask.categoryId, 
                                 priority:inputTask.priority } ),
             mode:'cors',
+            credentials:"include"
         }
 
         props.setLoading(true)

@@ -34,11 +34,11 @@ app.use(session({
   resave:false,
   saveUninitialized:false,
 }))
-app.use(CategoryRoutes)
+app.use(AccessRoutes)
 app.use(DatedTaskRoutes)
 app.use(PriorityRoutes)
-app.use(AccessRoutes)
 app.use(TaskRoutes)
+app.use(CategoryRoutes)
 
 app.listen(8000,() => {
   console.log("Server running on port 8K")

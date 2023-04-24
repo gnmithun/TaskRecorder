@@ -33,6 +33,7 @@ exports.createTask = async (req,res,next) => {
 
 exports.getTasks = async ( req,res,next ) => {
   try {
+    console.log(`Session id ${req.session.userId}`)
       await createTasksViewForTenants(req.session.userId)
       const data = await TasksView.findAll({include:Category})
       if (data.count === 0) {
