@@ -93,9 +93,14 @@ const Dashboard = (props) => {
         credentials:"include",
         mode:'cors'
       }
-      await fetch('http://localhost:8000/signout',requestOptions)    
-      props.setLoggedIn(false)
-      navigate('/signin')      
+      const resp = await fetch('http://localhost:8000/signout',requestOptions)    
+      const data = await resp.json()
+      if (data.response === "Success"){
+        navigate('/signin', { state : { loggedIn : false } } )       
+      } else {
+        alert(data.details)
+      }
+         
     }
 
     async function addCategory() {

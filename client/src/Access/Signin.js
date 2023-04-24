@@ -26,8 +26,7 @@ function  Signin(props) {
             if ( details === "Unauthorized"){
                 alert("Unauthorized: Please sign in")
             } else {
-                props.setLoggedIn(true)
-                navigate('/dashboard')
+                navigate('/dashboard', { state : { loggedIn : true } } )
             }
         } else {
             alert(data.details)
