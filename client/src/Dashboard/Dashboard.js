@@ -8,7 +8,7 @@ import TaskByDate from "../TaskByDate/TaskByDate";
 import PriorityTaskList from "../TaskByPriority/TaskByPriority"
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-
+import { customFetcher } from "../Common/customFetch";
 
 const Dashboard = (props) => {
 
@@ -22,14 +22,8 @@ const Dashboard = (props) => {
 
     useEffect(()=>{
         async function fetchCategories(params) {
-          const requestOptionsForGetCategories = {
-            method:"GET",
-            headers: { "Content-Type" : "application/json"},
-            credentials:"include",
-            mode:"cors"
-          }
           setLoading(true)
-          const resp = await fetch("http://localhost:8000/categories",requestOptionsForGetCategories)
+          const resp = await customFetcher("http://localhost:8000/categories",{ method:'GET'})
           const data = await resp.json()
           setLoading(false)
           if (data.response === "Success") {          
@@ -47,13 +41,7 @@ const Dashboard = (props) => {
     useEffect(()=>{
         async function fetchTasks(params) {
           setLoading(true)
-          const requestOptionsForGetTasks = {
-            method:'GET',
-            headers:{ 'Content-Type' : 'application/json' },
-            credentials:"include",
-            mode:'cors'
-        }
-          const resp = await fetch("http://localhost:8000/tasks",requestOptionsForGetTasks)
+          const resp = await customFetcher("http://localhost:8000/tasks",{ method:'GET' })
           const data = await resp.json() 
           setLoading(false)
           if (data.response === "Success"){
@@ -114,11 +102,10 @@ const Dashboard = (props) => {
       if (category === null) {
         return
       }
-      const options = { method : 'POST', 
-      mode:'cors', body:JSON.stringify({"category":category}), headers:{'Content-Type':'application/json'},mode:"cors",credentials:"include"}
+      const categoryType = JSON.stringify({"category":category})
       setLoading(true)
-      const resp = await fetch("http://localhost:8000/category",options)
-      const data = await resp.json()
+      const resp = await customFetcher("http://localhost:8000/category",{ method:'POST', body:categoryType })
+      const data = await resp.json() 
       setLoading(false)
       if (data.response === "Success"){
         setCategory({ id:data.details.id , type:data.details.type })      

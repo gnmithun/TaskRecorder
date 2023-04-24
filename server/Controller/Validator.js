@@ -27,7 +27,7 @@ exports.validateTaskId = (req,_,next) => {
 exports.validateUpdateTask = (req,_,next) => {
     const { error  } = taskValidator.validate( { detail : req.body.detail, 
                                                         completed : req.body.completed,
-                                                        category: req.body.category,
+                                                        categoryId: req.body.categoryId,
                                                         priority:req.body.priority } )
     validated(error,next)
 }

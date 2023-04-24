@@ -50,7 +50,8 @@ function TaskEditingForm(props) {
                     method:'PATCH',
                     headers: {'Content-Type': 'application/json'},  
                     body: JSON.stringify( { detail:updatedDetail, completed:updatedCompleted,
-                       categoryId:updatedCategory.id,priority:updatedPriority } ),                                           
+                       categoryId:updatedCategory.id,priority:updatedPriority } ),  
+                       credentials:"include",                                         
                     mode:'cors'
                 }
                 const taskId = props.task.id

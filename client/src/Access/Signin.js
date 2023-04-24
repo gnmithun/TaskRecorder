@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { customFetcher } from "../Common/customFetch";
+
 function  Signin(props) {
     const [userId,setUserId] = useState("")
     const [password,setPassword] = useState("")
@@ -7,19 +9,8 @@ function  Signin(props) {
 
     async function signin(event){
         event.preventDefault()
-
-        const requestOptions = {
-            method:'POST',
-            headers:{ 'Content-Type' : 'application/json' },
-            credentials:"include",
-            body: JSON.stringify( {
-                    "email":userId,
-                    "password":password
-            }),
-            mode:'cors'
-        }
-        
-        const resp = await fetch("http://localhost:8000/signin",requestOptions)           
+        const signinDetails = JSON.stringify({"email":userId,"password":password})
+        const resp = await customFetcher("http://localhost:8000/signin",{ method:'POST',body: signinDetails })
         const data = await resp.json()
         if (data.response === "Success") {
             const details = data.details
@@ -35,18 +26,9 @@ function  Signin(props) {
 
     async function signup(event){
         event.preventDefault()
-
-        const requestOptions = {
-            method:'POST',
-            headers:{ 'Content-Type' : 'application/json' },
-            body: JSON.stringify( {
-                    "email":userId,
-                    "password":password
-            }),
-            mode:'cors'
-        }
         
-            const resp = await fetch("http://localhost:8000/signup",requestOptions)           
+            const signupDetails = JSON.stringify({"email":userId,"password":password})
+            const resp = await customFetcher("http://localhost:8000/signup",{ method:'POST',body: signupDetails })
             const data = await resp.json()
             if (data.response === "Success") {
                 signin(event)

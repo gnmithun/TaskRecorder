@@ -33,7 +33,6 @@ exports.createTask = async (req,res,next) => {
 
 exports.getTasks = async ( req,res,next ) => {
   try {
-    console.log(`Session id ${req.session.userId}`)
       await createTasksViewForTenants(req.session.userId)
       const data = await TasksView.findAll({include:Category})
       if (data.count === 0) {
@@ -151,6 +150,7 @@ exports.deleteTask = async ( req,res,next ) => {
 }
 
 exports.updateTask = async ( req,res,next ) => {
+  console.log("updateTask")
   try {
     const task = await Tasks.findByPk(req.params.taskId)
     if ( task === null ){
@@ -162,6 +162,7 @@ exports.updateTask = async ( req,res,next ) => {
       categoryId : getUpdatedValueFor(req.body.categoryId,task.categoryId),
       priority : getUpdatedValueFor(req.body.priority,task.priority)
     })
+    
     return res.send( { "response" : "Success", "details" : updatedTask } )
   } catch (error) {
     next(error)    

@@ -28,11 +28,12 @@ const displayStatus = showList ?  styles.visible: styles.visible;
                             <div>
                                 <TaskEditingForm task={task} priority={Constants.priorities} categories={props.categories} taskUpdated={ props.taskUpdated }/>
                             </div>
-                            {/* { <div className={styles.tasksOperations}>
+                            { <div className={styles.tasksOperations}>
                             <button onClick={ async (event) => {                                
                                     const requestOptions = {
                                         method:'GET',
-                                        headers: {'Content-Type': 'application/json'},                                             
+                                        headers: {'Content-Type': 'application/json'},  
+                                        credentials:"include",                                           
                                         mode:'cors'
                                     }
                                     const taskId = task.id
@@ -56,7 +57,8 @@ const displayStatus = showList ?  styles.visible: styles.visible;
                                         }
                                         const requestOptions = {
                                             method:'DELETE',
-                                            headers: {'Content-Type': 'application/json'},                                             
+                                            headers: {'Content-Type': 'application/json'},
+                                            credentials:"include",                                              
                                             mode:'cors'
                                         }
                                         const taskId = task.id
@@ -73,7 +75,7 @@ const displayStatus = showList ?  styles.visible: styles.visible;
                                         }   
                                     } } > X 
                             </button>
-                            </div> } */}
+                            </div> }
                         </li>                             
                         </div>
                     ) 
