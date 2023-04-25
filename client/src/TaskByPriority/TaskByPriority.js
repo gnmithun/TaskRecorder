@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import DatedTasksList from "../DatedTasksList"
-
+import { customFetch } from "../Common/customFetch";
 const PriorityTaskList = (props) => {
     //List the tasks
     const [priorities,setPriorities]  = useState([])
@@ -8,7 +8,7 @@ const PriorityTaskList = (props) => {
     const [tasks,setTasks] = useState([])
     useEffect(() => {
         async function getPriorities(){            
-            const response = await fetch('http://localhost:8000/priorities')
+            const response = await customFetch('http://localhost:8000/priorities')
             const data = await response.json()
             if ( data.response === 'Success') {
                 setPriorities(data.details.priority)
@@ -25,14 +25,10 @@ const PriorityTaskList = (props) => {
 
     const getTasksWithSelectedPriority = async (event) => {
         
-        const requestOptions = {
-            method:"GET",
-            headers:{ "Content-Type" : "application/json" },
-            mode:'cors'
-        }
             props.setLoading(true)
-            const response = await fetch('http://localhost:8000/priority/'+priority,requestOptions)
-            const data = await response.json()
+            const getTasksWithSelectedPriorityEndPoint = 'http://localhost:8000/priority/'+priority
+            const resp = await customFetch(getTasksWithSelectedPriorityEndPoint,{ method:"GET" } )
+            const data = await resp.json()
 
             if ( data.response === 'Success') {
                 if(data.details.length === 0){

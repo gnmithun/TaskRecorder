@@ -118,8 +118,9 @@ exports.getTasksBasedOnDay = async (req,res,next) => {
 
 exports.getTask = async (req,res,next) => {
   const taskId = req.params.taskId
+  await createTasksViewForTenants(req.session.userId)
   try {  
-    const task = await Tasks.findOne( {
+    const task = await TasksView.findOne( {
       where:{
         id:taskId
       },
@@ -138,8 +139,9 @@ exports.getTask = async (req,res,next) => {
 exports.deleteTask = async ( req,res,next ) => {
 
  const taskId = req.params.taskId
+ await createTasksViewForTenants(req.session.userId)
  try {
-    const task = await Tasks.findByPk(taskId)
+    const task = await TasksView.findByPk(taskId)
     if ( task === null ){
       return res.send( { "response" : "Success", "details" : "No task with that ID" } )
     } 
@@ -151,9 +153,10 @@ exports.deleteTask = async ( req,res,next ) => {
 }
 
 exports.updateTask = async ( req,res,next ) => {
-  console.log("updateTask")
+  
   try {
-    const task = await Tasks.findByPk(req.params.taskId)
+    await createTasksViewForTenants(req.session.userId)
+    const task = await TasksView.findByPk(req.params.taskId)
     if ( task === null ){
       return res.send( { "response" : "Success", "details" : "No task with that ID" } )
     } 
