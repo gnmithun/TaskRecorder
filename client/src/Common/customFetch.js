@@ -1,4 +1,4 @@
-export const customFetcher = async (endpoint,options) => {
+export const customFetch = async (endpoint,options) => {
     const defaultHeaders = {
         headers: {'Content-Type': 'application/json'},
         credentials:"include",                                              

@@ -1,7 +1,7 @@
 import React from 'react';
 import { useState } from 'react';
 import styles from './TaskEditing.module.css'
-
+import { customFetch } from '../Common/customFetch';
 function TaskEditingForm(props) {
     const [updatedDetail,setUpdatedDetail]       = useState(props.task.detail)
     const [updatedCompleted,setUpdatedCompleted] = useState(props.task.completed)
@@ -46,17 +46,14 @@ function TaskEditingForm(props) {
                     resetOnFailure()
                     return
                 }
-                const requestOptions = {
-                    method:'PATCH',
-                    headers: {'Content-Type': 'application/json'},  
-                    body: JSON.stringify( { detail:updatedDetail, completed:updatedCompleted,
-                       categoryId:updatedCategory.id,priority:updatedPriority } ),  
-                       credentials:"include",                                         
-                    mode:'cors'
-                }
+
                 const taskId = props.task.id
-                const resp = await fetch('http://localhost:8000/task/'+taskId,requestOptions)
+                const getTaskEndpoint = 'http://localhost:8000/task/'+taskId
+                const getTaskPayload = JSON.stringify( { detail:updatedDetail, completed:updatedCompleted,
+                    categoryId:updatedCategory.id,priority:updatedPriority } )      
+                const resp = await customFetch(getTaskEndpoint,{ method:'PATCH', body : getTaskPayload })
                 const data = await resp.json()
+                    console.log(data)
                 if ( data.response === "Success" ) {
                     alert("Update successfull")
                     props.taskUpdated()

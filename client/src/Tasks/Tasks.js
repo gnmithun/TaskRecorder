@@ -1,6 +1,7 @@
 
 import React, { useEffect, useState } from 'react';
 import styles from "./Tasks.module.css"
+import { customFetch } from '../Common/customFetch';
 
 function Tasks(props) {
 
@@ -31,19 +32,14 @@ function Tasks(props) {
             return
         } 
 
-        const requestOptions = {
-            method:'POST',
-            headers: {'Content-Type': 'application/json'}, 
-            body: JSON.stringify( { detail:inputTask.detail, 
+        props.setLoading(true)
+        const createTaskPayload = JSON.stringify({
+            detail:inputTask.detail, 
                                 completed:inputTask.completed,
                                 categoryId:inputTask.categoryId, 
-                                priority:inputTask.priority } ),
-            mode:'cors',
-            credentials:"include"
-        }
-
-        props.setLoading(true)
-        const resp = await fetch('http://localhost:8000/tasks',requestOptions)
+                                priority:inputTask.priority
+        })
+        const resp = await customFetch('http://localhost:8000/tasks',{ method : 'POST', body:createTaskPayload} )
         const data = await resp.json()
         props.setLoading(false)
         if (data.response === "Success") {

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { customFetcher } from "../Common/customFetch";
+import { customFetch } from "../Common/customFetch";
 
 function  Signin(props) {
     const [userId,setUserId] = useState("")
@@ -10,7 +10,7 @@ function  Signin(props) {
     async function signin(event){
         event.preventDefault()
         const signinDetails = JSON.stringify({"email":userId,"password":password})
-        const resp = await customFetcher("http://localhost:8000/signin",{ method:'POST',body: signinDetails })
+        const resp = await customFetch("http://localhost:8000/signin",{ method:'POST',body: signinDetails })
         const data = await resp.json()
         if (data.response === "Success") {
             const details = data.details
@@ -28,7 +28,7 @@ function  Signin(props) {
         event.preventDefault()
         
             const signupDetails = JSON.stringify({"email":userId,"password":password})
-            const resp = await customFetcher("http://localhost:8000/signup",{ method:'POST',body: signupDetails })
+            const resp = await customFetch("http://localhost:8000/signup",{ method:'POST',body: signupDetails })
             const data = await resp.json()
             if (data.response === "Success") {
                 signin(event)

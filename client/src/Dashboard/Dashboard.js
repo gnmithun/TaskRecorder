@@ -8,7 +8,7 @@ import TaskByDate from "../TaskByDate/TaskByDate";
 import PriorityTaskList from "../TaskByPriority/TaskByPriority"
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { customFetcher } from "../Common/customFetch";
+import { customFetch } from "../Common/customFetch";
 
 const Dashboard = (props) => {
 
@@ -23,7 +23,7 @@ const Dashboard = (props) => {
     useEffect(()=>{
         async function fetchCategories(params) {
           setLoading(true)
-          const resp = await customFetcher("http://localhost:8000/categories",{ method:'GET'})
+          const resp = await customFetch("http://localhost:8000/categories",{ method:'GET'})
           const data = await resp.json()
           setLoading(false)
           if (data.response === "Success") {          
@@ -41,7 +41,7 @@ const Dashboard = (props) => {
     useEffect(()=>{
         async function fetchTasks(params) {
           setLoading(true)
-          const resp = await customFetcher("http://localhost:8000/tasks",{ method:'GET' })
+          const resp = await customFetch("http://localhost:8000/tasks",{ method:'GET' })
           const data = await resp.json() 
           setLoading(false)
           if (data.response === "Success"){
@@ -63,7 +63,7 @@ const Dashboard = (props) => {
         fetchTasks()    
     },[task])
 
-    async function customFetch(fetcher,param){
+    async function getTasksWithFilter(fetcher,param){
         setLoading(true)
         const data = await fetcher.getTasksWith(param)
         if (data.response === "Success"){
@@ -82,12 +82,7 @@ const Dashboard = (props) => {
 
     async function signout(event){
       event.preventDefault()
-      const requestOptions = {
-        method:'POST',
-        credentials:"include",
-        mode:'cors'
-      }
-      const resp = await fetch('http://localhost:8000/signout',requestOptions)    
+      const resp = await customFetch('http://localhost:8000/signout',{ method : 'POST'}) 
       const data = await resp.json()
       if (data.response === "Success"){
         navigate('/signin', { state : { loggedIn : false } } )       
@@ -104,7 +99,7 @@ const Dashboard = (props) => {
       }
       const categoryType = JSON.stringify({"category":category})
       setLoading(true)
-      const resp = await customFetcher("http://localhost:8000/category",{ method:'POST', body:categoryType })
+      const resp = await customFetch("http://localhost:8000/category",{ method:'POST', body:categoryType })
       const data = await resp.json() 
       setLoading(false)
       if (data.response === "Success"){
@@ -126,7 +121,7 @@ const Dashboard = (props) => {
                            priorities={Constants.priorities}/>
         <TasksList setLoading={setLoading} 
                            categories={categories}  
-                           customFetch = { customFetch }
+                           getTasksWithFilter = { getTasksWithFilter }
                            tasks={tasks === undefined ? [] : tasks } 
                            taskDeleted={ () => setTask({}) } 
                            taskUpdated={ () => setTask({}) } //How to fetch only the updated task
@@ -154,7 +149,7 @@ export default Dashboard
                            priorities={Constants.priorities}/>
                 <TasksList setLoading={setLoading} 
                            categories={categories}  
-                           customFetch = { customFetch }
+                           getTasksWithFilter = { getTasksWithFilter }
                            tasks={tasks === undefined ? [] : tasks } 
                            taskDeleted={ () => setTask({}) } 
                            taskUpdated={ () => setTask({}) } //How to fetch only the updated task
