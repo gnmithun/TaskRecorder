@@ -1,13 +1,9 @@
+import { customFetch } from "../Common/customFetch"
 export class CompletedTasks {
     constructor(){}
-    public static async getTasksWith(status){
-        console.log("Fetch tasks which are",status)
-        const requestOptions:RequestInit = {
-          method:'GET',
-          headers:{ 'Content-Type' : 'application/json'},
-          mode:'cors'
-        }
-        const resp = await fetch("http://localhost:8000/tasksWithStatus/"+status,requestOptions)
+    public static async getTasksWith(status:any){
+        const filteredTaskByStatusEndPoint = "http://localhost:8000/tasksWithStatus/"+status
+        const resp = await customFetch(filteredTaskByStatusEndPoint, { method : 'GET' })
         const data = await resp.json() 
         return data
     }

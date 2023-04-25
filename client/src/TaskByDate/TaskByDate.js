@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import DatedTasksList from '../DatedTasksList';
 import moment from 'moment'
+import { customFetch } from '../Common/customFetch';
 
 const TaskByDate = (props) => {
     const [ fromDate , setFromDate] = useState()
@@ -32,12 +33,8 @@ const TaskByDate = (props) => {
             <input type="submit" disabled={ isDisabled ()}  onClick = { async (event)=> {
                 
                 props.setLoading(true)
-                const requestOptions = {
-                    method:'GET',
-                    headers: {'Content-Type': 'application/json'}, 
-                    mode:'cors',
-                }
-                const resp = await fetch("http://localhost:8000/datedTasks?from="+fromDate+'&to='+toDate,requestOptions)
+                const getDatedTaskEndpoint = "http://localhost:8000/datedTasks?from="+fromDate+'&to='+toDate
+                const resp = await customFetch(getDatedTaskEndpoint, { method:'GET' } )
                 const data = await resp.json()
                 
                 if ( data.response === 'Success') {

@@ -37,22 +37,18 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 exports.__esModule = true;
 exports.FilteredTasks = void 0;
+var customFetch_1 = require("../Common/customFetch");
 var FilteredTasks = /** @class */ (function () {
     function FilteredTasks() {
     }
     FilteredTasks.getTasksWith = function (day) {
         return __awaiter(this, void 0, void 0, function () {
-            var requestOptions, resp, data;
+            var filteredTaskByDayEndPoint, resp, data;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        console.log("Fetch tasks which are", day);
-                        requestOptions = {
-                            method: 'GET',
-                            headers: { 'Content-Type': 'application/json' },
-                            mode: 'cors'
-                        };
-                        return [4 /*yield*/, fetch("http://localhost:8000/tasksFor?day=" + day, requestOptions)];
+                        filteredTaskByDayEndPoint = "http://localhost:8000/tasksFor?day=" + day;
+                        return [4 /*yield*/, (0, customFetch_1.customFetch)(filteredTaskByDayEndPoint, { method: 'GET' })];
                     case 1:
                         resp = _a.sent();
                         return [4 /*yield*/, resp.json()];

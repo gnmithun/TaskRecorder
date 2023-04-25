@@ -47,7 +47,8 @@ exports.getTasks = async ( req,res,next ) => {
 
 exports.getTasksBasedOnStatus = async (req,res,next) => {
   try{
-    const data = await Tasks.findAll({
+    await createTasksViewForTenants(req.session.userId)
+    const data = await TasksView.findAll({
       include:Category,
       where:{ completed:mapStatus(req.params.status) }
     })
@@ -63,7 +64,7 @@ exports.getTasksBasedOnStatus = async (req,res,next) => {
 
 exports.getTasksBasedOnDay = async (req,res,next) => {
   try{
-
+    await createTasksViewForTenants(req.session.userId)
     const now = new Date()
     let tasks = []
 
@@ -74,7 +75,7 @@ exports.getTasksBasedOnDay = async (req,res,next) => {
     yesterday.setDate(yesterday.getDate() - 1)
     yesterday.setHours(0,0,0,0)
     if ( req.query.day === 'yesterday') {
-      tasks = await Tasks.findAll({
+      tasks = await TasksView.findAll({
         include: Category,
         where:{
           createdAt:{
@@ -86,7 +87,7 @@ exports.getTasksBasedOnDay = async (req,res,next) => {
     }
 
     if ( req.query.day === 'today') {
-        tasks = await Tasks.findAll({
+        tasks = await TasksView.findAll({
           include: Category,
           where:{
             createdAt : {
@@ -98,7 +99,7 @@ exports.getTasksBasedOnDay = async (req,res,next) => {
     }
 
     if ( req.query.day === 'pending') {
-      tasks = await Tasks.findAll({
+      tasks = await TasksView.findAll({
         include: Category,
         where:{
           createdAt : {

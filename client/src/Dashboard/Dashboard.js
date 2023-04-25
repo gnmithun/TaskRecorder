@@ -126,8 +126,8 @@ const Dashboard = (props) => {
                            taskDeleted={ () => setTask({}) } 
                            taskUpdated={ () => setTask({}) } //How to fetch only the updated task
                            />
-        {/* <TaskByDate setLoading={setLoading}/>
-        <PriorityTaskList setLoading={setLoading}/>  */}
+        <TaskByDate setLoading={setLoading}/>
+        {/* <PriorityTaskList setLoading={setLoading}/>  */}
         </div>
         
     )
@@ -138,22 +138,4 @@ export default Dashboard
 
 
 
-/*
-                <NavBar setCategory={setCategory}/>
-                <Heading/>
-                { loading ? <LoadingSpinner/> : <></>}
-                <Tasks     setLoading={setLoading} 
-                           setTask={setTask} 
-                           task={task} 
-                           categories={categories} 
-                           priorities={Constants.priorities}/>
-                <TasksList setLoading={setLoading} 
-                           categories={categories}  
-                           getTasksWithFilter = { getTasksWithFilter }
-                           tasks={tasks === undefined ? [] : tasks } 
-                           taskDeleted={ () => setTask({}) } 
-                           taskUpdated={ () => setTask({}) } //How to fetch only the updated task
-                           />
-                {/* <TaskByDate setLoading={setLoading}/>
-                <PriorityTaskList setLoading={setLoading}/> }
-*/
+
