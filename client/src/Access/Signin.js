@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate , useLocation, Navigate } from 'react-router-dom';
 import { customFetch } from "../Common/customFetch";
 
 function  Signin(props) {
     const [userId,setUserId] = useState("")
     const [password,setPassword] = useState("")
     const navigate = useNavigate()
+
+    const location = useLocation()
+    const isLoggedIn = location.state?.loggedIn
 
     async function signin(event){
         event.preventDefault()
@@ -37,27 +40,35 @@ function  Signin(props) {
             }
     }
 
-    return (
-        <div>
-            <form onSubmit={ signin }>
-
-                <label > Username </label> <br/>
-                <input type='text' placeholder='Enter a preferred username' onChange={ (event) => {
-                    setUserId(event.target.value)
-                }}/><br/>
-                
-                <label> Password </label> <br/>
-                <input type='password' placeholder='Enter a hard to decipher password' onChange={ (event) => {
-                    setPassword(event.target.value)
-                }}/><br/>
-
-                <input type='submit' value='Signin'  />
-                <input type='button' value=' Signup' onClick={ (event) => {
-                    signup(event)
-                }}/>
-            </form>
-        </div>
-    );
+    function showSignInForm() {
+        console.log("At signin in ",isLoggedIn)
+        if(!isLoggedIn){
+        return(
+            <div>
+                <form onSubmit={ signin }>
+    
+                    <label > Username </label> <br/>
+                    <input type='text' placeholder='Enter a preferred username' onChange={ (event) => {
+                        setUserId(event.target.value)
+                    }}/><br/>
+                    
+                    <label> Password </label> <br/>
+                    <input type='password' placeholder='Enter a hard to decipher password' onChange={ (event) => {
+                        setPassword(event.target.value)
+                    }}/><br/>
+    
+                    <input type='submit' value='Signin'  />
+                    <input type='button' value=' Signup' onClick={ (event) => {
+                        signup(event)
+                    }}/>
+                </form>
+            </div>
+            )
+        } else {
+            return(<Navigate to="/dashboard"/>)
+        }
+    }
+    return (showSignInForm());
 }
 
 export default Signin;
