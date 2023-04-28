@@ -1,16 +1,18 @@
-import { Navigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
+
 
 function TaskManager(props) {
     
     const location = useLocation()
     const isLoggedIn = location.state?.loggedIn
-
+    const navigateTo = useNavigate()
+    
     const gotoDashboard = ()=>{
-      return (<Navigate to="/dashboard" state={{ loggedIn:isLoggedIn}}/>)
+      return navigateTo("/dashboard", { state : { loggedIn:isLoggedIn}})
     }
 
     const gotoSignin = ()=>{
-      return (<Navigate to="/signin"/>)
+      return navigateTo("/signin")
     }
     return(
       

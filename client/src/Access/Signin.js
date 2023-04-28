@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { Navigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { customFetch } from "../Common/customFetch";
 
 function  Signin(props) {
     const [userId,setUserId] = useState("")
     const [password,setPassword] = useState("")
+    const navigateTo = useNavigate()
 
     async function signin(event){
         event.preventDefault()
@@ -16,8 +18,7 @@ function  Signin(props) {
             if ( details === "Unauthorized"){
                 alert("Unauthorized: Please sign in")
             } else {
-                <Navigate to="/dashboard" state={{loggedIn:true}}/>
-
+                navigateTo("/dashboard",{ state:{loggedIn:true}})
             }
         } else {
             alert(data.details)
@@ -25,8 +26,7 @@ function  Signin(props) {
     }
 
     async function signup(event){
-        event.preventDefault()
-        
+        event.preventDefault()   
             const signupDetails = JSON.stringify({"email":userId,"password":password})
             const resp = await customFetch("http://localhost:8000/signup",{ method:'POST',body: signupDetails })
             const data = await resp.json()

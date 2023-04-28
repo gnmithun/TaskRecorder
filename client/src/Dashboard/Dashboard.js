@@ -7,7 +7,7 @@ import TasksList from "../TasksList/TasksList";
 import TaskByDate from "../TaskByDate/TaskByDate";
 import PriorityTaskList from "../TaskByPriority/TaskByPriority"
 import React, { useState, useEffect } from "react";
-import { Navigate, useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { customFetch } from "../Common/customFetch";
 
 const Dashboard = (props) => {
@@ -19,7 +19,8 @@ const Dashboard = (props) => {
     const [task,setTask] = useState( { detail:"", completed:false, categoryId:0 } )
     const location = useLocation()
     const isLoggedIn = location.state?.loggedIn
-
+    const navigateTo = useNavigate()
+    
     useEffect(()=>{
         async function fetchCategories(params) {
           if (isLoggedIn === false) return
@@ -87,7 +88,7 @@ const Dashboard = (props) => {
       const resp = await customFetch('http://localhost:8000/signout',{ method : 'POST'}) 
       const data = await resp.json()
       if (data.response === "Success"){
-        <Navigate to="/signin" state={{loggedIn : false}}/>
+        navigateTo('/signin', { state : { logged : false }})
       } else {
         alert(data.details)
       }
@@ -136,7 +137,7 @@ const Dashboard = (props) => {
        ) 
       } else {
         alert("Unauthorized! Please signin in first!!!")
-        return (<Navigate to="/signin"/>)
+        return navigateTo("/signin")
       }
     }
 
