@@ -7,7 +7,7 @@ import TasksList from "../TasksList/TasksList";
 import TaskByDate from "../TaskByDate/TaskByDate";
 import PriorityTaskList from "../TaskByPriority/TaskByPriority"
 import React, { useState, useEffect } from "react";
-import { Navigate, useLocation, useNavigate } from "react-router-dom";
+import { Navigate, useLocation } from "react-router-dom";
 import { customFetch } from "../Common/customFetch";
 
 const Dashboard = (props) => {
@@ -17,7 +17,6 @@ const Dashboard = (props) => {
     const [category,setCategory] = useState({})
     const [tasks,setTasks] = useState([])
     const [task,setTask] = useState( { detail:"", completed:false, categoryId:0 } )
-    const navigate = useNavigate()
     const location = useLocation()
     const isLoggedIn = location.state?.loggedIn
 
@@ -88,7 +87,7 @@ const Dashboard = (props) => {
       const resp = await customFetch('http://localhost:8000/signout',{ method : 'POST'}) 
       const data = await resp.json()
       if (data.response === "Success"){
-        navigate('/signin', { state : { loggedIn : false } } )       
+        <Navigate to="/signin" state={{loggedIn : false}}/>
       } else {
         alert(data.details)
       }
@@ -137,9 +136,10 @@ const Dashboard = (props) => {
        ) 
       } else {
         alert("Unauthorized! Please signin in first!!!")
-        return (<Navigate to="/signin" state={{ loggedIn:false}}/>)
+        return (<Navigate to="/signin"/>)
       }
     }
+
     return(showDashboard())
 }
 

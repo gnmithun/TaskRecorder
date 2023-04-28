@@ -1,14 +1,10 @@
 import React, { useState } from 'react';
-import { useNavigate , useLocation, Navigate } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import { customFetch } from "../Common/customFetch";
 
 function  Signin(props) {
     const [userId,setUserId] = useState("")
     const [password,setPassword] = useState("")
-    const navigate = useNavigate()
-
-    const location = useLocation()
-    const isLoggedIn = location.state?.loggedIn
 
     async function signin(event){
         event.preventDefault()
@@ -20,7 +16,8 @@ function  Signin(props) {
             if ( details === "Unauthorized"){
                 alert("Unauthorized: Please sign in")
             } else {
-                navigate('/dashboard', { state : { loggedIn : true } } )
+                <Navigate to="/dashboard" state={{loggedIn:true}}/>
+
             }
         } else {
             alert(data.details)
@@ -41,10 +38,7 @@ function  Signin(props) {
     }
 
     function showSignInForm() {
-        console.log("At signin in ",isLoggedIn)
-        if(!isLoggedIn){
-        return(
-            <div>
+            return(<div>
                 <form onSubmit={ signin }>
     
                     <label > Username </label> <br/>
@@ -62,12 +56,9 @@ function  Signin(props) {
                         signup(event)
                     }}/>
                 </form>
-            </div>
-            )
-        } else {
-            return(<Navigate to="/dashboard"/>)
+            </div>)
+            
         }
-    }
     return (showSignInForm());
 }
 

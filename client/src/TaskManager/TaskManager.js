@@ -1,7 +1,4 @@
-import React, { useEffect, useState } from "react";
-import Signin from "../Access/Signin"
-import Dashboard from "../Dashboard/Dashboard";
-import { Navigate, useLocation, useNavigate } from "react-router-dom";
+import { Navigate, useLocation } from "react-router-dom";
 
 function TaskManager(props) {
     
@@ -9,13 +6,11 @@ function TaskManager(props) {
     const isLoggedIn = location.state?.loggedIn
 
     const gotoDashboard = ()=>{
-      console.log("Navigate to dashboard",isLoggedIn)
-      return (<Navigate to="/dashboard" state={{ loggedIn:true}}/>)
+      return (<Navigate to="/dashboard" state={{ loggedIn:isLoggedIn}}/>)
     }
 
     const gotoSignin = ()=>{
-      console.log("Navigate to dashboard",isLoggedIn)
-      return (<Navigate to="/signin" state={{ loggedIn:false}}/>)
+      return (<Navigate to="/signin"/>)
     }
     return(
       
