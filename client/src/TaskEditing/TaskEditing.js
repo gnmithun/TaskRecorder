@@ -53,7 +53,6 @@ function TaskEditingForm(props) {
                     categoryId:updatedCategory.id,priority:updatedPriority } )      
                 const resp = await customFetch(getTaskEndpoint,{ method:'PATCH', body : getTaskPayload })
                 const data = await resp.json()
-                    console.log(data)
                 if ( data.response === "Success" ) {
                     alert("Update successfull")
                     props.taskUpdated()

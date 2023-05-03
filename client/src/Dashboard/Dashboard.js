@@ -11,7 +11,6 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { customFetch } from "../Common/customFetch";
 
 const Dashboard = (props) => {
-
     const [categories,setCategories] = useState([])
     const [loading,setLoading] = useState(false)
     const [category,setCategory] = useState({})
@@ -23,49 +22,56 @@ const Dashboard = (props) => {
     
     useEffect(()=>{
         async function fetchCategories(params) {
-          if (isLoggedIn === false) return
-          setLoading(true)
-          const resp = await customFetch("http://localhost:8000/categories",{ method:'GET'})
-          const data = await resp.json()
-          setLoading(false)
-          if (data.response === "Success") {          
-            if ( data.details.length === 0) {
-              return
+          if (isLoggedIn === true) {
+            setLoading(true)
+            const resp = await customFetch("http://localhost:8000/categories",{ method:'GET'})
+            const data = await resp.json()
+            setLoading(false)
+            if (data.response === "Success") {          
+              if ( data.details.length === 0) {
+                return
+              }
+              setCategories(data.details) 
+            } else {
+              alert(data.details)            
             }
-            setCategories(data.details) 
-        } else {
-            alert(data.details)            
-        }
-    }
+          }
+      }
         fetchCategories()    
     },[category])
 
     useEffect(()=>{
         async function fetchTasks(params) {
-          if (isLoggedIn === false) return
-          setLoading(true)
-          const resp = await customFetch("http://localhost:8000/tasks",{ method:'GET' })
-          const data = await resp.json() 
-          setLoading(false)
-          if (data.response === "Success"){
-            if ( data.details === "Unauthorized"){
-              alert("Unauthorized: Please sign in")
-              return
-            }
-            if ( data.details.length === 0 ) {
-              alert("No tasks found")
-              setTasks([])
-              return
-            }
-            setTasks(data.details)  
-          } else {
-            alert(data.details)
-          }  
-
+          if (isLoggedIn === true) {
+            setLoading(true)
+            const resp = await customFetch("http://localhost:8000/tasks",{ method:'GET' })
+            const data = await resp.json() 
+            setLoading(false)
+            if (data.response === "Success"){
+              if ( data.details === "Unauthorized"){
+                alert("Unauthorized: Please sign in")
+                return
+              }
+              if ( data.details.length === 0 ) {
+                alert("No tasks found")
+                setTasks([])
+                return
+              }
+              setTasks(data.details)  
+            } else {
+              alert(data.details)
+            }  
+          }
         }
         fetchTasks()    
     },[task])
 
+    useEffect(()=>{
+      if(!isLoggedIn){
+        alert("Unauthorized! Please signin in first!!!")
+        return navigateTo("/signin")
+      }
+    },[])
     async function getTasksWithFilter(fetcher,param){
         setLoading(true)
         const data = await fetcher.getTasksWith(param)
@@ -91,8 +97,7 @@ const Dashboard = (props) => {
         navigateTo('/signin', { state : { logged : false }})
       } else {
         alert(data.details)
-      }
-         
+      }  
     }
 
     async function addCategory() {
@@ -112,7 +117,7 @@ const Dashboard = (props) => {
       }
     }
 
-    function showDashboard(){
+    function showDashboard(){      
       if (isLoggedIn){
        return(
         <div>
@@ -135,10 +140,11 @@ const Dashboard = (props) => {
           <PriorityTaskList setLoading={setLoading}/> 
         </div>
        ) 
-      } else {
-        alert("Unauthorized! Please signin in first!!!")
-        return navigateTo("/signin")
-      }
+      } 
+      // else {
+      //   alert("Unauthorized! Please signin in first!!!")
+      //   return navigateTo("/signin")
+      // }
     }
 
     return(showDashboard())

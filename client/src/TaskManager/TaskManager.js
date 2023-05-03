@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 
 
@@ -14,12 +15,11 @@ function TaskManager(props) {
     const gotoSignin = ()=>{
       return navigateTo("/signin")
     }
+    useEffect(()=>{
+      ( isLoggedIn ? gotoDashboard()  : gotoSignin() )
+    },[])
     return(
-      
-            <div>
-                {
-                  ( isLoggedIn ? gotoDashboard()  : gotoSignin() )
-                }                                                                   
+            <div>                                                                
             </div>
     )
 }
