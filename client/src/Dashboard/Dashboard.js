@@ -90,7 +90,6 @@ const Dashboard = (props) => {
     }
 
     async function signout(event){
-      event.preventDefault()
       const resp = await customFetch('http://localhost:8000/signout',{ method : 'POST'}) 
       const data = await resp.json()
       if (data.response === "Success"){

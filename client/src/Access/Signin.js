@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { Navigate } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { customFetch } from "../Common/customFetch";
 
@@ -9,7 +8,6 @@ function  Signin(props) {
     const navigateTo = useNavigate()
 
     async function signin(event){
-        event.preventDefault()
         const signinDetails = JSON.stringify({"email":userId,"password":password})
         const resp = await customFetch("http://localhost:8000/signin",{ method:'POST',body: signinDetails })
         const data = await resp.json()
@@ -25,8 +23,7 @@ function  Signin(props) {
         }
     }
 
-    async function signup(event){
-        event.preventDefault()   
+    async function signup(event){ 
             const signupDetails = JSON.stringify({"email":userId,"password":password})
             const resp = await customFetch("http://localhost:8000/signup",{ method:'POST',body: signupDetails })
             const data = await resp.json()
@@ -39,8 +36,7 @@ function  Signin(props) {
 
     function showSignInForm() {
             return(<div>
-                <form onSubmit={ signin }>
-    
+                <form >
                     <label > Username </label> <br/>
                     <input type='text' placeholder='Enter a preferred username' onChange={ (event) => {
                         setUserId(event.target.value)
@@ -51,7 +47,7 @@ function  Signin(props) {
                         setPassword(event.target.value)
                     }}/><br/>
     
-                    <input type='submit' value='Signin'  />
+                    <input type='button' value='Signin'  onClick={ signin }/>
                     <input type='button' value=' Signup' onClick={ (event) => {
                         signup(event)
                     }}/>
