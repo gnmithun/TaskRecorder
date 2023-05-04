@@ -16,7 +16,8 @@ exports. isAuthenticatedUser = async(req,res,next) => {
 exports.signout = async (req,res,next) => {
     try {        
         req.session = null
-        res.clearCookie('connect.sid')
+        res.clearCookie(['sessionDetails'])
+        res.clearCookie(['loggedIn'])
         return res.send( { "response" : "Success", "details" : "Logged out and cookie removed. Hoepfully!" } )
     } catch ( error ) {
         next(error)
@@ -53,7 +54,7 @@ exports.signin = async (req,res,next) => {
 
             if (isPasswordCorrect) {                
                 req.session.userId = user.id
-                
+                res.cookie("loggedIn",true)
                 return res.send( { "response" : "Success", "details" : "Logged In" } )
             }
             else{

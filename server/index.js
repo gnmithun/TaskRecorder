@@ -30,9 +30,10 @@ app.use(express.json())
 app.use(express.urlencoded())
 
 app.use(session({
+  name : "sessionDetails",
+  secure : "true",
   secret : "E(H+MbQeShVmYq3t6w9z$C&F)J@NcRfU",
-  resave:false,
-  saveUninitialized:false,
+  resave : false,
 }))
 app.use(AccessRoutes)
 app.use(DatedTaskRoutes)
