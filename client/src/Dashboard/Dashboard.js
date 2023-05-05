@@ -20,6 +20,15 @@ const Dashboard = (props) => {
     const isLoggedIn = location.state?.loggedIn
     const navigateTo = useNavigate()
     
+    const handleAuthorisedError = (resp)=>{
+      if(resp.status === 401) {
+        navigateTo('/signin', { state : { logged : false }})
+        localStorage.setItem("loggedIn","no")
+      } else {
+        console.log("Show general error",resp)
+      }
+    }
+
     useEffect(()=>{
         async function fetchCategories(params) {
           if (isLoggedIn === true) {
@@ -33,7 +42,7 @@ const Dashboard = (props) => {
               }
               setCategories(data.details) 
             } else {
-              alert(data.details)            
+              handleAuthorisedError(resp)      
             }
           }
       }
@@ -59,7 +68,7 @@ const Dashboard = (props) => {
               }
               setTasks(data.details)  
             } else {
-              alert(data.details)
+              handleAuthorisedError(resp)
             }  
           }
         }
@@ -113,7 +122,7 @@ const Dashboard = (props) => {
       if (data.response === "Success"){
         setCategory({ id:data.details.id , type:data.details.type })      
       } else {
-        alert(data.details)
+        handleAuthorisedError(resp)
       }
     }
 
