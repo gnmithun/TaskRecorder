@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { customFetch } from "../Common/customFetch";
 import { useCookies } from 'react-cookie';
@@ -19,6 +19,7 @@ function  Signin(props) {
             if ( details === "Unauthorized"){
                 alert("Unauthorized: Please sign in")
             } else {
+                localStorage.setItem("loggedIn","yes")
                 navigateTo("/dashboard",{ state:{loggedIn:true}})
             }
         } else {
@@ -37,35 +38,36 @@ function  Signin(props) {
             }
     }
 
-    function showSignInForm() {
-        if(cookies.loggedIn) {
-            console.log("Should navigate to dashboard",cookies,cookies.loggedIn)
-        } else {
-            return( 
-                <div>
-                    <form >
-                        <label > Username </label> <br/>
-                        <input type='text' placeholder='Enter a preferred username' onChange={ (event) => {
-                            setUserId(event.target.value)
-                        }}/><br/>
-                        
-                        <label> Password </label> <br/>
-                        <input type='password' placeholder='Enter a hard to decipher password' onChange={ (event) => {
-                            setPassword(event.target.value)
-                        }}/><br/>
-        
-                        <input type='button' value='Signin'  onClick={ signin }/>
-                        <input type='button' value='Signup' onClick={ (event) => {
-                            signup(event)
-                        }}/>
-                    </form>
-                </div>
-                )
-        }
+    useEffect(() => {
+        if (localStorage.getItem("loggedIn") === "yes") {
+            navigateTo("/dashboard",{ state:{loggedIn:true}})
+        } 
+    },[])
 
-            
-        }
-    return (showSignInForm());
+    function showSignInForm() {
+        return( 
+            <div>
+                <form >
+                    <label > Username </label> <br/>
+                    <input type='text' placeholder='Enter a preferred username' onChange={ (event) => {
+                        setUserId(event.target.value)
+                    }}/><br/>
+                    
+                    <label> Password </label> <br/>
+                    <input type='password' placeholder='Enter a hard to decipher password' onChange={ (event) => {
+                        setPassword(event.target.value)
+                    }}/><br/>
+
+                    <input type='button' value='Signin'  onClick={ signin }/>
+                    <input type='button' value='Signup' onClick={ (event) => {
+                        signup(event)
+                    }}/>
+                </form>
+            </div>
+        )
+    }
+
+     return (showSignInForm());
 }
 
 export default Signin;

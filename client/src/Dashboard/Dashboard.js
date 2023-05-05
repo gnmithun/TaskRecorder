@@ -94,6 +94,7 @@ const Dashboard = (props) => {
       const data = await resp.json()
       if (data.response === "Success"){
         navigateTo('/signin', { state : { logged : false }})
+        localStorage.setItem("loggedIn","no")
       } else {
         alert(data.details)
       }  
@@ -140,10 +141,6 @@ const Dashboard = (props) => {
         </div>
        ) 
       } 
-      // else {
-      //   alert("Unauthorized! Please signin in first!!!")
-      //   return navigateTo("/signin")
-      // }
     }
 
     return(showDashboard())

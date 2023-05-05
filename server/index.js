@@ -34,6 +34,9 @@ app.use(session({
   secure : "true",
   secret : "E(H+MbQeShVmYq3t6w9z$C&F)J@NcRfU",
   resave : false,
+  // cookie : {
+  //   expires:15000
+  // }
 }))
 app.use(AccessRoutes)
 app.use(DatedTaskRoutes)
