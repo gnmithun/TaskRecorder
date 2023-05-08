@@ -25,7 +25,7 @@ const Dashboard = (props) => {
         navigateTo('/signin', { state : { logged : false }})
         localStorage.setItem("loggedIn","no")
       } else {
-        console.log("Show general error",resp)
+
       }
     }
 

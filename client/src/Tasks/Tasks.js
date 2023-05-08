@@ -110,7 +110,7 @@ function Tasks(props) {
             </div>
         );
     } catch (error){
-        console.log(error)
+
         navigateTo('/signin')
     } 
 
