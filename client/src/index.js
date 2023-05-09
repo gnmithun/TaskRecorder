@@ -10,7 +10,7 @@ import ErrorBoundary from './Common/errorBoundary';
 const root = ReactDOM.createRoot(document.getElementById("root"))
 root.render(
         <React.StrictMode>
-            <ErrorBoundary fallback={ (error) => {<h1>error</h1>}}>
+            <ErrorBoundary>
                 <CookiesProvider>
                 <div className="bg">
                     <Routing/>

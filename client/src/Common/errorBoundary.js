@@ -5,7 +5,6 @@ class ErrorBoundary extends Component {
     constructor(props) {
         super(props);
         this.state = { hasError: false }
-        this.state = { errorDetails : "" }
     }
 
     static getDerivedStateFromError(error){

@@ -7,7 +7,7 @@ import { CompletedTasks } from "../FilteredAPIs/CompletedTasks"
 import { customFetch } from '../Common/customFetch';
 
 function TasksList(props) {
-const [showList, setShowList] = useState(false)
+const [showList] = useState(false)
 const displayStatus = showList ?  styles.visible: styles.visible;
     return (
         <div>
