@@ -5,19 +5,19 @@ import './index.css';
 import reportWebVitals from './reportWebVitals';
 import Routing from './Routes/Routes';
 import { CookiesProvider } from 'react-cookie';
-import { ErrorBoundary } from "react-error-boundary";
+import ErrorBoundary from './Common/errorBoundary';
 
 const root = ReactDOM.createRoot(document.getElementById("root"))
 root.render(
-    <ErrorBoundary fallback={ <div> <h1> An Error </h1> </div>} >
-    <CookiesProvider>
         <React.StrictMode>
-            <div className="bg">
-                <Routing/>
-            </div> 
+            <ErrorBoundary fallback={ (error) => {<h1>error</h1>}}>
+                <CookiesProvider>
+                <div className="bg">
+                    <Routing/>
+                </div> 
+                </CookiesProvider>
+            </ErrorBoundary>
         </React.StrictMode>
-    </CookiesProvider>
-    </ErrorBoundary>
 )
 
 reportWebVitals();

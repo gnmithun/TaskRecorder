@@ -6,7 +6,6 @@ import { useCookies } from 'react-cookie';
 function  Signin(props) {
     const [userId,setUserId] = useState("")
     const [password,setPassword] = useState("")
-    const [cookies, setCookies] = useCookies(['loggedIn']);
 
     const navigateTo = useNavigate()
 
