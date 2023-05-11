@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { customFetch } from "../Common/customFetch";
+import useThrowAsyncError from "../Common/asyncErrorHandler"
 
 function  Signin(props) {
     const [userId,setUserId] = useState("")
     const [password,setPassword] = useState("")
-    const [errorState,setErrorState] = useState("")
     const navigateTo = useNavigate()
+    const asyncErrorHandler = useThrowAsyncError()
 
     async function signin(event){
         try{
@@ -25,11 +26,12 @@ function  Signin(props) {
                 alert(data.details)
             }
         } catch (error) {
-            return setErrorState(()=>{ throw error })
+            asyncErrorHandler(error)
         }
     }
 
     async function signup(event){ 
+        try{
             const signupDetails = JSON.stringify({"email":userId,"password":password})
             const resp = await customFetch("http://localhost:8000/signup",{ method:'POST',body: signupDetails })
             const data = await resp.json()
@@ -38,6 +40,10 @@ function  Signin(props) {
             } else {
                 alert(data.details)
             }
+        } catch (error){
+            asyncErrorHandler(error)
+        }
+
     }
 
     useEffect(() => {
