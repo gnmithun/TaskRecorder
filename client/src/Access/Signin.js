@@ -1,28 +1,31 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { customFetch } from "../Common/customFetch";
-import { useCookies } from 'react-cookie';
 
 function  Signin(props) {
     const [userId,setUserId] = useState("")
     const [password,setPassword] = useState("")
-
+    const [errorState,setErrorState] = useState("")
     const navigateTo = useNavigate()
 
     async function signin(event){
-        const signinDetails = JSON.stringify({"email":userId,"password":password})
-        const resp = await customFetch("http://localhost:8000/signin",{ method:'POST',body: signinDetails })
-        const data = await resp.json()
-        if (data.response === "Success") {
-            const details = data.details
-            if ( details === "Unauthorized"){
-                alert("Unauthorized: Please sign in")
+        try{
+            const signinDetails = JSON.stringify({"email":userId,"password":password})
+            const resp = await customFetch("http://localhost:8000/signin",{ method:'POST',body: signinDetails })
+            const data = await resp.json()
+            if (data.response === "Success") {
+                const details = data.details
+                if ( details === "Unauthorized"){
+                    alert("Unauthorized: Please sign in")
+                } else {
+                    localStorage.setItem("loggedIn","yes")
+                    navigateTo("/dashboard",{ state:{loggedIn:true}})
+                }
             } else {
-                localStorage.setItem("loggedIn","yes")
-                navigateTo("/dashboard",{ state:{loggedIn:true}})
+                alert(data.details)
             }
-        } else {
-            alert(data.details)
+        } catch (error) {
+            return setErrorState(()=>{ throw error })
         }
     }
 
