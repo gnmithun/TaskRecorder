@@ -9,6 +9,7 @@ import PriorityTaskList from "../TaskByPriority/TaskByPriority"
 import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { customFetch } from "../Common/customFetch";
+import useThrowAsyncError from "../Common/asyncErrorHandler";
 
 const Dashboard = (props) => {
     const [categories,setCategories] = useState([])
@@ -19,60 +20,24 @@ const Dashboard = (props) => {
     const location = useLocation()
     const isLoggedIn = location.state?.loggedIn
     const navigateTo = useNavigate()
-    
-    const handleAuthorisedError = (resp)=>{
-      if(resp.status === 401) {
-        navigateTo('/signin', { state : { logged : false }})
-        localStorage.setItem("loggedIn","no")
-      } else {
+    const asyncErrorHandler = useThrowAsyncError()
 
-      }
-    }
+
 
     useEffect(()=>{
-        async function fetchCategories(params) {
-          if (isLoggedIn === true) {
-            setLoading(true)
-            const resp = await customFetch("http://localhost:8000/categories",{ method:'GET'})
-            const data = await resp.json()
-            setLoading(false)
-            if (data.response === "Success") {          
-              if ( data.details.length === 0) {
-                return
-              }
-              setCategories(data.details) 
-            } else {
-              handleAuthorisedError(resp)      
-            }
-          }
-      }
-        fetchCategories()    
+        try {
+          fetchCategories() 
+        } catch (error) {
+          asyncErrorHandler(error)
+        }    
     },[category])
 
     useEffect(()=>{
-        async function fetchTasks(params) {
-          if (isLoggedIn === true) {
-            setLoading(true)
-            const resp = await customFetch("http://localhost:8000/tasks",{ method:'GET' })
-            const data = await resp.json() 
-            setLoading(false)
-            if (data.response === "Success"){
-              if ( data.details === "Unauthorized"){
-                alert("Unauthorized: Please sign in")
-                return
-              }
-              if ( data.details.length === 0 ) {
-                alert("No tasks found")
-                setTasks([])
-                return
-              }
-              setTasks(data.details)  
-            } else {
-              handleAuthorisedError(resp)
-            }  
-          }
-        }
-        fetchTasks()    
+        try{
+          fetchTasks()
+        } catch( error) {
+          asyncErrorHandler(error)
+        }  
     },[task])
 
     useEffect(()=>{
@@ -81,52 +46,116 @@ const Dashboard = (props) => {
         return navigateTo("/signin")
       }
     },[])
-    async function getTasksWithFilter(fetcher,param){
+
+    const handleAuthorisedError = (resp)=>{
+      if(resp.status === 401) {
+        navigateTo('/signin', { state : { logged : false }})
+        localStorage.setItem("loggedIn","no")
+      } else {
+
+      }
+    }
+    
+    async function fetchTasks(params) {
+      if (isLoggedIn === true) {
         setLoading(true)
-        const data = await fetcher.getTasksWith(param)
+        const resp = await customFetch("http://localhost:8000/tasks",{ method:'GET' })
+        const data = await resp.json() 
+        setLoading(false)
         if (data.response === "Success"){
+          if ( data.details === "Unauthorized"){
+            alert("Unauthorized: Please sign in")
+            return
+          }
           if ( data.details.length === 0 ) {
             alert("No tasks found")
             setTasks([])
-            setLoading(false)
             return
           }
           setTasks(data.details)  
         } else {
-          alert(data.details)
+          handleAuthorisedError(resp)
         }  
+      }
+    }
+
+    async function fetchCategories(params) {
+      if (isLoggedIn === true) {
+        setLoading(true)
+        const resp = await customFetch("http://localhost:8000/categories",{ method:'GET'})
+        const data = await resp.json()
         setLoading(false)
+        if (data.response === "Success") {          
+          if ( data.details.length === 0) {
+            return
+          }
+          setCategories(data.details) 
+        } else {
+          handleAuthorisedError(resp)      
+        }
+      }
+    } 
+
+    async function getTasksWithFilter(fetcher,param){
+        try{
+          setLoading(true)
+          const data = await fetcher.getTasksWith(param)
+          if (data.response === "Success"){
+            if ( data.details.length === 0 ) {
+              alert("No tasks found")
+              setTasks([])
+              setLoading(false)
+              return
+            }
+            setTasks(data.details)  
+          } else {
+            alert(data.details)
+          }  
+          setLoading(false)
+        } catch(error) {
+          asyncErrorHandler(error)
+        }
+
     }
 
     async function signout(event){
-      const resp = await customFetch('http://localhost:8000/signout',{ method : 'POST'}) 
-      const data = await resp.json()
-      if (data.response === "Success"){
-        navigateTo('/signin', { state : { logged : false }})
-        localStorage.setItem("loggedIn","no")
-      } else {
-        alert(data.details)
-      }  
+      try {
+        const resp = await customFetch('http://localhost:8000/signout',{ method : 'POST'}) 
+        const data = await resp.json()
+        if (data.response === "Success"){
+          navigateTo('/signin', { state : { logged : false }})
+          localStorage.setItem("loggedIn","no")
+        } else {
+          alert(data.details)
+        }  
+      } catch (error) {
+        asyncErrorHandler(error)
+      }
     }
 
     async function addCategory() {
-      let category = prompt("Enter a category")
-      if (category === null) {
-        return
+      try {
+        let category = prompt("Enter a category")
+        if (category === null) {
+          return
+        }
+        const categoryType = JSON.stringify({"category":category})
+        setLoading(true)
+        const resp = await customFetch("http://localhost:8000/category",{ method:'POST', body:categoryType })
+        const data = await resp.json() 
+        setLoading(false)
+        if (data.response === "Success"){
+          setCategory({ id:data.details.id , type:data.details.type })      
+        } else {
+          handleAuthorisedError(resp)
+        }
+      } catch (error) {
+        asyncErrorHandler(error)
       }
-      const categoryType = JSON.stringify({"category":category})
-      setLoading(true)
-      const resp = await customFetch("http://localhost:8000/category",{ method:'POST', body:categoryType })
-      const data = await resp.json() 
-      setLoading(false)
-      if (data.response === "Success"){
-        setCategory({ id:data.details.id , type:data.details.type })      
-      } else {
-        handleAuthorisedError(resp)
-      }
+
     }
 
-    function showDashboard(){      
+    function showDashboard(){   
       if (isLoggedIn){
        return(
         <div>
