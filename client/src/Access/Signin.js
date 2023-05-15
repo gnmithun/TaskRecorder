@@ -58,7 +58,11 @@ function  Signin(props) {
                 <form >
                     <label > Username </label> <br/>
                     <input type='text' placeholder='Enter a preferred username' onChange={ (event) => {
-                        setUserId(event.target.value)
+                        try {
+                            setUserId(event.target.value)
+                        } catch (error) {
+                            asyncErrorHandler(error)
+                        }                   
                     }}/><br/>
                     
                     <label> Password </label> <br/>

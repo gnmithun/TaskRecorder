@@ -3,11 +3,13 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from "./Tasks.module.css"
 import { customFetch } from '../Common/customFetch';
-
+import useThrowAsyncError from '../Common/asyncErrorHandler';
 function Tasks(props) {
 
     const [inputTask,setInputTask] = useState( { detail:"", completed:false, categoryId: 0, priority:"HIGH" } )
     const navigateTo = useNavigate()
+    const asyncErrorHandler = useThrowAsyncError()
+
     function isSubmitEnabled(){
         return props.loading ? true : (inputTask.detail !== "" ? false : true)
     }
@@ -17,40 +19,49 @@ function Tasks(props) {
            After the user adds the first category, the select component still does not update, so we explicitly fetch the 0th
            category i.e the newly added category and set its id to the default category id
          */
-        if(inputTask.categoryId === 0 && props.categories.length > 0) {
-            const category = props.categories[0]
-            setInputTask(inputTask => ( { ...inputTask,categoryId : category.id } ) )
+        try {
+            if(inputTask.categoryId === 0 && props.categories.length > 0) {
+                const category = props.categories[0]
+                setInputTask(inputTask => ( { ...inputTask,categoryId : category.id } ) )
+            }    
+        } catch (error) {
+            asyncErrorHandler(error)
         }
+
 
     },[props.categories])
 
     async function addTask(event){
-        event.preventDefault()
+        try {
+            event.preventDefault()
 
-        /*This is a corner case where there are no categories*/
-        if(props.categories.length === 0) {
-            alert("Please add some categories and select one to add tasks")
-            return
-        } 
-
-        props.setLoading(true)
-        const createTaskPayload = JSON.stringify({
-            detail:inputTask.detail, 
-                                completed:inputTask.completed,
-                                categoryId:inputTask.categoryId, 
-                                priority:inputTask.priority
-        })
-        const resp = await customFetch('http://localhost:8000/tasks',{ method : 'POST', body:createTaskPayload} )
-        const data = await resp.json()
-        props.setLoading(false)
-        if (data.response === "Success") {
-            const newTask = data.details
-            props.setTask(newTask)            
-            setInputTask(inputTask => ( {...inputTask,detail : "", completed : false} ) )    
-        } else {
-            alert(data.details)
+            /*This is a corner case where there are no categories*/
+            if(props.categories.length === 0) {
+                alert("Please add some categories and select one to add tasks")
+                return
+            } 
+    
+            props.setLoading(true)
+            const createTaskPayload = JSON.stringify({
+                detail:inputTask.detail, 
+                                    completed:inputTask.completed,
+                                    categoryId:inputTask.categoryId, 
+                                    priority:inputTask.priority
+            })
+            const resp = await customFetch('http://localhost:8000/tasks',{ method : 'POST', body:createTaskPayload} )
+            const data = await resp.json()
+            props.setLoading(false)
+            if (data.response === "Success") {
+                const newTask = data.details
+                props.setTask(newTask)            
+                setInputTask(inputTask => ( {...inputTask,detail : "", completed : false} ) )    
+            } else {
+                alert(data.details)
+            }
+    
+        } catch (error) {
+            asyncErrorHandler(error)
         }
-
     }
 
     try {
