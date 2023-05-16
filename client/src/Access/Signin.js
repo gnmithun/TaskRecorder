@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { customFetch } from "../Common/customFetch";
 import useThrowAsyncError from "../Common/asyncErrorHandler"
+import "./Signin.css"
 
 function  Signin(props) {
     const [userId,setUserId] = useState("")
@@ -52,30 +53,35 @@ function  Signin(props) {
         } 
     },[])
 
-    function showSignInForm() {
+    function showSignInForm() { 
         return( 
             <div>
-                <form >
-                    <label > Username </label> <br/>
-                    <input type='text' placeholder='Enter a preferred username' onChange={ (event) => {
-                        try {
-                            setUserId(event.target.value)
-                        } catch (error) {
-                            asyncErrorHandler(error)
-                        }                   
-                    }}/><br/>
-                    
-                    <label> Password </label> <br/>
-                    <input type='password' placeholder='Enter a hard to decipher password' onChange={ (event) => {
-                        setPassword(event.target.value)
-                    }}/><br/>
+                <h2 className='textCenter'>  Task Master </h2> 
+                <h3 className='textCenter'>  A productivity tool  </h3>         
+                <div className='center'>
+                    <form >
+                        <label > Username </label> <br/>
+                        <input type='text' className='inputbox' placeholder='Enter a preferred username' onChange={ (event) => {
+                            try {
+                                setUserId(event.target.value)
+                            } catch (error) {
+                                asyncErrorHandler(error)
+                            }                   
+                        }}/><br/>
+                        
+                        <label> Password </label> <br/>
+                        <input type='password' className='inputbox' placeholder='Enter a hard to decipher password' onChange={ (event) => {
+                            setPassword(event.target.value)
+                        }}/><br/>
 
-                    <input type='button' value='Signin'  onClick={ signin }/>
-                    <input type='button' value='Signup' onClick={ (event) => {
-                        signup(event)
-                    }}/>
-                </form>
+                        <input type='button' value='Signin'  onClick={ signin }/>
+                        <input type='button' value='Signup' onClick={ (event) => {
+                            signup(event)
+                        }}/>
+                    </form>
+                </div>
             </div>
+
         )
     }
 
