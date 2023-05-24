@@ -42,6 +42,7 @@ body {
 .inputbox {
   height: 30px;
   margin-bottom: 30px;
+  border-radius: 10px;
 }
 
 .center .inputbox {

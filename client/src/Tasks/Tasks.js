@@ -11,7 +11,7 @@ function Tasks(props) {
     const asyncErrorHandler = useThrowAsyncError()
 
     function isSubmitEnabled(){
-        return props.loading ? true : (inputTask.detail !== "" ? false : true)
+        return props.loading ? true : (inputTask.detail === "" ? false : true)
     }
 
     useEffect(() => {
@@ -66,11 +66,11 @@ function Tasks(props) {
 
     try {
         return (
-            <div className={styles.formStyle} >          
+            <div>          
                 <form onSubmit={addTask}>
                     <div className ={styles.taskContainer}>
-                        <input type="text"
-                            className= { styles.taskInput }
+                        <input type="search"
+                            className= { styles.inputBox }
                             value={ inputTask.detail }              
                             placeholder='Whats next?' 
                             disabled = { props.loading ? true : false }
@@ -78,44 +78,38 @@ function Tasks(props) {
                             onChange={ (event) => { 
                                 setInputTask(inputTask => ( {...inputTask,detail : event.target.value } ) ) 
                             }}
-                        />
-    
-                        {/* <input type="checkbox" 
-                            disabled = { props.loading ? true : false }
-                            checked = { inputTask.completed }
-                            name='completed' 
-                            onChange={ (event) => { 
-                                setInputTask(inputTask => ( {...inputTask,completed :  event.target.checked } ) )
-                            }}
-                        /> */}
-    
-                        
+                        />                    
                         <div className={styles.taskSubContainer}>
-                            <input type="submit" value="Submit" className = {styles.taskSubContainerSubmit } disabled = { isSubmitEnabled() }/>
-                            
-                            <select name="category" 
-                            className={ styles.taskSubContainerSubItemInput }
-                            onChange={ (event)=> { 
-                                const selectedCategory = props.categories.find( category => category.type === event.target.value)
-                                const categoryId = selectedCategory.id
-                                setInputTask(inputTask => ( { ...inputTask,categoryId : categoryId } ) )
-                            }} >
-                            { props.categories.map((category) => <option key={category.id} >{category.type} </option>) }
-                            </select>
-    
+                            <input type="submit" value="Submit" className = {
+                                isSubmitEnabled() ? styles.taskSubContainerSubmitDisabled : styles.taskSubContainerSubmitEnabled } 
+                            disabled = { isSubmitEnabled() }/>
+                            <div className={styles.dropDown}>
+                                <select name="category" 
+                                    className={ styles.taskSubContainerSelector }
+                                    onChange={ (event)=> { 
+                                        const selectedCategory = props.categories.find( category => category.type === event.target.value)
+                                        const categoryId = selectedCategory.id
+                                        setInputTask(inputTask => ( { ...inputTask,categoryId : categoryId } ) )
+                                    }} >
+                                        { 
+                                            props.categories.map((category) => <option key={category.id} >{category.type} </option>)
+                                        }
+
+                                </select>
+                            </div>
+
                             <select name="priority"
-                            className={ styles.taskSubContainerSubItemInput }
-                            onChange = { (event) => {
-                                const selectedPriority = props.priorities.find( priority => priority === event.target.value)
-                                setInputTask(inputTask => ( { ...inputTask,priority : selectedPriority } ) )
-                            }}>
-                            { props.priorities.map( (priority,index) => <option key={index}> { priority} </option>)}
+                                className={ styles.taskSubContainerSelector }
+                                onChange = { (event) => {
+                                    const selectedPriority = props.priorities.find( priority => priority === event.target.value)
+                                    setInputTask(inputTask => ( { ...inputTask,priority : selectedPriority } ) )
+                                }}>
+                                { props.priorities.map( (priority,index) => <option key={index}> { priority} </option>)}
                             </select>
                             
                         </div>
     
                     </div>
-                    {/* <label> Priority </label> */}
                     
                 </form>           
             </div>

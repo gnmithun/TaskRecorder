@@ -174,8 +174,8 @@ const Dashboard = (props) => {
                             taskDeleted={ () => setTask({}) } 
                             taskUpdated={ () => setTask({}) } //How to fetch only the updated task
                             />
-          <TaskByDate setLoading={setLoading}/>
-          <PriorityTaskList setLoading={setLoading}/> 
+          {/* <TaskByDate setLoading={setLoading}/>
+          <PriorityTaskList setLoading={setLoading}/>  */}
         </div>
        ) 
       } 
