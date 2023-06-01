@@ -74,14 +74,15 @@ function  Signin(props) {
                             setPassword(event.target.value)
                         }}/><br/>
 
-                        <input type='button' value='Signin'  onClick={ signin }/>
-                        <input type='button' value='Signup' onClick={ (event) => {
-                            signup(event)
-                        }}/>
+                        <div className='actionContainer'>
+                            <input type='button' className='signin' value='Signin'  onClick={ signin }/>
+                            <input type='button' className='signup' value='Signup' onClick={ (event) => {
+                                signup(event)
+                            }}/>                            
+                        </div>
                     </form>
                 </div>
             </div>
-
         )
     }
 
