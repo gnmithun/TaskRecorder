@@ -57,7 +57,8 @@ function  Signin(props) {
         return( 
             <div>
                 <h2 className='textCenter'>  Task Master </h2> 
-                <h3 className='textCenter'>  A productivity tool  </h3>         
+                <h3 className='textCenter'>  A productivity tool  </h3>  
+                <div className='signinContainer'>
                 <div className='center'>
                     <form >
                         <label > Username </label> <br/>
@@ -82,6 +83,8 @@ function  Signin(props) {
                         </div>
                     </form>
                 </div>
+                </div>       
+
             </div>
         )
     }

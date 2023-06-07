@@ -1,6 +1,18 @@
 @import url("https://fonts.googleapis.com/css2?family=Sansita+Swashed:wght@600&display=swap");
 
 
+.signinContainer{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.center {
+  padding: 50px 50px;
+  background: white;
+  border-radius: 10px;
+}
+
 .title {
   position: relative;
   padding: 50px 50px;
@@ -9,13 +21,7 @@
   align-items: center;
 }
 
-.center {
-  position: relative;
-  padding: 50px 50px;
-  background: white;
-  border-radius: 10px;
-  margin-bottom: 50px;
-}
+
 
 .center h1 {
   font-size: 2em;
