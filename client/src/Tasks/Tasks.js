@@ -11,7 +11,7 @@ function Tasks(props) {
     const asyncErrorHandler = useThrowAsyncError()
 
     function isSubmitEnabled(){
-        return props.loading ? true : (inputTask.detail === "" ? false : true)
+        return props.loading ? false : (inputTask.detail === "" ? false : true)
     }
 
     useEffect(() => {
@@ -82,7 +82,7 @@ function Tasks(props) {
                         <div className={styles.taskSubContainer}>
                             <input type="submit" value="Submit" className = {
                                 isSubmitEnabled() ? styles.taskSubContainerSubmitDisabled : styles.taskSubContainerSubmitEnabled } 
-                            disabled = { isSubmitEnabled() }/>
+                            disabled = { !isSubmitEnabled() }/>
                             <div className={styles.dropDown}>
                                 <select name="category" 
                                     className={ styles.taskSubContainerSelector }

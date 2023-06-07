@@ -10,7 +10,7 @@ import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { customFetch } from "../Common/customFetch";
 import useThrowAsyncError from "../Common/asyncErrorHandler";
-
+import "./Dashboard.css"
 const Dashboard = (props) => {
     const [categories,setCategories] = useState([])
     const [loading,setLoading] = useState(false)
@@ -158,7 +158,7 @@ const Dashboard = (props) => {
     function showDashboard(){   
       if (isLoggedIn){
        return(
-        <div>
+        <div className="dashboardContainer">
           <NavBar setCategory={category} signout = {signout} addCategory={addCategory}/>
           <Heading/>
           { loading ? <LoadingSpinner/> : <></>}
@@ -176,7 +176,7 @@ const Dashboard = (props) => {
                             />
           {/* <TaskByDate setLoading={setLoading}/>
           <PriorityTaskList setLoading={setLoading}/>  */}
-        </div>
+          </div>
        ) 
       } 
     }

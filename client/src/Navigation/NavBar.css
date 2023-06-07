@@ -42,23 +42,3 @@
     display: block;
 } */
 
-.navigationMain {
-    /* display: flex;
-    flex-direction: column; */
-    width: 100%;
-    background-color: red;
-}
-body .navigationMain{
-    margin: 0px;
-   }
-li {
-    list-style: none;
-}
-li a{
-    background-color: black;
-    margin-bottom: 10px;
-}
-
-li a:hover {
-    background-color: red;
-}

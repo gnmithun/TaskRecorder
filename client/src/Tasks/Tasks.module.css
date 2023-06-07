@@ -1,6 +1,7 @@
 
 .taskContainer {
   display: flex;
+  justify-content: center;
   flex-direction: column;
 }
 
@@ -10,7 +11,8 @@
 }
 
 .inputBox {
-  height: 30px;
+  margin-top: 50px;
+  height: 60px;
   border-radius: 10px;
   margin-bottom: 20px;
   text-align: center;
