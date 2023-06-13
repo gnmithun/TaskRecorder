@@ -12,14 +12,6 @@ const displayStatus = showList ?  styles.visible: styles.visible;
     return (
         <div>
 
-            <input type="button" value="Completed" className={styles.collapsibleMenu} onClick={ (event)=>  props.getTasksWithFilter(CompletedTasks,Constants.status[1]) }/>
-            
-            <input type="button" value="Today" className={styles.collapsibleMenu} onClick={ (event)=>  props.getTasksWithFilter(FilteredTasks,Constants.taskDays[2]) }/>
-            
-            <input type="button" value="Yesterday" className={styles.collapsibleMenu} onClick={  (event)=> props.getTasksWithFilter(FilteredTasks,Constants.taskDays[1]) } />
-
-            <input type="button" value="Loooooooooooooooong Pending" className={styles.collapsibleMenu} onClick={  (event)=> props.getTasksWithFilter(FilteredTasks,Constants.taskDays[0]) } />
-
             <div className={`${displayStatus}`}>
                 <ul className= { styles.customul }>
                     {
@@ -74,6 +66,14 @@ const displayStatus = showList ?  styles.visible: styles.visible;
                     }
                 </ul>
             </div>
+
+            <input type="button" value="Completed" className={styles.collapsibleMenu} onClick={ (event)=>  props.getTasksWithFilter(CompletedTasks,Constants.status[1]) }/>
+            
+            <input type="button" value="Today" className={styles.collapsibleMenu} onClick={ (event)=>  props.getTasksWithFilter(FilteredTasks,Constants.taskDays[2]) }/>
+            
+            <input type="button" value="Yesterday" className={styles.collapsibleMenu} onClick={  (event)=> props.getTasksWithFilter(FilteredTasks,Constants.taskDays[1]) } />
+
+            <input type="button" value="Loooooooooooooooong Pending" className={styles.collapsibleMenu} onClick={  (event)=> props.getTasksWithFilter(FilteredTasks,Constants.taskDays[0]) } />
         </div>
     );
 }

@@ -55,37 +55,34 @@ function  Signin(props) {
 
     function showSignInForm() { 
         return( 
-            <div>
-                <h2 className='textCenter'>  Task Master </h2> 
-                <h3 className='textCenter'>  A productivity tool  </h3>  
                 <div className='signinContainer'>
-                <div className='center'>
-                    <form >
-                        <label > Username </label> <br/>
-                        <input type='text' className='inputbox' placeholder='Enter a preferred username' onChange={ (event) => {
-                            try {
-                                setUserId(event.target.value)
-                            } catch (error) {
-                                asyncErrorHandler(error)
-                            }                   
-                        }}/><br/>
-                        
-                        <label> Password </label> <br/>
-                        <input type='password' className='inputbox' placeholder='Enter a hard to decipher password' onChange={ (event) => {
-                            setPassword(event.target.value)
-                        }}/><br/>
+                    <h2 className='textCenter'>  Task Master </h2> 
+                    <h3 className='textCenter'>  A productivity tool  </h3>  
+                    <div className='center'>
+                        <form >
+                            <label > Username </label> <br/>
+                            <input type='text' className='inputbox' placeholder='Enter a preferred username' onChange={ (event) => {
+                                try {
+                                    setUserId(event.target.value)
+                                } catch (error) {
+                                    asyncErrorHandler(error)
+                                }                   
+                            }}/><br/>
+                            
+                            <label> Password </label> <br/>
+                            <input type='password' className='inputbox' placeholder='Enter a hard to decipher password' onChange={ (event) => {
+                                setPassword(event.target.value)
+                            }}/><br/>
 
-                        <div className='actionContainer'>
-                            <input type='button' className='signin' value='Signin'  onClick={ signin }/>
-                            <input type='button' className='signup' value='Signup' onClick={ (event) => {
-                                signup(event)
-                            }}/>                            
-                        </div>
-                    </form>
+                            <div className='actionContainer'>
+                                <input type='button' className='signin' value='Signin'  onClick={ signin }/>
+                                <input type='button' className='signup' value='Signup' onClick={ (event) => {
+                                    signup(event)
+                                }}/>                            
+                            </div>
+                        </form>
+                    </div>  
                 </div>
-                </div>       
-
-            </div>
         )
     }
 

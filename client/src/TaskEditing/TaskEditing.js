@@ -20,7 +20,7 @@ function TaskEditingForm(props) {
     return (
         
         <div className= {styles.taskEditingContainer}>
-            <input type="text" className={ styles.tasksDetailsItemName } value={updatedDetail} onChange={ (event) => setUpdatedDetail(event.target.value) }/>
+            <input type="label" className={ styles.tasksDetailsItemName } value={updatedDetail} onChange={ (event) => setUpdatedDetail(event.target.value) }/>
 
             <select name='priority' className = { styles.tasksDetailsItem }
                     onChange={ (event) => {
