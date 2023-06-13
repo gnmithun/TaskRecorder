@@ -3,6 +3,7 @@ import { useState } from 'react';
 import styles from './TaskEditing.module.css'
 import { customFetch } from '../Common/customFetch';
 import useThrowAsyncError from '../Common/asyncErrorHandler';
+import Select from 'react-select'
 
 function TaskEditingForm(props) {
     const [updatedDetail,setUpdatedDetail]       = useState(props.task.detail)
@@ -16,30 +17,50 @@ function TaskEditingForm(props) {
             setUpdatedCompleted(props.task.completed)
             setUpdatedCategory(props.task.category)    
     }
+
+    let selectOptionsPriorities = []
+    let selectOptionsCategories = []
     
+    props.priority.map((priority)=>{
+        selectOptionsPriorities.push({
+             value: priority, label: priority,
+        })
+    })
+
+    props.categories.map((category)=>{
+        selectOptionsCategories.push({
+             value: category.type, label: category.type,
+        })
+    })
+
     return (
         
         <div className= {styles.taskEditingContainer}>
             <input type="label" className={ styles.tasksDetailsItemName } value={updatedDetail} onChange={ (event) => setUpdatedDetail(event.target.value) }/>
 
-            <select name='priority' className = { styles.tasksDetailsItem }
+            <Select name='priority' 
+                    className = { styles.tasksDetailsItem }
                     onChange={ (event) => {
                         try {
-                            const updatedPriority = props.priority.find( priority => priority === event.target.value)
+                            const updatedPriority = props.priority.find( priority => priority === event.target.value)                            
                             setUpdatedPriority(updatedPriority) 
+                            
                         } catch (error) {
                             asyncErrorHandler(error)
                         }
 
                     }}
-                    value={updatedPriority}                 
+                    options={selectOptionsPriorities}
                     >                    
-                    { props.priority.map( (priority,index) => 
+                    {
+                     
+                    props.priority.map( (priority,index) =>     
                          <option key={index} > {priority} </option>
-                    ) }                    
-            </select>
+                        )
+                    }                    
+            </Select>
 
-            <select name="category" className = { styles.tasksDetailsItem }
+            <Select name="category" className = { styles.tasksDetailsItem }
                     onChange={ (event)=> { 
                         try {
                             const selectedCategory = props.categories.find( category => category.type === event.target.value)                        
@@ -47,10 +68,10 @@ function TaskEditingForm(props) {
                         } catch (error) {
                             asyncErrorHandler(error)
                         }
-                    }} value = { updatedCategory.type } >
+                    }} options = { selectOptionsCategories } >
                       
                     { props.categories.map((category,index) => <option key={index} >{category.type} </option>) }
-            </select>
+            </Select>
 
             <button onClick={ async (event) => {
                 try {
@@ -87,8 +108,7 @@ function TaskEditingForm(props) {
                             setUpdatedCompleted(event.target.checked) 
                         } catch (error) {
                             asyncErrorHandler(error)
-                        }} 
-                }/>
+            }} }/>
         </div>
 
     );

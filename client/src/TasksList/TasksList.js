@@ -22,7 +22,7 @@ const displayStatus = showList ?  styles.visible: styles.visible;
                                 <TaskEditingForm task={task} priority={Constants.priorities} categories={props.categories} taskUpdated={ props.taskUpdated }/>
                             </div>
                             { <div className={styles.tasksOperations}>
-                            <button onClick={ async (event) => {                                
+                            <button className = {styles.infoButton} onClick={ async (event) => {                                
 
                                     const taskId = task.id
                                     props.setLoading(true)
@@ -37,7 +37,7 @@ const displayStatus = showList ?  styles.visible: styles.visible;
                                     } else {
                                         alert(data.details)
                                     }
-                                }}> Details
+                                }}> i
                             </button>
                             <button onClick={ async (event) => { 
                                         const response = window.confirm("Do you want to delete this task?")
@@ -57,7 +57,7 @@ const displayStatus = showList ?  styles.visible: styles.visible;
                                         } else {
                                             alert(data.details)                                        
                                         }   
-                                    } } > X 
+                                    } } > x 
                             </button>
                             </div> }
                         </li>                             
