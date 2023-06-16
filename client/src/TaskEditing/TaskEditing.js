@@ -11,6 +11,7 @@ function TaskEditingForm(props) {
     const [updatedPriority,setUpdatedPriority]   = useState(props.task.priority)
     const [updatedCategory,setUpdatedCategory]   = useState(props.task.category)    
     const asyncErrorHandler = useThrowAsyncError()
+    
     const resetOnFailure = () => {
             setUpdatedDetail(props.task.detail)
             setUpdatedPriority(props.task.priority)
@@ -23,13 +24,13 @@ function TaskEditingForm(props) {
     
     props.priority.map((priority)=>{
         selectOptionsPriorities.push({
-             value: priority, label: priority,
+             label: priority
         })
     })
 
     props.categories.map((category)=>{
         selectOptionsCategories.push({
-             value: category.type, label: category.type,
+             label: category.type
         })
     })
 
@@ -42,16 +43,14 @@ function TaskEditingForm(props) {
                     className = { styles.tasksDetailsItem }
                     onChange={ (event) => {
                         try {
-                            const updatedPriority = props.priority.find( priority => priority === event.target.value)                            
-                            setUpdatedPriority(updatedPriority) 
-                            
+                            const updatedPriority = selectOptionsPriorities.find( priority => priority.label === event.label)                            
+                            console.log(updatedPriority.label)
+                            setUpdatedPriority(updatedPriority)                             
                         } catch (error) {
                             asyncErrorHandler(error)
                         }
-
                     }}
-                    options={selectOptionsPriorities}
-                    >                    
+                    options={selectOptionsPriorities} >                    
                     {
                      
                     props.priority.map( (priority,index) =>     
@@ -62,9 +61,10 @@ function TaskEditingForm(props) {
 
             <Select name="category" className = { styles.tasksDetailsItem }
                     onChange={ (event)=> { 
-                        try {
-                            const selectedCategory = props.categories.find( category => category.type === event.target.value)                        
-                            setUpdatedCategory(selectedCategory )                            
+                        try {                         
+                            const selectedCategory = selectOptionsCategories.find( category => category.label === event.label)                            
+                            console.log(selectedCategory.label)
+                            setUpdatedCategory(selectedCategory) 
                         } catch (error) {
                             asyncErrorHandler(error)
                         }
