@@ -35,7 +35,7 @@ app.use(session({
   secret : "E(H+MbQeShVmYq3t6w9z$C&F)J@NcRfU",
   resave : false,
   cookie : {
-    expires:600000 // 1 hour
+    expires:6000000 // 1 hour
   }
 }))
 app.use(AccessRoutes)

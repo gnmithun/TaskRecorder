@@ -76,8 +76,7 @@ function Tasks(props) {
                             disabled = { props.loading ? true : false }
                             name='detail' 
                             onChange={ (event) => { 
-                                setInputTask(inputTask => ( {...inputTask,detail : event.target.value } ) ) 
-                            }}
+                                setInputTask(inputTask => ( {...inputTask,detail : event.target.value } ) ) }}
                         />                    
                         <div className={styles.taskSubContainer}>
                             <input type="submit" value="Submit" className = {

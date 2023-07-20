@@ -101,7 +101,7 @@ function TaskEditingForm(props) {
                 }
 
 
-            }} className = { styles.tasksDetailsItem }> Update </button>
+            }} className = { styles.tasksDetailsUpdate }> Update </button>
 
             <input type="checkbox" checked={updatedCompleted} onChange = {                 
                     (event) =>  { 

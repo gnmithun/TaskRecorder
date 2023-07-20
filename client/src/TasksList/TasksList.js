@@ -21,45 +21,7 @@ const displayStatus = showList ?  styles.visible: styles.visible;
                             <div>
                                 <TaskEditingForm task={task} priority={Constants.priorities} categories={props.categories} taskUpdated={ props.taskUpdated }/>
                             </div>
-                            { <div className={styles.tasksOperations}>
-                            <button className = {styles.infoButton} onClick={ async (event) => {                                
 
-                                    const taskId = task.id
-                                    props.setLoading(true)
-                                    const getTaskEndpoint = 'http://localhost:8000/task/'+taskId    
-                                    const resp = await customFetch(getTaskEndpoint,{ method:'GET' })
-                                    const data = await resp.json()
-                                    props.setLoading(false)
-                                    if( data.response === "Success" ) {
-                                        const taskDetails = data.details
-                                        alert(taskDetails.id + " : " + taskDetails.detail + " is a " + taskDetails.priority
-                                        + " priority task of " + taskDetails.category.type + " category ")
-                                    } else {
-                                        alert(data.details)
-                                    }
-                                }}> i
-                            </button>
-                            <button onClick={ async (event) => { 
-                                        const response = window.confirm("Do you want to delete this task?")
-                                        if ( response === false ) {
-                                            return
-                                        }
-                                        const taskId = task.id
-                                        props.setLoading(true)
-                                        const deleteTaskEndPoint = "http://localhost:8000/task/"+taskId
-                                        const resp = await customFetch(deleteTaskEndPoint,{ method:'DELETE' } )
-                                        const data = await resp.json()
-                                        props.setLoading(false)
-                                        if ( data.response === "Success" ) {                                                
-                                            const deletedTaskDetails = data.details                                                                                           
-                                            props.taskDeleted()
-                                            alert(`Deleted task "${deletedTaskDetails.detail}"`)
-                                        } else {
-                                            alert(data.details)                                        
-                                        }   
-                                    } } > x 
-                            </button>
-                            </div> }
                         </li>                             
                         </div>
                     ) 
