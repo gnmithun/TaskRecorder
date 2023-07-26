@@ -4,11 +4,30 @@ import { useNavigate } from 'react-router-dom';
 import styles from "./Tasks.module.css"
 import { customFetch } from '../Common/customFetch';
 import useThrowAsyncError from '../Common/asyncErrorHandler';
+import Select from 'react-select'
+
 function Tasks(props) {
 
     const [inputTask,setInputTask] = useState( { detail:"", completed:false, categoryId: 0, priority:"HIGH" } )
+    const [updatedPriority,setUpdatedPriority]   = useState(props.task.priority)
     const navigateTo = useNavigate()
     const asyncErrorHandler = useThrowAsyncError()
+
+    let selectOptionsPriorities = []
+    // let selectOptionsCategories = []
+    
+    props.priorities.map((priority)=>{
+        selectOptionsPriorities.push({
+            label: priority
+        })
+    })
+
+    // props.categories.map((category)=>{
+    //     selectOptionsCategories.push({
+    //          label : category.type,
+    //          value : category
+    //     })
+    // })
 
     function isSubmitEnabled(){
         return props.loading ? false : (inputTask.detail === "" ? false : true)
@@ -77,39 +96,46 @@ function Tasks(props) {
                             name='detail' 
                             onChange={ (event) => { 
                                 setInputTask(inputTask => ( {...inputTask,detail : event.target.value } ) ) }}
-                        />                    
+/>                    
                         <div className={styles.taskSubContainer}>
                             <input type="submit" value="Submit" className = {
                                 isSubmitEnabled() ? styles.taskSubContainerSubmitDisabled : styles.taskSubContainerSubmitEnabled } 
                             disabled = { !isSubmitEnabled() }/>
+
                             <div className={styles.dropDown}>
                                 <select name="category" 
                                     className={ styles.taskSubContainerSelector }
+                                    options={ props.categories }
                                     onChange={ (event)=> { 
                                         const selectedCategory = props.categories.find( category => category.type === event.target.value)
                                         const categoryId = selectedCategory.id
                                         setInputTask(inputTask => ( { ...inputTask,categoryId : categoryId } ) )
                                     }} >
-                                        { 
-                                            props.categories.map((category) => <option key={category.id} >{category.type} </option>)
-                                        }
-
+                                        { props.categories.map((category) => <option key={category.id} >{category.type} </option>) }
+                                    
                                 </select>
-                            </div>
 
-                            <select name="priority"
-                                className={ styles.taskSubContainerSelector }
-                                onChange = { (event) => {
-                                    const selectedPriority = props.priorities.find( priority => priority === event.target.value)
-                                    setInputTask(inputTask => ( { ...inputTask,priority : selectedPriority } ) )
-                                }}>
-                                { props.priorities.map( (priority,index) => <option key={index}> { priority} </option>)}
-                            </select>
-                            
+                                <Select name='priority'
+                                    getOptionValue={ option =>  option.label }
+                                    
+                                    
+                                    value={{label:updatedPriority}}
+                                    onChange={ (event) => {
+                                        try {
+                                            const updatedPriority = selectOptionsPriorities.find( priority => priority.label === event.label)                            
+                                            setInputTask(inputTask => ( { ...inputTask,priority : updatedPriority.label } ) )
+                                            setUpdatedPriority(updatedPriority.label)          
+                                        } catch (error) {
+                                            asyncErrorHandler(error)
+                                        }
+                                    }}
+                                    options={selectOptionsPriorities} > {   
+                                     selectOptionsPriorities.map( (priority,index) => <option key={index} > {priority.label} </option> )
+                                    }  
+                                </Select>
+                            </div>
                         </div>
-    
-                    </div>
-                    
+                    </div>   
                 </form>           
             </div>
         );

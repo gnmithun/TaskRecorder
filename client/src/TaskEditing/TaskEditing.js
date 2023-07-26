@@ -42,8 +42,9 @@ function TaskEditingForm(props) {
         <div className= {styles.taskEditingContainer}>
             <input type="label" className={ styles.tasksDetailsItemName } value={updatedDetail} onChange={ (event) => setUpdatedDetail(event.target.value) }/>
 
-            <Select name='priority' className = { styles.tasksDetailsItem }
-                    getOptionValue={ option =>  option.label }
+            <Select name='priority' 
+                    className = { styles.tasksDetailsItem }
+                    // getOptionValue={ option =>  option.label }
                     onChange={ (event) => {
                         try {
                             const updatedPriority = selectOptionsPriorities.find( priority => priority.label === event.label)                            
