@@ -9,12 +9,11 @@ import Select from 'react-select'
 function Tasks(props) {
 
     const [inputTask,setInputTask] = useState( { detail:"", completed:false, categoryId: 0, priority:"HIGH" } )
-    const [updatedPriority,setUpdatedPriority]   = useState(props.task.priority)
     const navigateTo = useNavigate()
     const asyncErrorHandler = useThrowAsyncError()
 
     let selectOptionsPriorities = []
-    // let selectOptionsCategories = []
+    let selectOptionsCategories = []
     
     props.priorities.map((priority)=>{
         selectOptionsPriorities.push({
@@ -22,33 +21,19 @@ function Tasks(props) {
         })
     })
 
-    // props.categories.map((category)=>{
-    //     selectOptionsCategories.push({
-    //          label : category.type,
-    //          value : category
-    //     })
-    // })
+    props.categories.map((category)=>{
+        selectOptionsCategories.push({
+             label: category.type
+        })
+    })
 
+    const defaultCategory = selectOptionsCategories[0]
+    const defaultPriorities = selectOptionsPriorities[0]
+    console.log(defaultCategory,defaultPriorities)
+    
     function isSubmitEnabled(){
         return props.loading ? false : (inputTask.detail === "" ? false : true)
     }
-
-    useEffect(() => {
-        /* The default state of inputTask.categoryId is 0. Cause by default there are no categories. The user has to add them
-           After the user adds the first category, the select component still does not update, so we explicitly fetch the 0th
-           category i.e the newly added category and set its id to the default category id
-         */
-        try {
-            if(inputTask.categoryId === 0 && props.categories.length > 0) {
-                const category = props.categories[0]
-                setInputTask(inputTask => ( { ...inputTask,categoryId : category.id } ) )
-            }    
-        } catch (error) {
-            asyncErrorHandler(error)
-        }
-
-
-    },[props.categories])
 
     async function addTask(event){
         try {
@@ -83,6 +68,24 @@ function Tasks(props) {
         }
     }
 
+    useEffect(() => {
+        /* The default state of inputTask.categoryId is 0. Cause by default there are no categories. The user has to add them
+           After the user adds the first category, the select component still does not update, so we explicitly fetch the 0th
+           category i.e the newly added category and set its id to the default category id
+         */
+        try {
+            if(inputTask.categoryId === 0 && props.categories.length > 0) {
+                const category = props.categories[0]
+                setInputTask(inputTask => ( { ...inputTask,categoryId : category.id } ) )
+            }    
+        } catch (error) {
+            asyncErrorHandler(error)
+        }
+
+
+    },[props.categories])
+
+
     try {
         return (
             <div>          
@@ -103,7 +106,7 @@ function Tasks(props) {
                             disabled = { !isSubmitEnabled() }/>
 
                             <div className={styles.dropDown}>
-                                <select name="category" 
+                                {/* <select name="category" 
                                     className={ styles.taskSubContainerSelector }
                                     options={ props.categories }
                                     onChange={ (event)=> { 
@@ -113,26 +116,35 @@ function Tasks(props) {
                                     }} >
                                         { props.categories.map((category) => <option key={category.id} >{category.type} </option>) }
                                     
-                                </select>
+                                </select> */}
 
+                                <Select name='category'
+                                    defaultValue={selectOptionsCategories[0]}
+                                    // onChange={ (event) => {
+                                    //     const selectedCategory = props.categories.find( (category) => {
+                                    //         if (category.type === event.label){
+                                    //             console.log(event.label)
+                                    //             return category
+                                    //         }                                            
+                                    //     })
+                                    //     const categoryId = selectedCategory.id
+                                    //     setInputTask(inputTask => ( { ...inputTask,categoryId : categoryId } ) )
+                                    //     } 
+                                    // }
+                                    options={ selectOptionsCategories }
+                                />
                                 <Select name='priority'
-                                    getOptionValue={ option =>  option.label }
+                                    defaultValue={selectOptionsPriorities[0]}
                                     
-                                    
-                                    value={{label:updatedPriority}}
                                     onChange={ (event) => {
                                         try {
                                             const updatedPriority = selectOptionsPriorities.find( priority => priority.label === event.label)                            
-                                            setInputTask(inputTask => ( { ...inputTask,priority : updatedPriority.label } ) )
-                                            setUpdatedPriority(updatedPriority.label)          
+                                            setInputTask(inputTask => ( { ...inputTask,priority : updatedPriority.label } ) )      
                                         } catch (error) {
                                             asyncErrorHandler(error)
                                         }
                                     }}
-                                    options={selectOptionsPriorities} > {   
-                                     selectOptionsPriorities.map( (priority,index) => <option key={index} > {priority.label} </option> )
-                                    }  
-                                </Select>
+                                    options={ selectOptionsPriorities }/>
                             </div>
                         </div>
                     </div>   
