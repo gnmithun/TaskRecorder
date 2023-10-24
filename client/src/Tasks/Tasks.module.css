@@ -38,3 +38,8 @@
 }
 
 
+.tasksDetailsItem {
+  margin-right: 20px;
+  margin-bottom: 5px;
+  border-radius: 10px;  
+}

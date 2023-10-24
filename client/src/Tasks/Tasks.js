@@ -33,8 +33,7 @@ function Tasks(props) {
     // let defaultCategory = selectOptionsCategories[0]        
 
 
-    const [selectedCategory,setSelectedCategory] = useState(props.categories[0])    
-    console.log(selectOptionsCategories)
+    const [selectedCategory,setSelectedCategory] = useState()    
 
     function isSubmitEnabled(){
         return props.loading ? false : (inputTask.detail === "" ? false : true)
@@ -99,25 +98,22 @@ function Tasks(props) {
                             placeholder='Whats next?' 
                             disabled = { props.loading ? true : false }
                             name='detail' 
-                            onChange={ (event) => { 
-                                setInputTask(inputTask => ( {...inputTask,detail : event.target.value } ) ) }}
+                            onChange={ (event) => { setInputTask(inputTask => ( {...inputTask,detail : event.target.value } ) ) }}
 />                    
                         <div className={styles.taskSubContainer}>
                             <input type="submit" value="Submit" className = {
                                 isSubmitEnabled() ? styles.taskSubContainerSubmitDisabled : styles.taskSubContainerSubmitEnabled } 
                             disabled = { !isSubmitEnabled() }/>
 
-                            <div className={styles.dropDown}>
+                            <div className={styles.tasksDetailsItem}>
                                 <Select 
                                   options={ selectOptionsCategories}
                                   onChange={ (event)=> { 
-                                    const selectedCategory = selectOptionsCategories.find( category => category.value.type === event.label)                         
-                                    const categoryId = selectedCategory.value.id                                    
-                                    // defaultCategory = selectedCategory                                    
+                                    setSelectedCategory(selectOptionsCategories.find( category => category.value.type === event.label))                         
+                                    const categoryId = selectedCategory.value.id                                                                                                     
                                     setInputTask(inputTask => ( { ...inputTask,categoryId : categoryId } ) )
-                                  }} 
-                                  defaultValue={ selectedCategory }
-                                  value={ selectedCategory }                              
+                                  }}                                                              
+                                  // value={ selectedCategory }                              
                                 />
                             </div>
                         </div>
