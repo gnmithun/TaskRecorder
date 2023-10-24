@@ -23,8 +23,9 @@ function Tasks(props) {
 
     props.categories.map((category)=>{
         selectOptionsCategories.push({
-             label: category.type,
-             value: category
+            //  label: category.type,
+            // value: category
+            category
         })
     })
 
@@ -106,15 +107,15 @@ function Tasks(props) {
                             disabled = { !isSubmitEnabled() }/>
 
                             <div className={styles.tasksDetailsItem}>
-                                <Select 
-                                  options={ selectOptionsCategories}
-                                  onChange={ (event)=> { 
-                                    setSelectedCategory(selectOptionsCategories.find( category => category.value.type === event.label))                         
-                                    const categoryId = selectedCategory.value.id                                                                                                     
-                                    setInputTask(inputTask => ( { ...inputTask,categoryId : categoryId } ) )
-                                  }}                                                              
-                                  // value={ selectedCategory }                              
-                                />
+                                <select
+                                 onChange={ (event) => {
+
+                                  const selectedCategory = selectOptionsCategories.find( value => value.category.type === event.target.value)                                                                                             
+                                  const categoryId = selectedCategory.category.id                                                                                                                                       
+                                  setInputTask(inputTask => ( { ...inputTask,categoryId : categoryId } ) )
+                                 }}>                                
+                                  { selectOptionsCategories.map( (value,index) =>   <option key={index}>   { value.category.type }  </option> ) } 
+                                </select>                                
                             </div>
                         </div>
                     </div>   
