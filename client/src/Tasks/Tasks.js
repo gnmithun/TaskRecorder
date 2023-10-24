@@ -12,25 +12,30 @@ function Tasks(props) {
     const navigateTo = useNavigate()
     const asyncErrorHandler = useThrowAsyncError()
 
-    let selectOptionsPriorities = []
+    // let selectOptionsPriorities = []
     let selectOptionsCategories = []
     
-    props.priorities.map((priority)=>{
-        selectOptionsPriorities.push({
-            label: priority
-        })
-    })
+    // props.priorities.map((priority)=>{
+    //     selectOptionsPriorities.push({
+    //         label: priority
+    //     })
+    // })
 
     props.categories.map((category)=>{
         selectOptionsCategories.push({
-             label: category.type
+             label: category.type,
+             value: category
         })
     })
 
-    const defaultCategory = selectOptionsCategories[0]
-    const defaultPriorities = selectOptionsPriorities[0]
-    console.log(defaultCategory,defaultPriorities)
-    
+
+    // const defaultPriorities = selectOptionsPriorities[0]
+    // let defaultCategory = selectOptionsCategories[0]        
+
+
+    const [selectedCategory,setSelectedCategory] = useState(props.categories[0])    
+    console.log(selectOptionsCategories)
+
     function isSubmitEnabled(){
         return props.loading ? false : (inputTask.detail === "" ? false : true)
     }
@@ -81,10 +86,7 @@ function Tasks(props) {
         } catch (error) {
             asyncErrorHandler(error)
         }
-
-
     },[props.categories])
-
 
     try {
         return (
@@ -106,45 +108,17 @@ function Tasks(props) {
                             disabled = { !isSubmitEnabled() }/>
 
                             <div className={styles.dropDown}>
-                                {/* <select name="category" 
-                                    className={ styles.taskSubContainerSelector }
-                                    options={ props.categories }
-                                    onChange={ (event)=> { 
-                                        const selectedCategory = props.categories.find( category => category.type === event.target.value)
-                                        const categoryId = selectedCategory.id
-                                        setInputTask(inputTask => ( { ...inputTask,categoryId : categoryId } ) )
-                                    }} >
-                                        { props.categories.map((category) => <option key={category.id} >{category.type} </option>) }
-                                    
-                                </select> */}
-
-                                <Select name='category'
-                                    defaultValue={selectOptionsCategories[0]}
-                                    // onChange={ (event) => {
-                                    //     const selectedCategory = props.categories.find( (category) => {
-                                    //         if (category.type === event.label){
-                                    //             console.log(event.label)
-                                    //             return category
-                                    //         }                                            
-                                    //     })
-                                    //     const categoryId = selectedCategory.id
-                                    //     setInputTask(inputTask => ( { ...inputTask,categoryId : categoryId } ) )
-                                    //     } 
-                                    // }
-                                    options={ selectOptionsCategories }
+                                <Select 
+                                  options={ selectOptionsCategories}
+                                  onChange={ (event)=> { 
+                                    const selectedCategory = selectOptionsCategories.find( category => category.value.type === event.label)                         
+                                    const categoryId = selectedCategory.value.id                                    
+                                    // defaultCategory = selectedCategory                                    
+                                    setInputTask(inputTask => ( { ...inputTask,categoryId : categoryId } ) )
+                                  }} 
+                                  defaultValue={ selectedCategory }
+                                  value={ selectedCategory }                              
                                 />
-                                <Select name='priority'
-                                    defaultValue={selectOptionsPriorities[0]}
-                                    
-                                    onChange={ (event) => {
-                                        try {
-                                            const updatedPriority = selectOptionsPriorities.find( priority => priority.label === event.label)                            
-                                            setInputTask(inputTask => ( { ...inputTask,priority : updatedPriority.label } ) )      
-                                        } catch (error) {
-                                            asyncErrorHandler(error)
-                                        }
-                                    }}
-                                    options={ selectOptionsPriorities }/>
                             </div>
                         </div>
                     </div>   

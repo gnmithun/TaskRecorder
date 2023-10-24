@@ -25,7 +25,8 @@ function TaskEditingForm(props) {
     
     props.priority.map((priority)=>{
         selectOptionsPriorities.push({
-             label: priority
+             label: priority,
+             value: priority
         })
     })
 
@@ -35,7 +36,6 @@ function TaskEditingForm(props) {
              value : category
         })
     })
-
 
     return (
         
@@ -55,9 +55,9 @@ function TaskEditingForm(props) {
                     }}
                     value={{label:updatedPriority}}
                     options={selectOptionsPriorities} >                    
-                    {   
+                    {/* {   
                     selectOptionsPriorities.map( (priority,index) => <option key={index} > {priority.label} </option> )
-                    }                    
+                    }                     */}
             </Select>
 
             <Select name="category" className = { styles.tasksDetailsItem }
@@ -72,7 +72,7 @@ function TaskEditingForm(props) {
                     value={{label:updatedCategory.type}} 
                     options = { selectOptionsCategories } 
                     >   
-                    { selectOptionsCategories.map((category,index) => <option key={index} >{category.label} </option>) }
+                    {/* { selectOptionsCategories.map((category,index) => <option key={index} >{category.label} </option>) } */}
             </Select>
 
             <button onClick={ async (event) => {
