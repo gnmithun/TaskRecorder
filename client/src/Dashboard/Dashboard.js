@@ -2,7 +2,6 @@ import Heading from "../Heading/Heading"
 import NavBar from "../Navigation/NavBar"
 import LoadingSpinner from "../Spinner/LoadingSpinner";
 import Tasks from "../Tasks/Tasks";
-import Constants from "../Common/appConst"
 import TasksList from "../TasksList/TasksList";
 import TaskByDate from "../TaskByDate/TaskByDate";
 import PriorityTaskList from "../TaskByPriority/TaskByPriority"
@@ -166,7 +165,7 @@ const Dashboard = (props) => {
                             setTask={setTask} 
                             task={task} 
                             categories={categories} 
-                            priorities={Constants.priorities}/>
+                            priorities/>
           <TasksList setLoading={setLoading} 
                             categories={categories}  
                             getTasksWithFilter = { getTasksWithFilter }

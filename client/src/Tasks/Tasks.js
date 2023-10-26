@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import styles from "./Tasks.module.css"
 import { customFetch } from '../Common/customFetch';
 import useThrowAsyncError from '../Common/asyncErrorHandler';
-import Select from 'react-select'
+import Constants from "../Common/appConst"
 
 function Tasks(props) {
 
@@ -12,29 +12,21 @@ function Tasks(props) {
     const navigateTo = useNavigate()
     const asyncErrorHandler = useThrowAsyncError()
 
-    // let selectOptionsPriorities = []
+    let selectOptionsPriorities = []
     let selectOptionsCategories = []
     
-    // props.priorities.map((priority)=>{
-    //     selectOptionsPriorities.push({
-    //         label: priority
-    //     })
-    // })
+    Constants.priorities.map((priority)=>{
+        return selectOptionsPriorities.push({
+            priority
+        })
+    })
 
     props.categories.map((category)=>{
-        selectOptionsCategories.push({
-            //  label: category.type,
-            // value: category
+        return selectOptionsCategories.push({
             category
         })
     })
 
-
-    // const defaultPriorities = selectOptionsPriorities[0]
-    // let defaultCategory = selectOptionsCategories[0]        
-
-
-    const [selectedCategory,setSelectedCategory] = useState()    
 
     function isSubmitEnabled(){
         return props.loading ? false : (inputTask.detail === "" ? false : true)
@@ -107,6 +99,10 @@ function Tasks(props) {
                             disabled = { !isSubmitEnabled() }/>
 
                             <div className={styles.tasksDetailsItem}>
+                                <select onChange={ (event) => setInputTask(inputTask => ( { ...inputTask,priority:event.target.value})) }>
+                                  { selectOptionsPriorities.map ((value,index) =>  <option key={index}> { value.priority } </option> ) }
+                                </select>
+                                <br/>
                                 <select
                                  onChange={ (event) => {
 
@@ -117,6 +113,8 @@ function Tasks(props) {
                                   { selectOptionsCategories.map( (value,index) =>   <option key={index}>   { value.category.type }  </option> ) } 
                                 </select>                                
                             </div>
+
+
                         </div>
                     </div>   
                 </form>           
